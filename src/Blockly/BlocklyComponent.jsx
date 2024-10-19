@@ -98,8 +98,8 @@ function BlocklyComponent(props) {
   return (
     <React.Fragment>
       <button onClick={generateCode}>Convert</button>
-      <div ref={blocklyDiv} id="blocklyDiv" />
-      <div style={{display: 'block'}} ref={toolbox}>
+      <div ref={blocklyDiv} id="blocklyDiv" className='text-black border text-2xl ' />
+      <div style={{display: 'none'}} ref={toolbox}>
         {props.children}
       </div>
     </React.Fragment>

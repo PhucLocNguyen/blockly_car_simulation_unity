@@ -25,10 +25,9 @@
 // https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks
 
 import * as Blockly from 'blockly/core';
-
+import { PINS } from './gpio';
 // Since we're using json to initialize the field, we'll need to import it.
 import '../fields/BlocklyReactField';
-
 const testReactField = {
   type: 'test_react_field',
   message0: 'custom field %1',
@@ -66,10 +65,13 @@ Blockly.Blocks['text_print'] = {
 
 Blockly.Blocks["variable_untyped"] = {
   init: function() {
-    this.appendDummyInput()
+    this.appendValueInput('VALUE_Variable')
         .appendField('variable:')
-        .appendField(new Blockly.FieldVariable('x'), 'FIELDNAME');
-  }
+        .appendField(new Blockly.FieldVariable('Y', true,['Number', 'String'],'String'), 'VAR_NAME2');
+        this.setPreviousStatement(true, null); // Cho phép kết nối với khối khác phía trên
+        this.setNextStatement(true, null); // Cho phép kết nối với khối khác phía dưới
+        this.setTooltip("Create a variable by assign a value.");
+      }
 }
 Blockly.Blocks["variable_typed"] = {
   init: function() {
@@ -88,24 +90,11 @@ Blockly.Blocks["variable_typed"] = {
     this.setPreviousStatement(true, null); // Cho phép kết nối với khối khác phía trên
     this.setNextStatement(true, null); // Cho phép kết nối với khối khác phía dưới
 
-    this.setTooltip("Create a variable with a default value.");
+    this.setTooltip("Create a variable with a text value.");
     this.setHelpUrl("");
   }
 };
 
-// Setup BCM - GPIO
-Blockly.Blocks['gpio_setup'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Set GPIO mode")
-        .appendField(new Blockly.FieldDropdown([["BCM", "BCM"], ["BOARD", "BOARD"]]), "mode");
-    this.setColour(230);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip("");
-    this.setHelpUrl("");
-  }
-};
 
 Blockly.Blocks['set_motor_speed'] = {
   init: function() {
@@ -128,12 +117,12 @@ Blockly.Blocks['set_motor_pins'] = {
     this.appendDummyInput()
         .appendField("Set motor pins")
         .appendField("Motor A (forward, backward)")
-        .appendField(new Blockly.FieldNumber(12), "motorA_1A")
-        .appendField(new Blockly.FieldNumber(13), "motorA_1B");
+        .appendField(new Blockly.FieldDropdown(PINS), "motorA_1A")
+        .appendField(new Blockly.FieldDropdown(PINS), "motorA_1B");
     this.appendDummyInput()
         .appendField("Motor B (forward, backward)")
-        .appendField(new Blockly.FieldNumber(10), "motorB_1A")
-        .appendField(new Blockly.FieldNumber(11), "motorB_1B");
+        .appendField(new Blockly.FieldDropdown(PINS), "motorB_1A")
+        .appendField(new Blockly.FieldDropdown(PINS), "motorB_1B");
     this.setColour(230);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -142,16 +131,4 @@ Blockly.Blocks['set_motor_pins'] = {
   }
 };
 
-Blockly.Blocks['delay'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("Delay for")
-        .appendField(new Blockly.FieldNumber(1, 0), "seconds")
-        .appendField("seconds");
-    this.setColour(120);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip("Pause the program for a specific amount of time.");
-    this.setHelpUrl("");
-  }
-};
+

@@ -4,3 +4,17 @@
   position: absolute;
   bottom: 0;
 }
+
+#blocklyDiv .blocklyToolboxCategory {
+  height: 100%;
+  
+}
+.blocklyToolboxCategory .blocklyTreeRow{
+  line-height: normal;
+  height: auto;
+}
+
+#blocklyDiv .blocklyTreeRow {
+  @apply  py-2;
+}
+

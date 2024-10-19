@@ -32,6 +32,14 @@ import { pythonGenerator } from 'blockly/python';
 javascriptGenerator.forBlock['test_react_field'] = function (block) {
   return "console.log('custom block');\n";
 };
+javascriptGenerator.forBlock['variable_untyped'] = function(block) {
+  // Print statement.
+  var variableName = javascriptGenerator.nameDB_.getName(block.getFieldValue('VAR_NAME2'), Blockly.Names.NameType.VARIABLE);
+  var argument0 = javascriptGenerator.valueToCode(block, 'VALUE_Variable', javascriptGenerator.ORDER_NONE || 0) || '\'\'';
+    // Tạo mã JavaScript để gán giá trị mặc định
+    var code = 'var ' + variableName + ' = ' + argument0 + ';\n';
+    return code;
+};
 
 javascriptGenerator.forBlock['variable_typed'] = function(block) {
   // Lấy tên của biến từ trường VAR_NAME
@@ -45,11 +53,7 @@ javascriptGenerator.forBlock['variable_typed'] = function(block) {
   return code;
 };
 
-javascriptGenerator.forBlock['gpio_setup'] = function(block) {
-  var dropdown_mode = block.getFieldValue('mode');
-  var code = `GPIO.setmode(GPIO.${dropdown_mode});\n`;
-  return code;
-};
+
 
 javascriptGenerator.forBlock['set_motor_speed'] = function(block) {
   var left_speed = block.getFieldValue('left_speed');
@@ -100,9 +104,12 @@ pythonGenerator.forBlock['variable_typed'] = function(block) {
   return code;
 };
 
-pythonGenerator.forBlock['gpio_setup'] = function(block) {
-  var dropdown_mode = block.getFieldValue('mode');
-  var code = `GPIO.setmode(GPIO.${dropdown_mode})\n`;
+pythonGenerator.forBlock['variable_untyped'] = function(block) {
+  // Print statement.
+  var variableName = pythonGenerator.nameDB_.getName(block.getFieldValue('VAR_NAME2'), Blockly.Names.NameType.VARIABLE);
+
+  var argument0 = pythonGenerator.valueToCode(block, 'VALUE_Variable', pythonGenerator.ORDER_NONE || 0) || '\'\'';
+  var code = variableName + ' = ' + argument0 + ';\n';
   return code;
 };
 
@@ -127,7 +134,11 @@ motorB_1B = ${motorB_1B}
 GPIO.setup(motorA_1A, GPIO.OUT)
 GPIO.setup(motorA_1B, GPIO.OUT)
 GPIO.setup(motorB_1A, GPIO.OUT)
-GPIO.setup(motorB_1B, GPIO.OUT)\n`;
+GPIO.setup(motorB_1B, GPIO.OUT)
+robot = Robot(right=(motorA_1A, motorA_1B), left=(motorB_1A, motorB_1B))
+\n`;
+pythonGenerator.definitions_['import_gpio'] = 'import RPi.GPIO as GPIO';
+pythonGenerator.definitions_['import_robot'] = 'from gpiozero import Robot';
   
   return code;
 };

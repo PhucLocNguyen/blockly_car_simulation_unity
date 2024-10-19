@@ -2,15 +2,40 @@ import * as Blockly from 'blockly/core';
 import {javascriptGenerator} from 'blockly/javascript';
 import { pythonGenerator } from 'blockly/python';
 
-/** Common HSV hue for all blocks in this file. */
-var GPIO_HUE = 250;
+var GPIO_HUE = 180;
 
-var PINS = [['2', '3'], ['3', '5'], ['4', '7'], ['17', '11'], ['27', '13'],
-            ['22', '15'], ['10', '19'], ['9', '21'], ['11', '23'],
-            ['14', '8'], ['15', '10'], ['18', '12'], ['23', '16'], ['24', '18'],
-            ['25', '22'], ['8', '24'], ['7', '26']];
+// Setup BCM - GPIO
+Blockly.Blocks['gpio_setup_board'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Set GPIO mode")
+        .appendField(new Blockly.FieldDropdown([["BCM", "BCM"], ["BOARD", "BOARD"]]), "mode");
+    this.setColour(230);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+javascriptGenerator.forBlock['gpio_setup_board'] = function(block) {
+  var dropdown_mode = block.getFieldValue('mode');
+  var code = `GPIO.setmode(GPIO.${dropdown_mode});\n`;
+  return code;
+};
+pythonGenerator.forBlock['gpio_setup_board'] = function(block) {
+  var dropdown_mode = block.getFieldValue('mode');
+  var code = `GPIO.setmode(GPIO.${dropdown_mode})\n`;
+  pythonGenerator.definitions_['import_gpio'] = 'import RPi.GPIO as GPIO\n';
 
-Blockly.Blocks['led_set'] = {
+  return code;
+};
+
+var PINS = [['2', '2'], ['3', '3'], ['4', '4'], ['17', '17'], ['27', '27'],
+            ['22', '22'], ['10', '10'], ['9', '9'], ['11', '11'],
+            ['14', '14'], ['15', '15'], ['18', '18'], ['23', '23'], ['24', '24'],
+            ['25', '25'], ['8', '8'], ['7', '7']];
+
+Blockly.Blocks['gpio_set'] = {
   /**
    * Description.
    * @this Blockly.Block
@@ -18,76 +43,95 @@ Blockly.Blocks['led_set'] = {
   init: function() {
     this.setHelpUrl('');
     this.setColour(GPIO_HUE);
-    this.appendValueInput('STATE', 'pin_value')
-        .appendField('set LED on pin#')
+    this.appendDummyInput("")
+        .appendField('set GPIO pin#')
         .appendField(new Blockly.FieldDropdown(PINS), 'PIN')
-        .appendField('to')
-        .setCheck('pin_value');
+        .appendField('to').appendField(new Blockly.FieldDropdown([["GPIO.IN","GPIO.IN"],["GPIO.OUT","GPIO.OUT"]]),"GPIO_MODE")
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setTooltip('');
+    this.setNextStatement(true,null);
+    this.setTooltip('Set a GPIO pin to GPIO.IN or GPIO.OUT state.');
   }
 };
 
 /**
- * Description.
+ * Python code generator for gpio_set block.
  * @param {!Blockly.Block} block Block to generate the code from.
  * @return {string} Completed code.
  */
-  javascriptGenerator.forBlock['led_set'] = function(block) {
+ javascriptGenerator.forBlock['gpio_set'] = function(block) {
   var pin = block.getFieldValue('PIN');
-  
-  // Very hackish way to get the BCM pin number, need to create a proper lookup
-  // dictionary with a function to generate the dropdown
-  for (var i = 0; i < PINS.length; i++) {
-    if (PINS[i][1] === pin) { // Changed == to ===
-      pin = PINS[i][0];
-      break;
-    }
-  }
-
-  // Lấy giá trị của trạng thái HIGH/LOW
-  var state = javascriptGenerator.valueToCode(
-      block, 'STATE', javascriptGenerator.ORDER_ATOMIC) || '0';
-
-  // Tạo định nghĩa cho LED giả lập hoặc điều khiển trực tiếp (tùy vào môi trường)
-  javascriptGenerator.definitions_['declare_led' + pin] = 'const led' + pin + ' = new Gpio(' + pin + ', "out");';
-
-  // Sinh mã điều khiển LED
-  var code = 'led' + pin + '.writeSync(';
-  if (state === 'HIGH') {
-    code += '1';  // Set GPIO to HIGH
-  } else {
-    code += '0';  // Set GPIO to LOW
-  }
-  code += ');\n';
-  
+  var state = block.getFieldValue('GPIO_MODE'); // get value from field
+  var code = 'GPIO.setup(' + pin + ', ' + state + ')\n';
+  return code;
+};
+pythonGenerator.forBlock['gpio_set'] = function(block) {
+  var pin = block.getFieldValue('PIN');
+  var state = block.getFieldValue('GPIO_MODE');
+  pythonGenerator.definitions_['import_gpio'] = 'import RPi.GPIO as GPIO\n';
+  var code = 'GPIO.setup(' + pin + ',' + state + ')\n';
   return code;
 };
 
-pythonGenerator.forBlock['led_set'] = function(block) {
-  var pin = block.getFieldValue('PIN');
-  // Very hackish way to get the BCM pin number, need to create a proper lookup
-  // dictionary with a function to generate the dropdown
-  for (var i = 0; i < PINS.length; i++) {
-    if (PINS[i][1] === pin) { // Changed == to ===
-      pin = PINS[i][0];
-      break;
-    }
+Blockly.Blocks['pin_binary'] = {
+  /**
+   * Description.
+   * @this Blockly.Block
+   */
+  init: function() {
+    this.setHelpUrl('');
+    this.setColour(GPIO_HUE);
+    this.appendDummyInput('')
+        .appendField(
+            new Blockly.FieldDropdown([['HIGH', 'HIGH'], ['LOW', 'LOW']]),
+           'STATE');
+    this.setOutput(true, 'pin_value');
+    this.setTooltip('Set a pin state logic High or Low.');
   }
-  var state = pythonGenerator.valueToCode(
-      block, 'STATE', pythonGenerator.ORDER_ATOMIC) || '0';
+};
 
-  pythonGenerator.definitions_['import_gpiozero'] = 'from gpiozero import LED';
-  pythonGenerator.definitions_['declare_led' + pin] =
-      'led' + pin + ' = LED(' + pin + ')';
+/**
+ * JavaScript code generator for pin_binary block.
+ * @param {!Blockly.Block} block Block to generate the code from.
+ * @return {array} Completed code with order of operation.
+ */
+javascriptGenerator.forBlock['pin_binary'] = function(block) {
+  var code = block.getFieldValue('STATE');
+  return [code, javascriptGenerator.ORDER_ATOMIC];
+};
 
-  var code = 'led' + pin + '.';
-  if (state === 'HIGH') { // Changed == to ===
-    code += 'on()\n';
-  } else {
-    code += 'off()\n';
+/**
+ * Python code generator for pin_binary block.
+ * @param {!Blockly.Block} block Block to generate the code from.
+ * @return {array} Completed code with order of operation.
+ */
+pythonGenerator.forBlock['pin_binary'] = function(block) {
+  var code = block.getFieldValue('STATE');
+  return [code, pythonGenerator.ORDER_ATOMIC];
+};
+
+Blockly.Blocks['gpio_cleanup'] = {
+  /**
+   * Block for cleaning up GPIO settings.
+   */
+  init: function() {
+    this.setHelpUrl('');
+    this.setColour(GPIO_HUE);
+    this.appendDummyInput("")
+        .appendField('reset GPIO settings');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setTooltip('Resets all GPIO settings to their default state.');
   }
+};
+
+pythonGenerator.forBlock['gpio_cleanup'] = function(block) {
+  pythonGenerator.definitions_['import_gpio'] = 'import RPi.GPIO as GPIO\n';
+  var code = 'GPIO.cleanup()\n';
   return code;
 };
+javascriptGenerator.forBlock['gpio_cleanup'] = function(block) {
+  var code = 'GPIO.cleanup();\n';
+  return code;
+};
+export {PINS}
