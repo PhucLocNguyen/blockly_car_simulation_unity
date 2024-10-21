@@ -32,59 +32,27 @@ import { pythonGenerator } from 'blockly/python';
 javascriptGenerator.forBlock['test_react_field'] = function (block) {
   return "console.log('custom block');\n";
 };
-javascriptGenerator.forBlock['variable_untyped'] = function(block) {
-  // Print statement.
-  var variableName = javascriptGenerator.nameDB_.getName(block.getFieldValue('VAR_NAME2'), Blockly.Names.NameType.VARIABLE);
-  var argument0 = javascriptGenerator.valueToCode(block, 'VALUE_Variable', javascriptGenerator.ORDER_NONE || 0) || '\'\'';
-    // Tạo mã JavaScript để gán giá trị mặc định
-    var code = 'var ' + variableName + ' = ' + argument0 + ';\n';
-    return code;
-};
-
-javascriptGenerator.forBlock['variable_typed'] = function(block) {
-  // Lấy tên của biến từ trường VAR_NAME
-  var variableName = javascriptGenerator.nameDB_.getName(block.getFieldValue('VAR_NAME'), Blockly.Names.NameType.VARIABLE);
-  
-  // Lấy giá trị mặc định từ trường DEFAULT_VALUE
-  var defaultValue = JSON.stringify(block.getFieldValue('DEFAULT_VALUE')) || '"Hello World"'; // Đảm bảo giá trị chuỗi
-  
-  // Tạo mã JavaScript để gán giá trị mặc định
-  var code = 'var ' + variableName + ' = ' + defaultValue + ';\n';
-  return code;
-};
 
 
 
-javascriptGenerator.forBlock['set_motor_speed'] = function(block) {
-  var left_speed = block.getFieldValue('left_speed');
-  var right_speed = block.getFieldValue('right_speed');
-  var code = `robot.value = (${left_speed}, ${right_speed});\n`;
-  return code;
-};
 
-javascriptGenerator.forBlock['set_motor_pins'] = function(block) {
-  var motorA_1A = block.getFieldValue('motorA_1A');
-  var motorA_1B = block.getFieldValue('motorA_1B');
-  var motorB_1A = block.getFieldValue('motorB_1A');
-  var motorB_1B = block.getFieldValue('motorB_1B');
-  
-  var code = `
-var motorA_1A = ${motorA_1A};
-var motorA_1B = ${motorA_1B};
-var motorB_1A = ${motorB_1A};
-var motorB_1B = ${motorB_1B};
-GPIO.setup(motorA_1A, GPIO.OUT);
-GPIO.setup(motorA_1B, GPIO.OUT);
-GPIO.setup(motorB_1A, GPIO.OUT);
-GPIO.setup(motorB_1B, GPIO.OUT);\n`;
-  
-  return code;
-}
+
+
+
+
 javascriptGenerator.forBlock['delay'] = function(block) {
   var seconds = block.getFieldValue('seconds');
   var milliseconds = seconds * 1000; // chuyển đổi từ giây sang mili giây
   var code = `await new Promise(resolve => setTimeout(resolve, ${milliseconds}));\n`;
   return code;
+};
+
+javascriptGenerator.forBlock['logic_compare_custom'] = function(block) {
+  var leftValue = javascriptGenerator.valueToCode(block, 'LEFT', javascriptGenerator.ORDER_ATOMIC);
+  var operator = block.getFieldValue('OPERATOR');
+  var rightValue = javascriptGenerator.valueToCode(block, 'RIGHT', javascriptGenerator.ORDER_ATOMIC);
+  var code = `${leftValue} ${operator} ${rightValue}`;
+  return [code, javascriptGenerator.ORDER_NONE];
 };
 
 // Python Generator 
@@ -104,46 +72,23 @@ pythonGenerator.forBlock['variable_typed'] = function(block) {
   return code;
 };
 
-pythonGenerator.forBlock['variable_untyped'] = function(block) {
-  // Print statement.
-  var variableName = pythonGenerator.nameDB_.getName(block.getFieldValue('VAR_NAME2'), Blockly.Names.NameType.VARIABLE);
 
-  var argument0 = pythonGenerator.valueToCode(block, 'VALUE_Variable', pythonGenerator.ORDER_NONE || 0) || '\'\'';
-  var code = variableName + ' = ' + argument0 + ';\n';
-  return code;
-};
 
-pythonGenerator.forBlock['set_motor_speed'] = function(block) {
-  var left_speed = block.getFieldValue('left_speed');
-  var right_speed = block.getFieldValue('right_speed');
-  var code = `robot.value = (${left_speed}, ${right_speed})\n`;
-  return code;
-};
 
-pythonGenerator.forBlock['set_motor_pins'] = function(block) {
-  var motorA_1A = block.getFieldValue('motorA_1A');
-  var motorA_1B = block.getFieldValue('motorA_1B');
-  var motorB_1A = block.getFieldValue('motorB_1A');
-  var motorB_1B = block.getFieldValue('motorB_1B');
-  
-  var code = `
-motorA_1A = ${motorA_1A}
-motorA_1B = ${motorA_1B}
-motorB_1A = ${motorB_1A}
-motorB_1B = ${motorB_1B}
-GPIO.setup(motorA_1A, GPIO.OUT)
-GPIO.setup(motorA_1B, GPIO.OUT)
-GPIO.setup(motorB_1A, GPIO.OUT)
-GPIO.setup(motorB_1B, GPIO.OUT)
-robot = Robot(right=(motorA_1A, motorA_1B), left=(motorB_1A, motorB_1B))
-\n`;
-pythonGenerator.definitions_['import_gpio'] = 'import RPi.GPIO as GPIO';
-pythonGenerator.definitions_['import_robot'] = 'from gpiozero import Robot';
-  
-  return code;
-};
+
+
 pythonGenerator.forBlock['delay'] = function(block) {
   var seconds = block.getFieldValue('seconds');
   var code = `time.sleep(${seconds})\n`;
+  return code;
+};
+
+pythonGenerator.forBlock['logic_compare_custom'] = function(block) {
+  var leftValue = block.getFieldValue('LEFT');
+  if(leftValue == null) leftValue =0;
+  var operator = block.getFieldValue('OPERATOR');
+  var rightValue = block.getFieldValue('RIGHT');
+  if(rightValue == null) rightValue =0;
+  var code = `${leftValue} ${operator} ${rightValue}`;
   return code;
 };

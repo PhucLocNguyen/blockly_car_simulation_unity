@@ -1,5 +1,5 @@
 #blocklyDiv {
-  height: 50%;
+  height: 70%;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -8,6 +8,9 @@
 #blocklyDiv .blocklyToolboxCategory {
   height: 100%;
   
+}
+.blocklyToolboxDiv{
+  background:#403b3b;
 }
 .blocklyToolboxCategory .blocklyTreeRow{
   line-height: normal;

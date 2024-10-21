@@ -1,52 +1,63 @@
-/**
- * @license
- *
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
- * @fileoverview Blockly React Component.
- * @author samelh@google.com (Sam El-Husseini)
- */
-
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './BlocklyComponent.css';
-import {useEffect, useRef} from 'react';
 
 import * as Blockly from 'blockly/core';
-import {javascriptGenerator} from 'blockly/javascript';
-import * as locale from 'blockly/msg/en';
+import { javascriptGenerator } from 'blockly/javascript';
 import 'blockly/blocks';
 import { pythonGenerator } from 'blockly/python';
+import * as localeVi from 'blockly/msg/vi';
+import * as localeEn from 'blockly/msg/en';
 
-Blockly.setLocale(locale);
+function loadLocale(language) {
+  if (language === 'vi') {
+    require('../languages/vi.js'); // Hoặc sử dụng await import nếu cần
+    delete require.cache[require.resolve('../languages/en.js')];
+    
+  } else if (language === 'en') {
+    require('../languages/en.js');
+    delete require.cache[require.resolve('../languages/vi.js')];
+  }
+}
 
 function BlocklyComponent(props) {
+  const [language, setLanguage] = useState(localStorage.getItem("language") ?? "vi");
+  
   const blocklyDiv = useRef();
   const toolbox = useRef();
   let primaryWorkspace = useRef();
   const autosaveInterval = useRef();
+
   const generateCode = () => {
-    var code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
-    console.log("Javascript:")
-    console.log(code); // ket qua output sau khi keo tha code la code python
-    var codePython = pythonGenerator.workspaceToCode(primaryWorkspace.current);
-    console.log("Python:")
-    console.log(codePython);
-  }
-  ;
+    const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
+    console.log("Javascript:", code);
+    const codePython = pythonGenerator.workspaceToCode(primaryWorkspace.current);
+    console.log("Python:", codePython);
+  };
+  const recreateWorkspace = () => {
+    if (primaryWorkspace.current) {
+      primaryWorkspace.current.dispose(); // Xóa workspace cũ
+    }
+  
+    primaryWorkspace.current = Blockly.inject(blocklyDiv.current, {
+      toolbox: toolbox.current,
+      ...props,
+    });
+  
+    if (localStorage.getItem('blocklyCache')) {
+      Blockly.Xml.domToWorkspace(Blockly.utils.xml.textToDom(localStorage.getItem('blocklyCache')), primaryWorkspace.current);
+    }
+  };
+  
+  useEffect(() => {
+    // Thay đổi ngôn ngữ của Blockly theo ngôn ngữ hiện tại
+    var tempLanguage=localStorage.getItem("language");
+    console.log(tempLanguage)
+    Blockly.setLocale(tempLanguage == 'vi' ? localeVi : localeEn);
+    loadLocale(tempLanguage);
+    recreateWorkspace();
+  }, [language,primaryWorkspace]);
+  
+
   useEffect(() => {
     autosaveInterval.current = setInterval(saveWorkspace, 5000);
 
@@ -56,6 +67,19 @@ function BlocklyComponent(props) {
       }
     };
   }, []);
+
+  const handleChangeLanguage = (lang) => {
+    if (lang !== language) {
+      setLanguage(lang);
+      localStorage.setItem("language",lang)
+    } else {
+      // Nếu ngôn ngữ giống nhau, vẫn cần tái tạo lại workspace để áp dụng localization
+      loadLocale(lang);
+      Blockly.setLocale(lang === 'vi' ? localeVi : localeEn);
+      recreateWorkspace();
+    }
+  };
+
   const saveWorkspace = () => {
     try {
       const workspace = primaryWorkspace.current;
@@ -80,26 +104,18 @@ function BlocklyComponent(props) {
     }
   };
 
-  useEffect(() => {
-    const {initialXml, children, ...rest} = props;
-    primaryWorkspace.current = Blockly.inject(blocklyDiv.current, {
-      toolbox: toolbox.current,
-      ...rest,
-    });
-
-    if (initialXml) {
-      Blockly.Xml.domToWorkspace(
-        Blockly.utils.xml.textToDom(initialXml),
-        primaryWorkspace.current,
-      );
-    }
-  }, [primaryWorkspace, toolbox, blocklyDiv, props]);
-
   return (
     <React.Fragment>
-      <button onClick={generateCode}>Convert</button>
-      <div ref={blocklyDiv} id="blocklyDiv" className='text-black border text-2xl ' />
-      <div style={{display: 'none'}} ref={toolbox}>
+      <div style={{display:"flex", gap:"5px"}}>
+      <button onClick={generateCode} style={{padding:"10px 20px", borderRadius:"5px", cursor:"pointer"}}>Convert</button>
+      <select value={language} onChange={(e) => handleChangeLanguage(e.target.value)} style={{padding:"5px", borderRadius:"5px", cursor:"pointer"}}>
+        <option value="vi">Tiếng Việt</option>
+        <option value="en">English</option>
+      </select>
+      </div>
+      
+      <div ref={blocklyDiv} id="blocklyDiv" className='text-black border text-2xl test' />
+      <div style={{ display: 'none' }} ref={toolbox}>
         {props.children}
       </div>
     </React.Fragment>

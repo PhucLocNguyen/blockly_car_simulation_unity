@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
-import logo from './logo.svg';
+import logo from "./Assets/logoApp.jpg";
 
 import BlocklyComponent, {
   Block,
@@ -9,18 +9,18 @@ import BlocklyComponent, {
   Field,
   Shadow,
   Category,
-} from './Blockly';
+} from "./Blockly";
 
 // import './blocks/customblocks';
 // import './blocks/gpio';  // Import file gpio.js chứa khối GPIO
-import './generator/generator';
+import "./generator/generator";
 // import "./blocks/text"
 // import "./Components/Gpio_simulator"
 // import "./blocks/mathBlocks"
 // import "./time.js"
-import './blocks/exportBlocks';
+import "./blocks/exportBlocks";
 function App(props) {
-  const [xmlRemember] = useState(localStorage.getItem('blocklyCache') || '');
+  const [xmlRemember] = useState(localStorage.getItem("blocklyCache") || "");
 
   return (
     <div className="App">
@@ -29,27 +29,49 @@ function App(props) {
         <BlocklyComponent
           readOnly={false}
           trashcan={true}
-          media={'media/'}
+          media={"media/"}
           move={{
             scrollbars: true,
             drag: true,
             wheel: true,
           }}
-          initialXml={xmlRemember}>
+          initialXml={xmlRemember}
+        >
           {/* Danh mục các khối cơ bản*/}
-          <Category name="Basic" colour="#8FBC8F">
+          <Category name="Basic" colour="">
             <Block type="sleep_ms" />
             <Block type="pin_binary" />
           </Category>
           {/* Danh mục các khối logic */}
           <Category name="Logic" colour="#76B041">
             <Block type="controls_ifelse" />
-            <Block type="logic_compare" />
+            <Block type="logic_compare_custom">
+              <Value name="LEFT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+            </Block>
             <Block type="logic_operation" />
             <Block type="logic_negate" />
             <Block type="logic_boolean" />
-            <Block type="logic_null" disabled="true" />
-            <Block type="logic_ternary" />
+            <Block type="logic_compare_string_custom">
+              <Value name="LEFT">
+                <Shadow type="text">
+                  <Field name="TEXT">Default String 1</Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="text">
+                  <Field name="TEXT">Default String 2</Field>
+                </Shadow>
+              </Value>
+            </Block>
           </Category>
           {/* Danh mục các khối vòng lặp */}
           <Category name="Loops" colour="#20B2AA">
@@ -61,16 +83,13 @@ function App(props) {
               </Value>
             </Block>
             <Block type="forever_loop" />
-          </Category>
-          {/* Danh mục các khối  GPIO Setup */}
-          <Category name="GPIO Setup" colour="#40E0D0">
-            <Block type="gpio_set" />
-            <Block type="gpio_cleanup" />
+            <Block type="controls_whileUntil" />
           </Category>
           {/* Danh mục các khối Digital I/O */}
-          <Category name="Digital I/O" colour="#4682B4">
+          <Category name="Pin" colour="#4682B4">
             <Block type="gpio_read_digital" />
             <Block type="gpio_set_digital" />
+            <Block type="gpio_cleanup" />
           </Category>
           {/* Danh mục các khối PWM Control */}
           <Category name="PWM Control" colour="#FF4500">
@@ -84,9 +103,9 @@ function App(props) {
             <Block type="temperature_sensor_read" />
           </Category>
           {/* Danh mục các khối xử lý sự kiện */}
-         
+
           {/* Danh mục các khối hàm tùy chỉnh */}
-          <Category name="Custom Function Blocks" colour="#4682B4">
+          <Category name="Function" colour="#4682B4">
             <Block type="define_custom_function" />
             <Block type="call_custom_function" />
           </Category>
@@ -98,9 +117,15 @@ function App(props) {
           <Category name="Variable" colour="#FFA500">
             <Block type="variable_untyped" />
             <Block type="variable_typed" />
-            <Block type="text_print" />
+            <Block type="text_print">
+            <Value name="VALUE">
+                <Shadow type="text">
+                  <Field name="TEXT">Hello World</Field>
+                </Shadow>
+              </Value>
+            </Block>
             <Block type="variables_get">
-              <Field name="VAR"></Field>
+              <Field name="VAR">Y</Field>
             </Block>
           </Category>
           {/* Danh mục các khối của FSTEM */}

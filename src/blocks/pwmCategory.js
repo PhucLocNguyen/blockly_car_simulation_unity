@@ -1,22 +1,22 @@
 import {javascriptGenerator} from 'blockly/javascript';
 import * as Blockly from 'blockly/core';
-import 'blockly/blocks'; // Import các khối mặc định
+import '../fields/BlocklyReactField';
 import { pythonGenerator } from 'blockly/python';
-import { PINS } from './gpio';
+import { PINS } from './pinCategory';
 
-// PWM Setup Block
+// Định nghĩa block 'pwm_setup'
 Blockly.Blocks['pwm_setup'] = {
   init: function() {
     this.setHelpUrl('');
     this.setColour(120);
     this.appendDummyInput()
-        .appendField('setup PWM on pin#')
+        .appendField('%{BKY_PWM_SETUP_PIN}')
         .appendField(new Blockly.FieldDropdown(PINS), 'PIN')
-        .appendField('with frequency (Hz)')
+        .appendField('%{BKY_PWM_SETUP_FREQUENCY}')
         .appendField(new Blockly.FieldNumber(1000, 1), 'FREQUENCY');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Setup PWM with a specific frequency.');
+    this.setTooltip('%{BKY_PWM_SETUP_TOOLTIP}');
   }
 };
 
@@ -35,18 +35,19 @@ pythonGenerator.forBlock['pwm_setup'] = function(block) {
   return code;
 };
 
-// PWM Start/Stop Block
+// Định nghĩa block 'pwm_start_stop'
 Blockly.Blocks['pwm_start_stop'] = {
   init: function() {
     this.setHelpUrl('');
     this.setColour(120);
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([['start', 'START'], ['stop', 'STOP']]), 'ACTION')
-        .appendField('PWM on pin#')
+        .appendField('%{BKY_PWM_START_STOP_ACTION}')
+        .appendField(new Blockly.FieldDropdown([['%{BKY_PWM_START}', 'START'], ['%{BKY_PWM_STOP}', 'STOP']]), 'ACTION')
+        .appendField('%{BKY_PWM_ON_PIN}')
         .appendField(new Blockly.FieldDropdown(PINS), 'PIN');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Start or stop PWM on a specific pin.');
+    this.setTooltip('%{BKY_PWM_START_STOP_TOOLTIP}');
   }
 };
 
@@ -64,20 +65,20 @@ pythonGenerator.forBlock['pwm_start_stop'] = function(block) {
   return code;
 };
 
-// PWM Change Duty Cycle Block
+// Định nghĩa block 'pwm_change_duty_cycle'
 Blockly.Blocks['pwm_change_duty_cycle'] = {
   init: function() {
     this.setHelpUrl('');
     this.setColour(120);
     this.appendDummyInput()
-        .appendField('change PWM duty cycle on pin#')
+        .appendField('%{BKY_PWM_CHANGE_DUTY_CYCLE_PIN}')
         .appendField(new Blockly.FieldDropdown(PINS), 'PIN')
-        .appendField('to')
+        .appendField('%{BKY_PWM_CHANGE_DUTY_CYCLE_TO}')
         .appendField(new Blockly.FieldNumber(0, 0, 100), 'DUTY_CYCLE')
         .appendField('%');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setTooltip('Change the duty cycle of PWM on a specific pin.');
+    this.setTooltip('%{BKY_PWM_CHANGE_DUTY_CYCLE_TOOLTIP}');
   }
 };
 
