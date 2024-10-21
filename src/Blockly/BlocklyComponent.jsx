@@ -60,7 +60,7 @@ function BlocklyComponent(props) {
 
   useEffect(() => {
     autosaveInterval.current = setInterval(saveWorkspace, 5000);
-
+    loadLocale(language);
     return () => {
       if (autosaveInterval.current) {
         clearInterval(autosaveInterval.current);
