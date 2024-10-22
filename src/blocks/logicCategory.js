@@ -9,7 +9,7 @@ Blockly.Blocks['logic_compare_custom'] = {
         this.appendValueInput("LEFT")
             .setCheck("Number"); // Allows connection to blocks that output a number or direct input
         this.appendDummyInput()
-            .appendField(new Blockly.FieldDropdown([["=", "="], ["≠", "!="], ["<", "<"], ["‏≤", "<="], [">", ">"], ["‏≥", ">="]]), "OPERATOR");
+            .appendField(new Blockly.FieldDropdown([["=", "=="], ["≠", "!="], ["<", "<"], ["‏≤", "<="], [">", ">"], ["‏≥", ">="]]), "OPERATOR");
         this.appendValueInput("RIGHT")
             .setCheck("Number"); // Allows connection to blocks that output a number or direct input
         this.setInputsInline(true);

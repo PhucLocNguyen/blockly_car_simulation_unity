@@ -85,11 +85,11 @@ Blockly.Blocks['text_print'] = {
 
 javascriptGenerator.forBlock['text_print'] = function(block) {
     var argument0 = javascriptGenerator.valueToCode(block, 'VALUE', javascriptGenerator.ORDER_NONE || 0) || '';
-    return 'console.log(' + argument0 + ')';
+    return 'console.log(' + argument0 + ')\n';
 };
   
 pythonGenerator.forBlock['text_print'] = function(block) {
     var argument0 = pythonGenerator.valueToCode(block, 'VALUE', pythonGenerator.ORDER_NONE || 0) || '';
-    return 'print(' + argument0 + ')';
+    return 'print(' + argument0 + ')\n';
 };
 

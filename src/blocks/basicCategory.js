@@ -35,7 +35,7 @@ Blockly.Blocks['sleep_ms'] = {
    */
   javascriptGenerator.forBlock['sleep_ms'] = function(block) {
       var delayTime = block.getFieldValue('SLEEP_TIME_MILI') || '0';
-      var code = 'delayMs(' + delayTime + ')';
+      var code = 'sleep(' + delayTime + ')\n';
       return code;
   };
   

@@ -37,12 +37,12 @@ function App(props) {
           initialXml={xmlRemember}
         >
           {/* Danh mục các khối cơ bản*/}
-          <Category name="Basic" colour="">
+          <Category name="Basic" colour="85">
             <Block type="sleep_ms" />
             <Block type="pin_binary" />
           </Category>
           {/* Danh mục các khối logic */}
-          <Category name="Logic" colour="#76B041">
+          <Category name="Logic" colour="210">
             <Block type="controls_ifelse" />
             <Block type="logic_compare_custom">
               <Value name="LEFT">
@@ -73,7 +73,7 @@ function App(props) {
             </Block>
           </Category>
           {/* Danh mục các khối vòng lặp */}
-          <Category name="Loops" colour="#20B2AA">
+          <Category name="Loops" colour="120">
             <Block type="controls_repeat_ext">
               <Value name="TIMES">
                 <Shadow type="math_number">
@@ -85,32 +85,32 @@ function App(props) {
             <Block type="controls_whileUntil" />
           </Category>
           {/* Danh mục các khối Digital I/O */}
-          <Category name="Pin" colour="#4682B4">
+          <Category name="Pin" colour="50">
             <Block type="gpio_read_digital" />
             <Block type="gpio_set_digital" />
             <Block type="gpio_cleanup" />
           </Category>
           {/* Danh mục các khối PWM Control */}
-          <Category name="PWM Control" colour="#FF4500">
+          <Category name="PWM Control" colour="10">
             <Block type="pwm_setup" />
             <Block type="pwm_start_stop" />
             <Block type="pwm_change_duty_cycle" />
           </Category>
           {/* Danh mục các khối lấy dữ liệu Sensor */}
-          <Category name="Sensors" colour="#FFD700">
+          <Category name="Sensors" colour="180">
             <Block type="ultrasonic_sensor_trigger" />
             <Block type="temperature_sensor_read" />
           </Category>
           {/* Danh mục các khối xử lý sự kiện */}
 
           {/* Danh mục các khối hàm tùy chỉnh */}
-          <Category name="Function" colour="#4682B4">
+          <Category name="Function" colour="290">
             <Block type="define_custom_function" />
             <Block type="call_custom_function" />
             <Block type="procedures_ifreturn" />
           </Category>
           {/* Danh mục các khối Text */}
-          <Category name="Math" colour="#BA55D3">
+          <Category name="Math" colour="250">
             <Block type="math_number" />
             <Block type="math_arithmetic" />
             <Block type="math_single" />
@@ -120,7 +120,7 @@ function App(props) {
             <Block type="math_round" />
             <Block type="math_on_list" />
           </Category>
-          <Category name="Text" colour="#BA55D3">
+          <Category name="Text" colour="162">
             <Block type="text" />
             <Block type="text_join" />
             <Block type="text_append" />
@@ -131,7 +131,7 @@ function App(props) {
             <Block type="text_charAt" />
           </Category>
           {/* Danh mục các khối biến */}
-          <Category name="Variable" colour="#FFA500" custom="VARIABLE">
+          <Category name="Variable" colour="320" custom="VARIABLE">
             <Block type="variable_untyped" />
             <Block type="variable_typed" />
             <Block type="text_print">
@@ -156,7 +156,7 @@ function App(props) {
           
 
           {/* Danh mục các khối của FSTEM */}
-          <Category name="FSTEM Library" colour="#006400">
+          <Category name="FSTEM Library" colour="193">
             <Block type="gpio_setup_board" />
             <Block type="set_motor_speed" />
             <Block type="set_motor_pins" />
