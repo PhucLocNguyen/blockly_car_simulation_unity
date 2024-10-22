@@ -21,7 +21,6 @@ import "./generator/generator";
 import "./blocks/exportBlocks";
 function App(props) {
   const [xmlRemember] = useState(localStorage.getItem("blocklyCache") || "");
-
   return (
     <div className="App">
       <header className="App-header">
@@ -108,17 +107,35 @@ function App(props) {
           <Category name="Function" colour="#4682B4">
             <Block type="define_custom_function" />
             <Block type="call_custom_function" />
+            <Block type="procedures_ifreturn" />
           </Category>
           {/* Danh mục các khối Text */}
+          <Category name="Math" colour="#BA55D3">
+            <Block type="math_number" />
+            <Block type="math_arithmetic" />
+            <Block type="math_single" />
+            <Block type="math_constant" />
+            <Block type="math_random_int" />
+            <Block type="math_random_float" />
+            <Block type="math_round" />
+            <Block type="math_on_list" />
+          </Category>
           <Category name="Text" colour="#BA55D3">
+            <Block type="text" />
+            <Block type="text_join" />
+            <Block type="text_append" />
+            <Block type="text_isEmpty" />
+            <Block type="text_getSubstring" />
+            <Block type="text_reverse" />
+            <Block type="text_count" />
             <Block type="text_charAt" />
           </Category>
           {/* Danh mục các khối biến */}
-          <Category name="Variable" colour="#FFA500">
+          <Category name="Variable" colour="#FFA500" custom="VARIABLE">
             <Block type="variable_untyped" />
             <Block type="variable_typed" />
             <Block type="text_print">
-            <Value name="VALUE">
+              <Value name="VALUE">
                 <Shadow type="text">
                   <Field name="TEXT">Hello World</Field>
                 </Shadow>
@@ -127,7 +144,17 @@ function App(props) {
             <Block type="variables_get">
               <Field name="VAR">Y</Field>
             </Block>
+            <Block type="variables_set">
+            <field name="VAR">x</field>
+            <value name="VALUE">
+              <shadow type="math_number">
+                <field name="NUM">5</field>
+              </shadow>
+            </value>
+          </Block>
           </Category>
+          
+
           {/* Danh mục các khối của FSTEM */}
           <Category name="FSTEM Library" colour="#006400">
             <Block type="gpio_setup_board" />

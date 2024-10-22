@@ -104,6 +104,7 @@ function BlocklyComponent(props) {
     }
   };
 
+// Gọi hàm này khi bạn cần tạo biến tùy chỉnh trong workspace của bạn
   return (
     <React.Fragment>
       <div style={{display:"flex", gap:"5px"}}>
