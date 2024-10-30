@@ -15,7 +15,7 @@ const publicRoutes = [
     component: Login,
   },
   {
-    path: "/#editor",
+    path: "/editor",
     component: WorkingPage,
   },
 ];
