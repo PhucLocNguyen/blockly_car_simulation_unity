@@ -9,13 +9,14 @@ import * as localeVi from "blockly/msg/vi";
 import * as localeEn from "blockly/msg/en";
 import SimulateIDECode from "../Components/SimulateIDECode";
 import logo from "../Assets/logoApp.jpg"
+import { t } from "i18next";
 function loadLocale(language) {
   if (language === "vi") {
-    require("../languages/vi.js"); // Hoặc sử dụng await import nếu cần
-    delete require.cache[require.resolve("../languages/en.js")];
+    require("../languages/Blocks/vi.js"); // Hoặc sử dụng await import nếu cần
+    delete require.cache[require.resolve("../languages/Blocks/en.js")];
   } else if (language === "en") {
-    require("../languages/en.js");
-    delete require.cache[require.resolve("../languages/vi.js")];
+    require("../languages/Blocks/en.js");
+    delete require.cache[require.resolve("../languages/Blocks/vi.js")];
   }
 }
 
@@ -30,7 +31,6 @@ function BlocklyComponent(props) {
   const toolbox = useRef();
   let primaryWorkspace = useRef();
   const autosaveInterval = useRef();
-
   const generateCode = () => {
     const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
     setCodeJavascript(code);
@@ -130,15 +130,14 @@ function BlocklyComponent(props) {
             cursor: "pointer",
           }}
         >
-          Convert
+          {t("convertButton")}
         </button>
         <select
           value={language}
           onChange={(e) => handleChangeLanguage(e.target.value)}
-          style={{ padding: "5px", borderRadius: "5px", cursor: "pointer" }}
-        >
-          <option value="vi">Tiếng Việt</option>
-          <option value="en">English</option>
+          style={{ padding: "5px", borderRadius: "5px", cursor: "pointer" }}>
+          <option value="vi">{t("vietnamese")}</option>
+          <option value="en">{t("english")}</option>
         </select>
       </div>
 
@@ -154,7 +153,7 @@ function BlocklyComponent(props) {
             : " closeConvertAnimation "
         }`}
       >
-        <h2 className="ml-5">Code from Blocks</h2>
+        <h2 className="ml-5">{t("convertCodeTitle")}</h2>
         <SimulateIDECode
           titleIDE={"Python"}
           programmingLanguage="python"

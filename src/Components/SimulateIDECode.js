@@ -1,10 +1,12 @@
 import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "./SimulateIDECode.css";
 
 function SimulateIDECode({titleIDE, programmingLanguage, script}) {
   
+  const { t } = useTranslation();
 
   const codeRef = useRef(null);
 
@@ -13,10 +15,10 @@ function SimulateIDECode({titleIDE, programmingLanguage, script}) {
       const textToCopy = codeRef.current.innerText; // Lấy text bao gồm cả khoảng cách dòng
       navigator.clipboard.writeText(textToCopy).then(
         () => {
-          alert("Code đã được sao chép thành công!");
+          alert(`${t("copy_success_message")}`);
         },
         () => {
-          alert("Có lỗi khi sao chép code.");
+          alert(`${t("copy_failed_message")}`);
         }
       );
     }
@@ -28,7 +30,7 @@ function SimulateIDECode({titleIDE, programmingLanguage, script}) {
         <div className="title text-white">{titleIDE}</div>
 
         <button className="copy-button" onClick={handleCopy}>
-          Sao chép mã
+        {t("copyButton")}
         </button>
       </div>
       <div className="">
