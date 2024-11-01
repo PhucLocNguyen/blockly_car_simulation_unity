@@ -1,10 +1,8 @@
 import { auth } from "../firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { AuthContext } from "../context/AuthContext";
 
 const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
- 
   try {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
@@ -18,9 +16,12 @@ const loginWithGoogle = async () => {
     //     photoURL: user.photoURL,
     //   })
     // );
+    return user;
   } catch (error) {
     console.error("Login failed:", error);
+    return null;
   }
+
 };
 
 export default loginWithGoogle;

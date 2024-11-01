@@ -164,11 +164,13 @@ function BlocklyComponent(props) {
             className="pb-1 w-[calc(100%-40px)] my-2  bg-gray-50 opacity-90"
           ></div>
         </div>
-        <SimulateIDECode
+        {/* <SimulateIDECode
           titleIDE={"Nodejs"}
           programmingLanguage="javascript"
           script={codeJavascript}
-        />
+        /> */}
+        <iframe src="http://127.0.0.1:5500/index.html" width="100%" height="500px"></iframe>
+
         <div id="overlayConvertBox" className={`absolute bg-white top-0 right-0 -left-0 -bottom-0 z-10 hidden w-full h-full ${!displayConvertBox? "animationOpacity ":""}`}></div>
         <div className="absolute rounded-full shadow-lg w-10 h-10 -left-4 border border-white top-1/2 -translate-y-1/2 cursor-pointer z-20" onClick={HandleClickConvertBox}>
           <img src={logo} className="w-full h-full rounded-full border-white border-[4px] shadow-lg border-solid" alt="" />

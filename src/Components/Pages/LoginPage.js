@@ -3,32 +3,48 @@ import { useContext } from "react";
 import logo from "../../Assets/logoApp.jpg";
 import { AuthContext } from "../../context/AuthContext";
 import loginWithGoogle from "../../utils/loginWithGoogle";
+import WestIcon from "@mui/icons-material/West";
+import { IconButton } from "@mui/material";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
 function LoginPage() {
-  const {user} = useContext(AuthContext);
-  console.log(user) 
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirectAfterLogin = async () => {
+    const response = await loginWithGoogle();
+    if (response != null) {
+      // redirect ve homepage
+      setUser(response);
+      const from = location.state?.from?.pathname || "/";
+      navigate(from, { replace: true });
+    }
+    // alert loi
+  };
+ 
+  console.log(user);
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4">
       <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
-        <div className="text-center">
-          <img src={logo} width={150} className="mx-auto rounded-lg" />
-          <div className="mt-5 space-y-2">
-            <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl"></h3>
-            <p className="">
-              {t("signup_question")}
-              <a
-                href="javascript:void(0)"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                {t("register")}
-              </a>
-            </p>
+        <div className="bg-white shadow p-4 space-y-10 sm:p-6 sm:rounded-lg">
+          <div className="relative">
+            <Link to="/">
+              <IconButton className="absolute left-0 top-1/2">
+                <WestIcon />
+              </IconButton>
+            </Link>
+            <div className="border p-2 text-center">
+              <img src={logo} width={150} className="mx-auto rounded-lg" />
+            </div>
           </div>
-        </div>
-        <div className="bg-white shadow p-4 py-6 space-y-8 sm:p-6 sm:rounded-lg">
+
           <div className="grid grid-cols-1 gap-x-3">
-            <button onClick={loginWithGoogle} className="flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100 cursor-pointer">
+            <button
+              onClick={redirectAfterLogin}
+              className="flex items-center justify-center py-2 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100 cursor-pointer"
+            >
               <svg
-                className="w-5 h-5"
+                className="w-8 h-8"
                 viewBox="0 0 48 48"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,49 +69,13 @@ function LoginPage() {
                 </g>
                 <defs>
                   <clipPath id="clip0_17_40">
-                    <rect width="48" height="48" fill="white" />
+                    <rect width="100" height="100" fill="white" />
                   </clipPath>
                 </defs>
               </svg>
-              <p>{t("login_Google")}</p>
+              <p className=" px-1 text-lg font-sans">{t("login_Google")}</p>
             </button>
           </div>
-          <div className="relative">
-            <span className="block w-full h-px bg-gray-300"></span>
-            <p className="inline-block w-fit text-sm bg-white px-2 absolute -top-2 inset-x-0 mx-auto">
-              Or continue with
-            </p>
-          </div>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="space-y-5">
-              <div className="w-full">
-                <label className="font-medium">Email</label>
-                <input
-                  type="email"
-                  required
-                  className="w-full mt-2 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                />
-              </div>
-              <div className="w-full">
-                <label className="font-medium">{t("password")}</label>
-                <input
-                  type="password"
-                  required
-                  className="w-full mt-2 py-2 text-gray-500  border focus:border-indigo-600 shadow-sm rounded-lg"
-                />
-              </div>
-              <div className="w-full">
-                <button className="w-full py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
-                  {t("signin")}
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div className="text-center">
-          <a href="javascript:void(0)" className="hover:text-indigo-600">
-            {t("forgot_password")}
-          </a>
         </div>
       </div>
     </div>

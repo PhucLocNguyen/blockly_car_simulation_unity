@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import AuthProvider from "./context/AuthContext";
 import { publicRoutes } from "./routes/Route";
 import DefaultLayout from "./Components/Layouts/DefaultLayout";
-
+import { ToastContainer } from "react-toastify";
 function App(props) {
   return (
     <AuthProvider>
@@ -31,8 +31,7 @@ function App(props) {
                 path={route.index ? undefined : route.path}
                 element={
                   <Layout>
-                    {" "}
-                    <Page />{" "}
+                    <Page />
                   </Layout>
                 }
               >
@@ -50,10 +49,13 @@ function App(props) {
                     );
                   })}
               </Route>
+                
             );
           })}
+          
         </Routes>
       </Suspense>
+      <ToastContainer />
     </AuthProvider>
   );
 }

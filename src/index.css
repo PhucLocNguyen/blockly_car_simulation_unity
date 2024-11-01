@@ -18,7 +18,10 @@ html,
 body {
   height: 100%;
 }
-
+p{
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-weight: 600;
+}
 #root {
   height: 100%;
 }

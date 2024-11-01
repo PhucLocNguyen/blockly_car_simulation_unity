@@ -1,3 +1,6 @@
+:root{
+  --primary-color:rgb(2 58 229 / var(--tw-bg-opacity))
+}
 .App-logo {
   height: 20vmin;
   border-radius: 50%;
@@ -14,7 +17,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: #fff;
-  padding: 20px;
+  overflow: hidden;
 }
 
 .App-link {
