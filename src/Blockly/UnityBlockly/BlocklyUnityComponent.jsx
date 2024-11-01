@@ -103,10 +103,7 @@ function BlocklyUnityComponent(props) {
     }
   };
 
-  function HandleClickConvertBox() {
-    setDisplayConvertBox(!displayConvertBox);
-    console.log("testing");
-  }
+  
   // Gọi hàm này khi bạn cần tạo biến tùy chỉnh trong workspace của bạn
   return (
     <React.Fragment>

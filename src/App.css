@@ -1,5 +1,5 @@
-:root{
-  --primary-color:rgb(2 58 229 / var(--tw-bg-opacity))
+:root {
+  --primary-color: rgb(2 58 229 / var(--tw-bg-opacity));
 }
 .App-logo {
   height: 20vmin;
@@ -32,23 +32,23 @@
     transform: rotate(360deg);
   }
 }
-#overlayConvertBox.hidden{
+#overlayConvertBox.hidden {
   transition: display 0.8s ease-in-out;
 }
-#convertContainer{
+#convertContainer {
   transition: transform 0.8s ease-in-out;
   transition: width 0.5s ease-in-out;
 }
-#convertContainer.closeConvertAnimation{
+#convertContainer.closeConvertAnimation {
   transform: translateX(50%);
   width: 50px;
 }
-#convertContainer.closeConvertAnimation #overlayConvertBox{
-display: block!important;
-opacity: 1!important;
+#convertContainer.closeConvertAnimation #overlayConvertBox {
+  display: block !important;
+  opacity: 1 !important;
 }
 
-@keyframes closeAnimation{
+@keyframes closeAnimation {
   from {
     opacity: 0;
     background: #333;
@@ -57,13 +57,18 @@ opacity: 1!important;
     opacity: 1;
   }
 }
-.animationOpacity{
-  animation:closeAnimation 0.8s ease-in-out forwards;
-
+.animationOpacity {
+  animation: closeAnimation 0.8s ease-in-out forwards;
 }
-.blocklyTrash{
+.blocklyTrash {
   transition: transform 0.8s ease-in-out;
 }
-.openConvertBoxContainer .blocklyTrash{
-  transform: translate(1150px, 550px)!important
+.openConvertBoxContainer .blocklyTrash {
+  transform: translate(1150px, 550px) !important;
+}
+.lineClamp1Format {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }

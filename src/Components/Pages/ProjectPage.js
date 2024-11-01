@@ -21,7 +21,7 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Link } from "react-router-dom";
@@ -29,24 +29,44 @@ import { ReactComponent as FileImage } from "../../Assets/icons/fileImage.svg";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { addNewProject, GetAllProjects } from "../../utils/CRUD_Project";
 import { getTimeAgoString } from "../../utils/Time";
+import RaspberrypiLogo from "../../Assets/RaspberrypiIcon.png";
+import simulatorIcon from "../../Assets/simulator.png";
+import AddIcon from "@mui/icons-material/Add";
+const projectType = [
+  {
+    title: "Vehicle simulator block",
+    type: "unity-simulator",
+    image: simulatorIcon,
+  },
+  {
+    title: "Raspberry pi block",
+    type: "raspberrypi",
+    image: RaspberrypiLogo,
+  },
+];
 function ProjectPage() {
   const { user } = useContext(AuthContext);
   const [data, setData] = useState({
-    projectTitle: "Untitled",
+    projectTitle: "",
     type: "unity-simulator",
   });
   const navigate = useNavigate();
+  const location = useLocation();
   const [projectList, setProjectList] = useState([]);
   const [openDialog, setOpenDialogs] = useState({
     dialog1: false,
   });
   const CreateProject = async () => {
+    if (user == null) {
+      return;
+    }
     await addNewProject(user.uid, data.projectTitle, data.type);
     // khi click vào tạo mới project
     fetchProjects();
     handleDialogClose("dialog1");
   };
   const handleDialogOpen = (dialogKey) => {
+    if(user==null)navigate("/login",{from:location});
     setOpenDialogs((prev) => ({ ...prev, [dialogKey]: true }));
   };
 
@@ -65,7 +85,10 @@ function ProjectPage() {
     }
   };
   const HandleChangeData = (e) => {
-    const { name, value } = e.target;
+    var { name, value } = e.target;
+    if(typeof(value)==="string"){
+      value= value.trim();
+    }
     setData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -92,7 +115,7 @@ function ProjectPage() {
   return (
     <div>
       {/* Projects Section */}
-      <Container>
+      <Container maxWidth="xl">
         <Box sx={{ py: 2 }} />
         <Box className="flex items-center gap-2 ">
           <Typography variant="h5" gutterBottom>
@@ -148,11 +171,25 @@ function ProjectPage() {
                     position: "relative",
                   }}
                 >
-                  <Typography variant="h6">{current.name}</Typography>
-                  <FileImage
-                    style={{ width: "50px", height: "50px", marginTop: 16 }}
-                    fill="#333"
-                  />
+                  <Typography variant="h6" className="lineClamp1Format">
+                    {current.name}
+                  </Typography>
+                  <div className="flex items-center">
+                    <FileImage
+                      style={{ width: "50px", height: "50px" }}
+                      fill="#333"
+                    />
+                    <AddIcon />
+                    <img
+                      src={
+                        current?.type == "raspberrypi"
+                          ? RaspberrypiLogo
+                          : simulatorIcon
+                      }
+                      className="h-[50px] w-[50px]"
+                    />
+                  </div>
+
                   <Typography color="textSecondary" textAlign="right" mt={2}>
                     {getTimeAgoString(current.updatedAt)}
                   </Typography>
@@ -191,7 +228,9 @@ function ProjectPage() {
                 autoComplete={"false"}
                 autoCorrect={"false"}
               />
-
+              <DialogContentText className="mt-2">
+                Choose a type for project
+              </DialogContentText>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -200,16 +239,20 @@ function ProjectPage() {
                 label="Chọn giá trị"
                 onChange={HandleChangeData}
               >
-                <MenuItem value="unity-simulator">Simulation</MenuItem>
-                <MenuItem value="raspberrypi">Raspberry pi</MenuItem>
+                {projectType.map((current) => {
+                  return (
+                    <MenuItem value={current.type}>{current.title}</MenuItem>
+                  );
+                })}
               </Select>
             </div>
           </DialogContent>
           <div className="px-2">
             <DialogActions className="flex items-center">
               <Button
-                className="bg-[#107c10]"
+                className={data?.projectTitle===""?"bg-[#14b914]":"bg-[#107c10]"}
                 sx={{ background: "#107c10", color: "#fff", padding: "0px" }}
+                disabled={data?.projectTitle===""}
                 onClick={CreateProject}
               >
                 <p className="px-2">Create</p>

@@ -16,16 +16,33 @@ import { t } from "i18next";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import SignOut from "../utils/SignOut";
-
+import { useNavigate } from "react-router-dom";
+import CancelIcon from "@mui/icons-material/Cancel";
+const languages = [
+  { languageCode: "en", languageTitle: "English", image: "" },
+  { languageCode: "vi", languageTitle: "Tiếng Việt", image: "" },
+];
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [openDialog, setOpenDialogs] = useState({
     dialog1: false,
   });
+  const [config, setConfig] = useState({
+    language: "",
+  });
+  const HandleChangeData = (e) => {
+    const { name, value } = e.target;
+    setConfig({
+      ...config,
+      [name]: value,
+    });
+  };
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const handleLogout = () => {
-    SignOut();
+  const handleLogout = async () => {
+    await SignOut();
+    navigate("/login", { replace: true });
   };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -128,7 +145,7 @@ function Header() {
                 >
                   <div className="px-2">
                     <img
-                      src={user.photoURL}
+                      src={user?.photoURL}
                       alt={`${user.email}-thumbnail`}
                       className="rounded-full border border-white w-8"
                     />
@@ -169,17 +186,47 @@ function Header() {
         onClose={() => handleDialogClose("dialog1")}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        sx={{ width: "100%" }}
       >
-        <DialogTitle id="alert-dialog-title">{"Popup Title"}</DialogTitle>
-        <DialogContent>
+        <div className="flex justify-between items-center md:w-[540px] border-b border-black">
+          <DialogTitle id="alert-dialog-title" className="text-black">
+            Choose a language
+          </DialogTitle>
+          <DialogActions>
+            <IconButton onClick={() => handleDialogClose("dialog1")}>
+              <CancelIcon />
+            </IconButton>
+          </DialogActions>
+        </div>
+        <DialogContent sx={{ padding: "0px 25px" }}>
           <DialogContentText id="alert-dialog-description">
-            This is the content of the popup. You can put any message or content
-            here.
+            <div className="grid grid-cols-5 mb-[30px] gap-4">
+              {languages.map((item, index) => (
+                <label
+                  key={item.languageTitle + index}
+                  htmlFor={"language-" + item.languageTitle}
+                  className="rounded-md border border-[#646464] cursor-pointer"
+                >
+                  <div className="shadow-lg relative h-[100px]">
+                    <input
+                      type="radio"
+                      name="material"
+                      id={"material-" + index}
+                      className="hidden peer"
+                      onChange={HandleChangeData}
+                    />
+                    <span className="w-[20px] h-[20px] mb-[50px] top-1 left-1 inline-block border-[2px] border-[#e3e3e3] rounded-full relative z-10 peer-checked:bg-primary checkedBoxFormat peer-checked:border-[#3057d5] peer-checked:scale-110 peer-checked:bg-[#3057d5] peer-checked:before:opacity-100"></span>
+                    <img
+                      src={item.image}
+                      className="rounded-md w-full absolute top-0 h-[80px]"
+                    />
+                    <p className="text-center">{item.name}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handleDialogClose("dialog1")}>Close</Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
