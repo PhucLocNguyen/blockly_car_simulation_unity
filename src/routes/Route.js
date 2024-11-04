@@ -1,11 +1,8 @@
 import { lazy } from "react";
 import LayoutHeader from "../Components/Layouts/LayoutHeader";
-const WorkspaceSimulation = lazy(() => import("../Components/Pages/UnityBlocklySimulation/WorkspaceSimulation"));
-const UnityWebGL = lazy(() => import("../Components/UnityWebGL"));
+import WorkspaceManagement from "../Components/WorkspaceManagement";
 const Login = lazy(() => import("../Components/Pages/LoginPage"));
 const ProjectPage = lazy(() => import("../Components/Pages/ProjectPage"));
-const WorkingPage = lazy(() => import("../Components/Pages/WorkingPage"));
-
 const publicRoutes = [
   {
     index: true,
@@ -13,21 +10,12 @@ const publicRoutes = [
     layout: LayoutHeader
   },
   {
-    path:"/webgl",
-    component: UnityWebGL
-  }
-  ,
-  {
     path: "/login",
     component: Login,
   },
   {
     path: "/editor",
-    component: WorkingPage,
-  },
-  {
-    path:"/editor-simulation",
-    component:WorkspaceSimulation
+    component: WorkspaceManagement,
   }
 ];
 const privateRoutes = {};

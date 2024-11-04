@@ -12,37 +12,6 @@ import {
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { doc } from "firebase/firestore";
-
-const addProject = async (userID, projectName, content) => {
-  let projectId = "";
-  try {
-    // Tạo projectId ngẫu nhiên
-    do {
-      projectId = uuidv4();
-
-      // Kiểm tra xem projectId có bị trùng hay không
-      const q = query(
-        collection(db, "Projects"),
-        where("projectId", "==", projectId)
-      );
-      var querySnapshot = await getDocs(q);
-    } while (!querySnapshot.empty);
-
-    // Thêm project mới nếu projectId là duy nhất
-    await addDoc(collection(db, "Projects", "BlocklyProgram"), {
-      projectId: projectId,
-      name: projectName,
-      content: content,
-      userID: userID,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    });
-    console.log("Project added successfully!");
-  } catch (error) {
-    console.error("Error adding project:", error);
-  }
-};
-
 const addNewProject = async (userID,projectTitle,projectType) => {
   let projectId = "";
   try {
@@ -135,7 +104,6 @@ const deleteProject = async (projectId) => {
 };
 
 export {
-  addProject,
   addNewProject,
   GetAllProjects,
   deleteProject,

@@ -9,6 +9,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import * as Blockly from "blockly/core";
 import IconButton from "@mui/material/IconButton";
 import LoginIcon from "@mui/icons-material/Login";
 import { useContext, useEffect, useState } from "react";
@@ -18,9 +19,13 @@ import { AuthContext } from "../context/AuthContext";
 import SignOut from "../utils/SignOut";
 import { useNavigate } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
+import UKFlag from "../Assets/EnglishUKFlag.png";
+import VNFlag from "../Assets/vietnameseFlag.png";
+import * as localeVi from "blockly/msg/vi";
+import * as localeEn from "blockly/msg/en";
 const languages = [
-  { languageCode: "en", languageTitle: "English", image: "" },
-  { languageCode: "vi", languageTitle: "Tiếng Việt", image: "" },
+  { languageCode: "en", languageTitle: "English", image: UKFlag },
+  { languageCode: "vi", languageTitle: "Tiếng Việt", image: VNFlag },
 ];
 function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -28,15 +33,14 @@ function Header() {
   const [openDialog, setOpenDialogs] = useState({
     dialog1: false,
   });
-  const [config, setConfig] = useState({
-    language: "",
-  });
+  const [language, setLanguage] = useState(
+    localStorage.getItem("language") ?? "vi"
+  );
+ 
   const HandleChangeData = (e) => {
     const { name, value } = e.target;
-    setConfig({
-      ...config,
-      [name]: value,
-    });
+    setLanguage(value);
+    localStorage.setItem("language",value);
   };
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -67,9 +71,11 @@ function Header() {
   };
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
-
+    // Thay đổi ngôn ngữ của Blockly theo ngôn ngữ hiện tại
+    var tempLanguage = localStorage.getItem("language");
+    Blockly.setLocale(tempLanguage == "vi" ? localeVi : localeEn);
+    // loadLocale(tempLanguage);
+  }, [language]);
   return (
     <div className="bg-[#023ae5] w-full">
       <div className="flex justify-between px-4 content-center items-center py-1">
@@ -200,25 +206,25 @@ function Header() {
         </div>
         <DialogContent sx={{ padding: "0px 25px" }}>
           <DialogContentText id="alert-dialog-description">
-            <div className="grid grid-cols-5 mb-[30px] gap-4">
+            <div className="grid grid-cols-4 mb-[30px] gap-4">
               {languages.map((item, index) => (
                 <label
                   key={item.languageTitle + index}
                   htmlFor={"language-" + item.languageTitle}
                   className="rounded-md border border-[#646464] cursor-pointer"
                 >
-                  <div className="shadow-lg relative h-[100px]">
+                  <div className="shadow-lg h-[100px]">
                     <input
                       type="radio"
-                      name="material"
-                      id={"material-" + index}
-                      className="hidden peer"
+                      name="language"
+                      id={"language-" + index}
+                      className=" peer"
                       onChange={HandleChangeData}
+                      value={item.languageCode}
                     />
-                    <span className="w-[20px] h-[20px] mb-[50px] top-1 left-1 inline-block border-[2px] border-[#e3e3e3] rounded-full relative z-10 peer-checked:bg-primary checkedBoxFormat peer-checked:border-[#3057d5] peer-checked:scale-110 peer-checked:bg-[#3057d5] peer-checked:before:opacity-100"></span>
                     <img
                       src={item.image}
-                      className="rounded-md w-full absolute top-0 h-[80px]"
+                      className="rounded-md w-full object-cover h-[50px]"
                     />
                     <p className="text-center">{item.name}</p>
                   </div>

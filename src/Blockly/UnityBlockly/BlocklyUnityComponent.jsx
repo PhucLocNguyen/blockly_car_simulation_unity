@@ -20,8 +20,7 @@ function BlocklyUnityComponent(props) {
   const toolbox = useRef();
   let primaryWorkspace = useRef();
   const autosaveInterval = useRef();
-  const location = useLocation();
-  const projectId = location.state?.id;
+  const projectId = props.projectId;
   //   const generateCode = () => {
   //     const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
   //     setCodeJavascript(code);
@@ -115,7 +114,8 @@ function BlocklyUnityComponent(props) {
           </div>
           <div className="col-span-3 p-2">
             <h2>Mo phong</h2>
-            <iframe src="/index.html" width="100%" height="500px"></iframe>
+            <iframe src="/webGL" width="100%" height="500px"></iframe>
+            
           </div>
         </div>
 

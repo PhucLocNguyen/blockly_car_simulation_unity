@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Player_Control_Car_Learning_Unity</title>
+    <title>Unity WebGL Player | CarController</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
+    <button onclick="sendMovementCommand()">Gửi lệnh</button>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+      <canvas id="unity-canvas" width="100%" height="500px" tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -20,7 +21,7 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">Player_Control_Car_Learning_Unity</div>
+        <div id="unity-build-title">CarController</div>
       </div>
     </div>
     <script>
@@ -57,14 +58,14 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Build.loader.js";
+      var loaderUrl = buildUrl + "/Webgl.loader.js";
       var config = {
-        dataUrl: buildUrl + "/Build.data",
-        frameworkUrl: buildUrl + "/Build.framework.js",
-        codeUrl: buildUrl + "/Build.wasm",
+        dataUrl: buildUrl + "/Webgl.data",
+        frameworkUrl: buildUrl + "/Webgl.framework.js",
+        codeUrl: buildUrl + "/Webgl.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "Player_Control_Car_Learning_Unity",
+        productName: "CarController",
         productVersion: "0.1",
         showBanner: unityShowBanner,
       };
@@ -103,8 +104,8 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
+        canvas.style.width = "100%";
+        canvas.style.height = "500px";
       }
 
       loadingBar.style.display = "block";
@@ -118,7 +119,40 @@
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
-                };
+                };window.sendMovementCommand = function() {
+            const frontLeftSpeed = 100;
+            const frontRightSpeed = 100;
+            const rearLeftSpeed = 100;
+            const rearRightSpeed = 100;
+            const angle = 0;
+            const duration = 2;
+
+            console.log("Sending command to Unity...");
+            unityInstance.SendMessage(
+                "Maruti800",
+                "MoveCar",
+                `${frontLeftSpeed},${frontRightSpeed},${rearLeftSpeed},${rearRightSpeed},${angle},${duration}`
+            );
+            console.log("Sending command to Unity...");
+            unityInstance.SendMessage(
+                "Maruti800",
+                "MoveCar",
+                `0,0,0,0,-0,3`
+            );
+            console.log("Sending command to Unity...");
+            unityInstance.SendMessage(
+                "Maruti800",
+                "MoveCar",
+                `-100,-100,-100,-100,-0,2`
+            );
+            console.log("Sending command to Unity...");
+            unityInstance.SendMessage(
+                "Maruti800",
+                "MoveCar",
+                `0,0,0,0,-0,3`
+            );
+
+        };
               }).catch((message) => {
                 alert(message);
               });

@@ -73,9 +73,9 @@ function ProjectPage() {
   const handleDialogClose = (dialogKey) => {
     setOpenDialogs((prev) => ({ ...prev, [dialogKey]: false }));
   };
-  const OpenProject = (projectId) => {
+  const OpenProject = (projectId, projectType = "unity-simulator") => {
     // khi click vào project cũ
-    navigate("/editor-simulation", { state: { id: projectId } });
+    navigate("/editor", { state: { id: projectId,type: projectType } });
   };
 
   const fetchProjects = async () => {
@@ -160,7 +160,7 @@ function ProjectPage() {
             return (
               <Card
                 key={current.id}
-                onClick={() => OpenProject(current.id)}
+                onClick={() => OpenProject(current.id, current.type)}
                 className="cursor-pointer"
               >
                 <CardContent

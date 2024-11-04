@@ -23,8 +23,7 @@ import { t } from "i18next";
 import { useState } from "react";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
 import Header from "./Header";
-function WorkspaceSimulation() {
-  const [xmlRemember] = useState(localStorage.getItem("blocklyCache") || "");
+function WorkspaceSimulation({projectId, xmlRemember}) {
 
   return (
     <div className="App">
@@ -47,6 +46,7 @@ function WorkspaceSimulation() {
             wheel: true,
           }}
           initialXml={xmlRemember}
+          projectId ={projectId}
         >
           {/* Danh mục các khối cơ bản*/}
           <Category name={t("category_Basic")} colour="85">

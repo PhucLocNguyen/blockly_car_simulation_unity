@@ -8,8 +8,13 @@ import { pythonGenerator } from "blockly/python";
 import * as localeVi from "blockly/msg/vi";
 import * as localeEn from "blockly/msg/en";
 import SimulateIDECode from "../Components/SimulateIDECode";
-import logo from "../Assets/logoApp.jpg"
+import logo from "../Assets/logoApp.jpg";
 import { t } from "i18next";
+import { GetProjectById, updateProject } from "../utils/CRUD_Project";
+import { useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
+
 function loadLocale(language) {
   if (language === "vi") {
     require("../languages/Blocks/vi.js"); // Hoặc sử dụng await import nếu cần
@@ -31,6 +36,7 @@ function BlocklyComponent(props) {
   const toolbox = useRef();
   let primaryWorkspace = useRef();
   const autosaveInterval = useRef();
+  const projectId = props.projectId;
   const generateCode = () => {
     const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
     setCodeJavascript(code);
@@ -41,7 +47,7 @@ function BlocklyComponent(props) {
     setCodePython(codePython);
     console.log("Python:", codePython);
   };
-  const recreateWorkspace = () => {
+  const recreateWorkspace = async () => {
     if (primaryWorkspace.current) {
       primaryWorkspace.current.dispose(); // Xóa workspace cũ
     }
@@ -51,11 +57,16 @@ function BlocklyComponent(props) {
       ...props,
     });
 
-    if (localStorage.getItem("blocklyCache")) {
-      Blockly.Xml.domToWorkspace(
-        Blockly.utils.xml.textToDom(localStorage.getItem("blocklyCache")),
-        primaryWorkspace.current
-      );
+    var project = await GetProjectById(projectId);
+    if (project != null && project.content !== "") {
+      try {
+        Blockly.Xml.domToWorkspace(
+          Blockly.utils.xml.textToDom(project?.content),
+          primaryWorkspace.current
+        );
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -64,12 +75,12 @@ function BlocklyComponent(props) {
     var tempLanguage = localStorage.getItem("language");
     console.log(tempLanguage);
     Blockly.setLocale(tempLanguage == "vi" ? localeVi : localeEn);
-    loadLocale(tempLanguage);
+    // loadLocale(tempLanguage);
     recreateWorkspace();
   }, [language, primaryWorkspace]);
 
   useEffect(() => {
-    autosaveInterval.current = setInterval(saveWorkspace, 5000);
+    autosaveInterval.current = setInterval(saveCodeUpdate, 10000);
     loadLocale(language);
     return () => {
       if (autosaveInterval.current) {
@@ -78,102 +89,73 @@ function BlocklyComponent(props) {
     };
   }, []);
 
-  const handleChangeLanguage = (lang) => {
-    if (lang !== language) {
-      setLanguage(lang);
-      localStorage.setItem("language", lang);
-    } else {
-      // Nếu ngôn ngữ giống nhau, vẫn cần tái tạo lại workspace để áp dụng localization
-      loadLocale(lang);
-      Blockly.setLocale(lang === "vi" ? localeVi : localeEn);
-      recreateWorkspace();
-    }
+  const saveCodeUpdate = async () => {
+    //Save code va co the save duoc ten cua du an
+    const workspace = primaryWorkspace.current;
+    const xml = Blockly.Xml.workspaceToDom(workspace);
+    const xmlText = Blockly.Xml.domToText(xml);
+    await updateProject(projectId, xmlText);
   };
-
-  const saveWorkspace = () => {
-    try {
-      const workspace = primaryWorkspace.current;
-      const xml = Blockly.Xml.workspaceToDom(workspace);
-      const xmlText = Blockly.Xml.domToText(xml);
-
-      // Save the current workspace XML to localStorage
-      localStorage.setItem("blocklyCache", xmlText);
-
-      // Keep a backup version
-      const timestamp = new Date().toISOString();
-      localStorage.setItem(`blocklyBackup-${timestamp}`, xmlText);
-
-      // Limit to 3 backup versions
-      const backups = Object.keys(localStorage).filter((key) =>
-        key.startsWith("blocklyBackup-")
-      );
-      if (backups.length > 3) {
-        localStorage.removeItem(backups.sort()[0]);
-      }
-    } catch (error) {
-      console.error("Error saving workspace:", error);
-    }
-  };
-  function HandleClickConvertBox(){
+  const HandleClickConvertBox = () => {
     setDisplayConvertBox(!displayConvertBox);
-    console.log("testing")
-  }
+  };
   // Gọi hàm này khi bạn cần tạo biến tùy chỉnh trong workspace của bạn
   return (
     <React.Fragment>
-      <div style={{ display: "flex", gap: "5px" }}>
-        <button
-          onClick={generateCode}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          {t("convertButton")}
-        </button>
-        <select
-          value={language}
-          onChange={(e) => handleChangeLanguage(e.target.value)}
-          style={{ padding: "5px", borderRadius: "5px", cursor: "pointer" }}>
-          <option value="vi">{t("vietnamese")}</option>
-          <option value="en">{t("english")}</option>
-        </select>
-      </div>
-
-      <div ref={blocklyDiv} id="blocklyDiv" className={displayConvertBox&&"openConvertBoxContainer"} />
-      <div style={{ display: "none" }} ref={toolbox}>
-        {props.children}
-      </div>
-      <div
-        id="convertContainer"
-        className={`absolute max-w-screen-sm w-full min-h-screen bottom-0 right-0 bg-[#023ae5] ${
-          displayConvertBox
-            ? " showConvertAnimation "
-            : " closeConvertAnimation "
-        }`}
-      >
-        <h2 className="ml-5">{t("convertCodeTitle")}</h2>
-        <SimulateIDECode
-          titleIDE={"Python"}
-          programmingLanguage="python"
-          script={codePython}
-        />
-        <div className="w-full flex justify-items-center align-middle items-center justify-center">
-          <div
-            className="pb-1 w-[calc(100%-40px)] my-2  bg-gray-50 opacity-90"
-          ></div>
+      <div className="relative w-full">
+        <div className="grid grid-cols-12 w-full h-max py-2" id="formatBlockly">
+          <div ref={blocklyDiv} id="blocklyDivUnity" className="col-span-9" />
+          <div style={{ display: "none" }} ref={toolbox}>
+            {props.children}
+          </div>
+          <div className="col-span-3 p-2">
+            <h2 className="ml-5">{t("convertCodeTitle")}</h2>
+            <div className="max-h-[500px] md:min-h-[500px] h-full">
+              <SimulateIDECode
+                titleIDE={"Python"}
+                programmingLanguage="python"
+                script={codePython}
+              />
+              <div className="flex justify-center ">
+                <Button
+                  className="border-[#1ce61c] "
+                  sx={{
+                    border: "4px solid #1ce61c",
+                    color: "#000",
+                    padding: "0px",
+                    background: "#fff",
+                    borderRadius: "10px",
+                    marginLeft: "10px",
+                  }}
+                  onClick={generateCode}
+                >
+                  <p className="px-20">Convert code</p>
+                  <div className="bg-[#0f760f] p-2 rounded-[10px]">
+                    <SaveIcon />
+                  </div>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* <SimulateIDECode
-          titleIDE={"Nodejs"}
-          programmingLanguage="javascript"
-          script={codeJavascript}
-        /> */}
-        <iframe src="http://127.0.0.1:5500/index.html" width="100%" height="500px"></iframe>
 
-        <div id="overlayConvertBox" className={`absolute bg-white top-0 right-0 -left-0 -bottom-0 z-10 hidden w-full h-full ${!displayConvertBox? "animationOpacity ":""}`}></div>
-        <div className="absolute rounded-full shadow-lg w-10 h-10 -left-4 border border-white top-1/2 -translate-y-1/2 cursor-pointer z-20" onClick={HandleClickConvertBox}>
-          <img src={logo} className="w-full h-full rounded-full border-white border-[4px] shadow-lg border-solid" alt="" />
+        <div className="h-fit py-4 bg-white w-full border-[2px] border-solid border-black ">
+          <Button
+            className="bg-[#107c10]"
+            sx={{
+              background: "#107c10",
+              color: "#fff",
+              padding: "0px",
+              borderRadius: "10px",
+              marginLeft: "10px",
+            }}
+            onClick={saveCodeUpdate}
+          >
+            <p className="px-20">Save code</p>
+            <div className="bg-[#0f760f] p-2 rounded-[10px]">
+              <SaveIcon />
+            </div>
+          </Button>
         </div>
       </div>
     </React.Fragment>
