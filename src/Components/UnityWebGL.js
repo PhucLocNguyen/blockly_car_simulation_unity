@@ -9,7 +9,12 @@ function UnityWebGL() {
     codeUrl: "WebGl/Build/Webgl.wasm",
   });
 
-  return <Unity unityProvider={unityProvider} />;
+  return (
+    <Unity
+      style={{ width: "100%", height: "500px" }}
+      unityProvider={unityProvider}
+    />
+  );
 }
 
 export default UnityWebGL;
