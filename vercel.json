@@ -1,7 +1,0 @@
-{
-    "rewrites": [
-      { "source": "/webGl", "destination": "/index.html" },
-      { "source": "/webGl/(.*)", "destination": "/index.html" }
-    ]
-  }
-  

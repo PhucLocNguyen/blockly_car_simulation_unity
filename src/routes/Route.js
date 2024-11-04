@@ -3,6 +3,7 @@ import LayoutHeader from "../Components/Layouts/LayoutHeader";
 import WorkspaceManagement from "../Components/WorkspaceManagement";
 const Login = lazy(() => import("../Components/Pages/LoginPage"));
 const ProjectPage = lazy(() => import("../Components/Pages/ProjectPage"));
+const UnityWebGL = lazy(() => import("../Components/UnityWebGL"));
 const publicRoutes = [
   {
     index: true,
@@ -19,7 +20,7 @@ const publicRoutes = [
   }
   ,{
     path: "/WebGl",
-    component: <Fragment/>,
+    component: <UnityWebGL/>,
   }
 ];
 const privateRoutes = {};
