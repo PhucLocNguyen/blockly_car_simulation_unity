@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { Fragment, lazy } from "react";
 import LayoutHeader from "../Components/Layouts/LayoutHeader";
 import WorkspaceManagement from "../Components/WorkspaceManagement";
 const Login = lazy(() => import("../Components/Pages/LoginPage"));
@@ -16,6 +16,10 @@ const publicRoutes = [
   {
     path: "/editor",
     component: WorkspaceManagement,
+  }
+  ,{
+    path: "/WebGl",
+    component: <Fragment/>,
   }
 ];
 const privateRoutes = {};
