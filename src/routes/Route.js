@@ -1,4 +1,4 @@
-import { Fragment, lazy } from "react";
+import { lazy } from "react";
 import LayoutHeader from "../Components/Layouts/LayoutHeader";
 import WorkspaceManagement from "../Components/WorkspaceManagement";
 const Login = lazy(() => import("../Components/Pages/LoginPage"));
@@ -20,7 +20,7 @@ const publicRoutes = [
   }
   ,{
     path: "/WebGl",
-    component: <UnityWebGL/>,
+    component: UnityWebGL,
   }
 ];
 const privateRoutes = {};
