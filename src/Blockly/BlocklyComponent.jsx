@@ -30,7 +30,6 @@ function BlocklyComponent(props) {
     localStorage.getItem("language") ?? "vi"
   );
   const [codePython, setCodePython] = useState("");
-  const [codeJavascript, setCodeJavascript] = useState("");
   const [displayConvertBox, setDisplayConvertBox] = useState(true);
   const blocklyDiv = useRef();
   const toolbox = useRef();
@@ -38,9 +37,6 @@ function BlocklyComponent(props) {
   const autosaveInterval = useRef();
   const projectId = props.projectId;
   const generateCode = () => {
-    const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
-    setCodeJavascript(code);
-    console.log("Javascript:", code);
     const codePython = pythonGenerator.workspaceToCode(
       primaryWorkspace.current
     );
@@ -83,6 +79,9 @@ function BlocklyComponent(props) {
     autosaveInterval.current = setInterval(saveCodeUpdate, 10000);
     loadLocale(language);
     return () => {
+      if (primaryWorkspace.current) {
+        primaryWorkspace.current.clear();
+      }
       if (autosaveInterval.current) {
         clearInterval(autosaveInterval.current);
       }

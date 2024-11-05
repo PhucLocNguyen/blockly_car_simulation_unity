@@ -72,3 +72,18 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
+
+.blockly-wrapper input, .blockly-wrapper textarea {
+  pointer-events: auto;
+  user-select: auto;
+  z-index: 1000; /* Đảm bảo z-index đủ cao */
+}
+.blockly-wrapper {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+.blocklyEditableText {
+  pointer-events: auto;
+  cursor: text;
+}

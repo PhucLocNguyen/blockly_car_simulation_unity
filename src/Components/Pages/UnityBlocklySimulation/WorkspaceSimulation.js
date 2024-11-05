@@ -51,7 +51,7 @@ function WorkspaceSimulation({projectId, xmlRemember}) {
           {/* Danh mục các khối cơ bản*/}
           <Category name={t("category_Basic")} colour="85">
             <Block type="sleep_ms" />
-            <Block type="pin_binary" />
+            <Block type="pwm_setup" />
           </Category>
           {/* Danh mục các khối logic */}
           <Category name={t("category_Logic")} colour="210">
@@ -97,6 +97,13 @@ function WorkspaceSimulation({projectId, xmlRemember}) {
             <Block type="controls_whileUntil" />
           </Category>
           {/* Danh mục các khối Digital I/O */}
+          <Category name="Điều khiển xe" colour="120">
+            <Block type="set_car_speed_angle">
+              
+            </Block>
+            <Block type="forever_loop" />
+            <Block type="controls_whileUntil" />
+          </Category>
         </BlocklyUnityComponent>
       </header>
     </div>

@@ -4,6 +4,7 @@ import WorkspaceManagement from "../Components/WorkspaceManagement";
 const Login = lazy(() => import("../Components/Pages/LoginPage"));
 const ProjectPage = lazy(() => import("../Components/Pages/ProjectPage"));
 const UnityWebGL = lazy(() => import("../Components/UnityWebGL"));
+
 const publicRoutes = [
   {
     index: true,
@@ -17,11 +18,12 @@ const publicRoutes = [
   {
     path: "/editor",
     component: WorkspaceManagement,
+  },
+  {
+    path:"/simulate",
+    component:UnityWebGL,
   }
-  ,{
-    path: "/WebGl",
-    component: UnityWebGL,
-  }
+  
 ];
 const privateRoutes = {};
 export { publicRoutes, privateRoutes };

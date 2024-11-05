@@ -104,3 +104,9 @@ Blockly.Msg['VARIABLE_TYPED'] = 'variable:';
 Blockly.Msg['VARIABLE_TYPED_TOOLTIP'] = 'Create a variable with a text value.';
 Blockly.Msg['TEXT_PRINT'] = 'print';
 Blockly.Msg['TEXT_PRINT_TOOLTIP'] = 'Print the value of the input.';
+
+Blockly.Msg["SET_CAR_SPEED_ANGLE_TITLE"] = "Set car speed and angle";
+Blockly.Msg["SET_CAR_SPEED_LEFT"] = "Left speed";
+Blockly.Msg["SET_CAR_SPEED_RIGHT"] = "Right speed";
+Blockly.Msg["SET_CAR_ANGLE"] = "Angle";
+Blockly.Msg["SET_CAR_SPEED_ANGLE_TOOLTIP"] = "Sets the left and right wheel speed and angle of the car.";

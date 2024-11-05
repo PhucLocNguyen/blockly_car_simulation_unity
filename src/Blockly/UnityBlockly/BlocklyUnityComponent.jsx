@@ -11,26 +11,18 @@ import { Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useLocation } from "react-router-dom";
 import { GetProjectById, updateProject } from "../../utils/CRUD_Project";
+import UnityWebGL from "../../Components/UnityWebGL";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 function BlocklyUnityComponent(props) {
+  const [codeJavascript, setCodeJavascript] = useState(null);
   const [language, setLanguage] = useState(
     localStorage.getItem("language") ?? "vi"
   );
-  const [displayConvertBox, setDisplayConvertBox] = useState(true);
   const blocklyDiv = useRef();
   const toolbox = useRef();
   let primaryWorkspace = useRef();
   const autosaveInterval = useRef();
   const projectId = props.projectId;
-  //   const generateCode = () => {
-  //     const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
-  //     setCodeJavascript(code);
-  //     console.log("Javascript:", code);
-  //     const codePython = pythonGenerator.workspaceToCode(
-  //       primaryWorkspace.current
-  //     );
-  //     setCodePython(codePython);
-  //     console.log("Python:", codePython);
-  //   };
   function loadLocale(language) {
     if (language === "vi") {
       require("../../languages/Blocks/vi.js"); // Hoặc sử dụng await import nếu cần
@@ -40,6 +32,11 @@ function BlocklyUnityComponent(props) {
       delete require.cache[require.resolve("../../languages/Blocks/vi.js")];
     }
   }
+  const generateCode = () => {
+    const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
+    setCodeJavascript(code);
+    console.log("Javascript:", code);
+  };
   const saveCodeUpdate = async () => {
     //Save code va co the save duoc ten cua du an
     const workspace = primaryWorkspace.current;
@@ -84,38 +81,49 @@ function BlocklyUnityComponent(props) {
     autosaveInterval.current = setInterval(saveCodeUpdate, 10000);
     loadLocale(language);
     return () => {
+      if (primaryWorkspace.current) {
+        primaryWorkspace.current.clear();
+      }
       if (autosaveInterval.current) {
         clearInterval(autosaveInterval.current);
       }
     };
   }, []);
 
-  const handleChangeLanguage = (lang) => {
-    if (lang !== language) {
-      setLanguage(lang);
-      localStorage.setItem("language", lang);
-    } else {
-      // Nếu ngôn ngữ giống nhau, vẫn cần tái tạo lại workspace để áp dụng localization
-      //   loadLocale(lang);
-      Blockly.setLocale(lang === "vi" ? localeVi : localeEn);
-      recreateWorkspace();
-    }
-  };
-
-  
   // Gọi hàm này khi bạn cần tạo biến tùy chỉnh trong workspace của bạn
   return (
     <React.Fragment>
       <div className="relative w-full">
         <div className="grid grid-cols-12 w-full h-max py-2" id="formatBlockly">
+          
           <div ref={blocklyDiv} id="blocklyDivUnity" className="col-span-9" />
+          
           <div style={{ display: "none" }} ref={toolbox}>
             {props.children}
           </div>
+
           <div className="col-span-3 p-2">
             <h2>Mo phong</h2>
-            <iframe src="/webGL" width="100%" height="500px"></iframe>
-            
+            <UnityWebGL code={codeJavascript} />
+            <div className="flex justify-center ">
+              <Button
+                className="border-[#1ce61c] "
+                sx={{
+                  border: "4px solid #1ce61c",
+                  color: "#000",
+                  padding: "0px",
+                  background: "#fff",
+                  borderRadius: "10px",
+                  marginLeft: "10px",
+                }}
+                onClick={generateCode}
+              >
+                <p className="px-20">Simulate</p>
+                <div className="bg-[#0f760f] p-2 rounded-[10px]">
+                  <DirectionsCarIcon style={{ fill: "#fff" }} />
+                </div>
+              </Button>
+            </div>
           </div>
         </div>
 
