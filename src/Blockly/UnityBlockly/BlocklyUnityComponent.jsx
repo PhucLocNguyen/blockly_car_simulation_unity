@@ -123,7 +123,10 @@ function BlocklyUnityComponent(props) {
                   <DirectionsCarIcon style={{ fill: "#fff" }} />
                 </div>
               </Button>
+              
             </div>
+            <input type="text"></input>
+
           </div>
         </div>
 

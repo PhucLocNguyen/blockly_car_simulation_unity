@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useState } from "react";
+import React, { Fragment, Suspense, useEffect, useState } from "react";
 import "./App.css";
 
 import "./generator/generator";
@@ -9,6 +9,12 @@ import { publicRoutes } from "./routes/Route";
 import DefaultLayout from "./Components/Layouts/DefaultLayout";
 import { ToastContainer } from "react-toastify";
 function App(props) {
+  useEffect(() => {
+    const blocklySvg = document.querySelector(".blocklySvg");
+    if (blocklySvg) {
+      blocklySvg.focus();
+    }
+  }, []); 
   return (
     <AuthProvider>
       <Suspense fallback={<div>Loading...</div>}>

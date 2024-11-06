@@ -74,16 +74,19 @@
 }
 
 .blockly-wrapper input, .blockly-wrapper textarea {
-  pointer-events: auto;
-  user-select: auto;
-  z-index: 1000; /* Đảm bảo z-index đủ cao */
+  pointer-events: auto!important;
+  user-select: auto!important;
+  z-index: 1000!important; /* Đảm bảo z-index đủ cao */
 }
 .blockly-wrapper {
   position: relative;
   z-index: 10;
-  pointer-events: auto;
+  pointer-events: auto!important;
 }
 .blocklyEditableText {
-  pointer-events: auto;
-  cursor: text;
+  pointer-events: auto!important;
+  cursor: text!important;
+}
+#unity-root{
+  pointer-events: none!important;
 }
