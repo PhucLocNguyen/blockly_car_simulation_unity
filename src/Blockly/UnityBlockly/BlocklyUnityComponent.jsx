@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "./BlocklyUnityComponent.css";
 import * as Blockly from "blockly/core";
 import "blockly/blocks";
@@ -13,11 +13,10 @@ import { useLocation } from "react-router-dom";
 import { GetProjectById, updateProject } from "../../utils/CRUD_Project";
 import UnityWebGL from "../../Components/UnityWebGL";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import { LanguageContext } from "../../context/LanguageProvider";
 function BlocklyUnityComponent(props) {
   const [codeJavascript, setCodeJavascript] = useState(null);
-  const [language, setLanguage] = useState(
-    localStorage.getItem("language") ?? "vi"
-  );
+  const {language} = useContext(LanguageContext);
   const [toogleClick, setToggleClick] = useState(false);
   const blocklyDiv = useRef();
   const toolbox = useRef();
@@ -72,10 +71,8 @@ function BlocklyUnityComponent(props) {
 
   useEffect(() => {
     // Thay đổi ngôn ngữ của Blockly theo ngôn ngữ hiện tại
-    var tempLanguage = localStorage.getItem("language");
-    console.log(tempLanguage);
-    Blockly.setLocale(tempLanguage == "vi" ? localeVi : localeEn);
-    // loadLocale(tempLanguage);
+    Blockly.setLocale(language == "vi" ? localeVi : localeEn);
+    loadLocale(language);
     recreateWorkspace();
   }, [language, primaryWorkspace]);
 

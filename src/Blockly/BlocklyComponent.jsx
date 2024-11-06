@@ -14,6 +14,8 @@ import { GetProjectById, updateProject } from "../utils/CRUD_Project";
 import { useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
+import { useContext } from "react";
+import { LanguageContext } from "../context/LanguageProvider";
 
 function loadLocale(language) {
   if (language === "vi") {
@@ -26,9 +28,7 @@ function loadLocale(language) {
 }
 
 function BlocklyComponent(props) {
-  const [language, setLanguage] = useState(
-    localStorage.getItem("language") ?? "vi"
-  );
+  const {language} = useContext(LanguageContext);
   const [codePython, setCodePython] = useState("");
   const [displayConvertBox, setDisplayConvertBox] = useState(true);
   const blocklyDiv = useRef();
@@ -68,10 +68,8 @@ function BlocklyComponent(props) {
 
   useEffect(() => {
     // Thay đổi ngôn ngữ của Blockly theo ngôn ngữ hiện tại
-    var tempLanguage = localStorage.getItem("language");
-    console.log(tempLanguage);
-    Blockly.setLocale(tempLanguage == "vi" ? localeVi : localeEn);
-    // loadLocale(tempLanguage);
+    Blockly.setLocale(language == "vi" ? localeVi : localeEn);
+    loadLocale(language);
     recreateWorkspace();
   }, [language, primaryWorkspace]);
 

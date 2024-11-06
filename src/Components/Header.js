@@ -23,6 +23,7 @@ import UKFlag from "../Assets/EnglishUKFlag.png";
 import VNFlag from "../Assets/vietnameseFlag.png";
 import * as localeVi from "blockly/msg/vi";
 import * as localeEn from "blockly/msg/en";
+import { LanguageContext } from "../context/LanguageProvider";
 const languages = [
   { languageCode: "en", languageTitle: "English", image: UKFlag },
   { languageCode: "vi", languageTitle: "Tiếng Việt", image: VNFlag },
@@ -33,9 +34,7 @@ function Header() {
   const [openDialog, setOpenDialogs] = useState({
     dialog1: false,
   });
-  const [language, setLanguage] = useState(
-    localStorage.getItem("language") ?? "vi"
-  );
+  const {language, setLanguage} = useContext(LanguageContext);
  
   const HandleChangeData = (e) => {
     const { name, value } = e.target;

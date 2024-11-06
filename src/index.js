@@ -3,11 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import './languages/i18n';
-import { BrowserRouter } from 'react-router-dom'
-ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
+import './languages/i18n'; // Đảm bảo cấu hình i18n cho đa ngôn ngữ
+import { BrowserRouter } from 'react-router-dom';
+import AuthProvider from './context/AuthContext';
+import LanguageProvider from './context/LanguageProvider';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+ReactDOM.render(
+  <React.StrictMode>
+    <AuthProvider>
+      <LanguageProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LanguageProvider>
+    </AuthProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+// Giữ nguyên hoặc thay đổi chế độ offline tùy ý
 serviceWorker.unregister();

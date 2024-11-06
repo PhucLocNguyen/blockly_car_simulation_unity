@@ -18,6 +18,7 @@ const publicRoutes = [
   {
     path: "/editor",
     component: WorkspaceManagement,
+    layout: LayoutHeader
   },
   {
     path:"/simulate",

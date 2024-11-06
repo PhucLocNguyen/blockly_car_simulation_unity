@@ -22,12 +22,10 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { t } from "i18next";
 import { useState } from "react";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
-import Header from "../../Header";
 function WorkspaceSimulation({ projectId, xmlRemember }) {
   return (
     <div className="App">
       <header className="App-header">
-        <Header />
         <div className="bg-white w-full py-4">
           <Link to="/">
             <IconButton>
