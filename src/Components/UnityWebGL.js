@@ -1,25 +1,25 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
 import React, { Fragment, useEffect } from "react";
-
-function UnityWebGL({ code }) {
-  const { unityProvider,sendMessage } = useUnityContext({
-    loaderUrl: "WebGl/Build/NoInput.loader.js",
-    dataUrl: "WebGl/Build/NoInput.data",
-    frameworkUrl: "WebGl/Build/NoInput.framework.js",
-    codeUrl: "WebGl/Build/NoInput.wasm",
+import Car from "../Classes/Car";
+function UnityWebGL({ code = "" }) {
+  const { unityProvider, sendMessage } = useUnityContext({
+    loaderUrl: "WebGl/Build/WebGl.loader.js",
+    dataUrl: "WebGl/Build/WebGl.data",
+    frameworkUrl: "WebGl/Build/WebGl.framework.js",
+    codeUrl: "WebGl/Build/WebGl.wasm",
   });
+  const car = new Car(sendMessage, "Maruti800");
 
   useEffect(() => {
-    // Xóa các listener sự kiện bàn phím do WebGL thêm vào (nếu có)
-    sendMessage("TruckVehicle","DisableKeyboardInput")
-  }, []);
-  
+    eval(code);
+  }, [code]);
+
   return (
     <div id="unity-root" className=" disabled ">
       <Unity
-        style={{ width: "100%", height: "500px", pointerEvents:"none" }}
+        style={{ width: "100%", height: "500px", pointerEvents: "none" }}
         unityProvider={unityProvider}
-        tabIndex={-1} 
+        tabIndex={-1}
       />
     </div>
   );

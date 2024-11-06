@@ -125,8 +125,6 @@ function BlocklyUnityComponent(props) {
               </Button>
               
             </div>
-            <input type="text"></input>
-
           </div>
         </div>
 

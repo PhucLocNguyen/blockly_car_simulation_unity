@@ -7,9 +7,12 @@ function WorkspaceManagement() {
   const projectId = location.state?.id;
   const projectType = location.state?.type;
   const [xmlRemember] = useState(localStorage.getItem("blocklyCache") || "");
+
   switch (projectType) {
     case "raspberrypi":
-      return <WorkingPage xmlRemember={xmlRemember} projectId={projectId} />;
+      return (
+          <WorkingPage xmlRemember={xmlRemember} projectId={projectId} />
+      );
       break;
     case "unity-simulator":
       return (

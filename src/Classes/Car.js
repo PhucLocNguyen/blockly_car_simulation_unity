@@ -1,13 +1,13 @@
 class Car {
-    constructor(unityInstance, objectName) {
-        this.unityInstance = unityInstance;
+    constructor(sendMessage, objectName) {
+        this.sendMessage = sendMessage;
         this.objectName = objectName;
     }
 
     // Method to move the car with custom speed and angle
     moveCar(frontLeftSpeed, frontRightSpeed, rearLeftSpeed, rearRightSpeed, angle, duration) {
         const command = `${frontLeftSpeed},${frontRightSpeed},${rearLeftSpeed},${rearRightSpeed},${angle},${duration}`;
-        this.unityInstance.SendMessage(this.objectName, "MoveCar", command);
+        this.sendMessage(this.objectName, "MoveCar", command);
         console.log(`Sending move command: ${command}`);
     }
 
@@ -37,3 +37,4 @@ class Car {
     }
 }
 
+export default Car;

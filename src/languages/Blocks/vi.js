@@ -111,3 +111,4 @@ Blockly.Msg["SET_CAR_SPEED_LEFT"] = "Tốc độ bên trái";
 Blockly.Msg["SET_CAR_SPEED_RIGHT"] = "Tốc độ bên phải";
 Blockly.Msg["SET_CAR_ANGLE"] = "Góc";
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TOOLTIP"] = "Thiết lập tốc độ bánh xe bên trái, bên phải và góc của xe.";
+Blockly.Msg["BKY_SET_CAR_DURATION"] = "trong khoảng";

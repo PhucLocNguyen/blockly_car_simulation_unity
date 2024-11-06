@@ -221,6 +221,7 @@ function Header() {
                       className=" peer"
                       onChange={HandleChangeData}
                       value={item.languageCode}
+                      checked={item.languageCode===localStorage.getItem("language")}
                     />
                     <img
                       src={item.image}

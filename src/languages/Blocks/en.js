@@ -110,3 +110,4 @@ Blockly.Msg["SET_CAR_SPEED_LEFT"] = "Left speed";
 Blockly.Msg["SET_CAR_SPEED_RIGHT"] = "Right speed";
 Blockly.Msg["SET_CAR_ANGLE"] = "Angle";
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TOOLTIP"] = "Sets the left and right wheel speed and angle of the car.";
+Blockly.Msg["BKY_SET_CAR_DURATION"] = "in ";

@@ -4,12 +4,6 @@ import { pythonGenerator } from 'blockly/python';
 
 var TIME_HUE = 140;
 // Basic block components translation
-Blockly.Msg['SLEEP_MS_TITLE'] = 'chờ';
-Blockly.Msg['SLEEP_MS_TOOLTIP'] = 'Chờ trong một khoảng thời gian cụ thể '
-Blockly.Msg['PIN_BINARY_TITLE'] = 'thiết lập trạng thái logic';
-Blockly.Msg['PIN_BINARY_TOOLTIP'] = 'Thiết lập trạng thái logic cao hoặc thấp cho chân GPIO.';
-
-
 Blockly.Blocks['sleep_ms'] = {
     /**
      * Description.
