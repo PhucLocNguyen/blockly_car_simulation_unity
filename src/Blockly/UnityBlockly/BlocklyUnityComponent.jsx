@@ -18,6 +18,7 @@ function BlocklyUnityComponent(props) {
   const [language, setLanguage] = useState(
     localStorage.getItem("language") ?? "vi"
   );
+  const [toogleClick, setToggleClick] = useState(false);
   const blocklyDiv = useRef();
   const toolbox = useRef();
   let primaryWorkspace = useRef();
@@ -35,6 +36,7 @@ function BlocklyUnityComponent(props) {
   const generateCode = () => {
     const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
     setCodeJavascript(code);
+    setToggleClick(!toogleClick); //listen to simulate button to simulate
     console.log("Javascript:", code);
   };
   const saveCodeUpdate = async () => {
@@ -104,7 +106,7 @@ function BlocklyUnityComponent(props) {
 
           <div className="col-span-3 p-2">
             <h2>Mo phong</h2>
-            <UnityWebGL code={codeJavascript} />
+            <UnityWebGL code={codeJavascript} toogleClick={toogleClick}/>
             <div className="flex justify-center ">
               <Button
                 className="border-[#1ce61c] "

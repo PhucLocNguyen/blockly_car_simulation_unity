@@ -1,7 +1,7 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
 import React, { Fragment, useEffect } from "react";
 import Car from "../Classes/Car";
-function UnityWebGL({ code = "" }) {
+function UnityWebGL({ code = "" ,toogleClick=false}) {
   const { unityProvider, sendMessage } = useUnityContext({
     loaderUrl: "WebGl/Build/WebGl.loader.js",
     dataUrl: "WebGl/Build/WebGl.data",
@@ -12,7 +12,7 @@ function UnityWebGL({ code = "" }) {
 
   useEffect(() => {
     eval(code);
-  }, [code]);
+  }, [code,toogleClick]);
 
   return (
     <div id="unity-root" className=" disabled ">
