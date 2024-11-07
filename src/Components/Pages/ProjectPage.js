@@ -32,7 +32,8 @@ import { getTimeAgoString } from "../../utils/Time";
 import RaspberrypiLogo from "../../Assets/RaspberrypiIcon.png";
 import simulatorIcon from "../../Assets/simulator.png";
 import AddIcon from "@mui/icons-material/Add";
-const projectType = [
+import { toast } from "react-toastify";
+export const projectType = [
   {
     title: "Vehicle simulator block",
     type: "unity-simulator",
@@ -66,7 +67,7 @@ function ProjectPage() {
     handleDialogClose("dialog1");
   };
   const handleDialogOpen = (dialogKey) => {
-    if(user==null)navigate("/login",{from:location});
+    if (user == null) navigate("/login", { from: location });
     setOpenDialogs((prev) => ({ ...prev, [dialogKey]: true }));
   };
 
@@ -75,7 +76,7 @@ function ProjectPage() {
   };
   const OpenProject = (projectId, projectType = "unity-simulator") => {
     // khi click vào project cũ
-    navigate("/editor", { state: { id: projectId,type: projectType } });
+    navigate("/editor", { state: { id: projectId, type: projectType } });
   };
 
   const fetchProjects = async () => {
@@ -86,8 +87,8 @@ function ProjectPage() {
   };
   const HandleChangeData = (e) => {
     var { name, value } = e.target;
-    if(typeof(value)==="string"){
-      value= value.trim();
+    if (typeof value === "string") {
+      value = value.trim();
     }
     setData((prevData) => ({
       ...prevData,
@@ -109,6 +110,8 @@ function ProjectPage() {
 
   useEffect(() => {
     fetchProjects();
+    const messageAlert = location.state?.message || null;
+    messageAlert && toast.info(messageAlert);
   }, []);
 
   const debouncedOnChange = useCallback(debounce(HandleChangeData, 400), []);
@@ -241,7 +244,9 @@ function ProjectPage() {
               >
                 {projectType.map((current) => {
                   return (
-                    <MenuItem value={current.type}>{current.title}</MenuItem>
+                    <MenuItem key={current.title} value={current.type}>
+                      {current.title}
+                    </MenuItem>
                   );
                 })}
               </Select>
@@ -250,9 +255,11 @@ function ProjectPage() {
           <div className="px-2">
             <DialogActions className="flex items-center">
               <Button
-                className={data?.projectTitle===""?"bg-[#14b914]":"bg-[#107c10]"}
+                className={
+                  data?.projectTitle === "" ? "bg-[#14b914]" : "bg-[#107c10]"
+                }
                 sx={{ background: "#107c10", color: "#fff", padding: "0px" }}
-                disabled={data?.projectTitle===""}
+                disabled={data?.projectTitle === ""}
                 onClick={CreateProject}
               >
                 <p className="px-2">Create</p>

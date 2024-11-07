@@ -9,10 +9,13 @@ import {
   updateDoc,
   deleteDoc,
   getDoc,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { doc } from "firebase/firestore";
-const addNewProject = async (userID,projectTitle,projectType) => {
+const docRef = collection(db, "Projects");
+const addNewProject = async (userID, projectTitle, projectType) => {
   let projectId = "";
   try {
     // Create a random projectId
@@ -32,7 +35,7 @@ const addNewProject = async (userID,projectTitle,projectType) => {
       projectId: projectId,
       name: projectTitle,
       content: "",
-      type:projectType,
+      type: projectType,
       userID: userID,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -43,15 +46,23 @@ const addNewProject = async (userID,projectTitle,projectType) => {
   }
 };
 
-const GetAllProjects = async (userID) => {
+const GetAllProjects = async (userID, limitPage = null) => {
   try {
-    const q = query(collection(db, "Projects"), where("userID", "==", userID));
+    let q = query(
+      docRef,
+      where("userID", "==", userID),
+      orderBy("createdAt"),
+      limit(2)
+    );
+    if (limitPage == null) q = query(docRef, where("userID", "==", userID), orderBy("createdAt"));
     const querySnapshot = await getDocs(q);
+
     const projects = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    console.log("Get Projects successfully!", projects);
+
+    console.log("Projects fetched successfully:");
     return projects;
   } catch (error) {
     console.error("Error getting projects:", error);
@@ -65,7 +76,6 @@ const GetProjectById = async (projectId) => {
 
     if (projectSnap.exists()) {
       const project = { id: projectSnap.id, ...projectSnap.data() };
-      console.log("Get project successfully!", project);
       return project;
     } else {
       console.log("No such document!");

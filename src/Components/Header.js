@@ -34,12 +34,12 @@ function Header() {
   const [openDialog, setOpenDialogs] = useState({
     dialog1: false,
   });
-  const {language, setLanguage} = useContext(LanguageContext);
- 
+  const { language, setLanguage } = useContext(LanguageContext);
+
   const HandleChangeData = (e) => {
     const { name, value } = e.target;
     setLanguage(value);
-    localStorage.setItem("language",value);
+    localStorage.setItem("language", value);
   };
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -165,13 +165,7 @@ function Header() {
                     "aria-labelledby": "user-button",
                   }}
                 >
-                  <MenuItem
-                    onClick={() => {
-                      handleDialogOpen("dialog1");
-                    }}
-                  >
-                    Edit profile
-                  </MenuItem>
+                  <MenuItem>Edit profile</MenuItem>
                   <MenuItem
                     onClick={() => {
                       handleLogout();
@@ -204,34 +198,45 @@ function Header() {
           </DialogActions>
         </div>
         <DialogContent sx={{ padding: "0px 25px" }}>
-          <DialogContentText id="alert-dialog-description">
-            <div className="grid grid-cols-4 mb-[30px] gap-4">
+          <div id="alert-dialog-description">
+            <div className="grid grid-cols-4 mb-[30px] gap-4 pb-4">
               {languages.map((item, index) => (
-                <label
-                  key={item.languageTitle + index}
-                  htmlFor={"language-" + item.languageTitle}
-                  className="rounded-md border border-[#646464] cursor-pointer"
+                <div
+                  key={item.languageCode}
+                  className={`relative py-2 rounded-md  border-[2px] border-solid cursor-pointer ${
+                    item.languageCode === language
+                      ? "border-primary"
+                      : "border-transparent"
+                  } `}
                 >
-                  <div className="shadow-lg h-[100px]">
-                    <input
-                      type="radio"
-                      name="language"
-                      id={"language-" + index}
-                      className=" peer"
-                      onChange={HandleChangeData}
-                      value={item.languageCode}
-                      checked={item.languageCode===localStorage.getItem("language")}
-                    />
-                    <img
-                      src={item.image}
-                      className="rounded-md w-full object-cover h-[50px]"
-                    />
-                    <p className="text-center">{item.name}</p>
-                  </div>
-                </label>
+                  <label
+                    key={item.languageCode}
+                    htmlFor={"language-" + item.languageCode}
+                    className="flex justify-center"
+                  >
+                    <div className="w-fit">
+                      <input
+                        type="radio"
+                        name="language"
+                        id={"language-" + item.languageCode}
+                        className=" peer hidden"
+                        onChange={HandleChangeData}
+                        value={item.languageCode}
+                        checked={item.languageCode === language}
+                      />
+                      <img
+                        src={item.image}
+                        className="rounded-md w-[75px] object-cover w-full h-[50px]"
+                      />
+                      <p className="text-center text-black py-0 my-0">
+                        {item.languageTitle}
+                      </p>
+                    </div>
+                  </label>
+                </div>
               ))}
             </div>
-          </DialogContentText>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

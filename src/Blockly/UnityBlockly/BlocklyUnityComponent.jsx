@@ -16,7 +16,7 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { LanguageContext } from "../../context/LanguageProvider";
 function BlocklyUnityComponent(props) {
   const [codeJavascript, setCodeJavascript] = useState(null);
-  const {language} = useContext(LanguageContext);
+  const { language } = useContext(LanguageContext);
   const [toogleClick, setToggleClick] = useState(false);
   const blocklyDiv = useRef();
   const toolbox = useRef();
@@ -75,7 +75,39 @@ function BlocklyUnityComponent(props) {
     loadLocale(language);
     recreateWorkspace();
   }, [language, primaryWorkspace]);
+  useEffect(() => {
+    if (primaryWorkspace.current) {
+      primaryWorkspace.current.addChangeListener((event) => {
+        if (
+          event.type === Blockly.Events.BLOCK_CREATE ||
+          Blockly.Events.BLOCK_MOVE
+        ) {
+          const allBlocks = primaryWorkspace.current.getAllBlocks();
 
+          // Filter event blocks starting with "event_block"
+          const eventBlocks = allBlocks.filter((block) =>
+            block.type.startsWith("event_block")
+          );
+
+          // Create a dictionary to keep track of each event block type
+          const blockTypes = {};
+
+          eventBlocks.forEach((block) => {
+            if (blockTypes[block.type]) {
+              // If this block type already exists, disable the additional one
+              block.disabled = true;
+              block.updateDisabled();
+            } else {
+              // Otherwise, add it to the dictionary and ensure it's enabled
+              blockTypes[block.type] = block;
+              block.disabled = false;
+              block.updateDisabled();
+            }
+          });
+        }
+      });
+    }
+  }, [primaryWorkspace.current]);
   useEffect(() => {
     autosaveInterval.current = setInterval(saveCodeUpdate, 10000);
     loadLocale(language);
@@ -94,16 +126,15 @@ function BlocklyUnityComponent(props) {
     <React.Fragment>
       <div className="relative w-full">
         <div className="grid grid-cols-12 w-full h-max py-2" id="formatBlockly">
-          
           <div ref={blocklyDiv} id="blocklyDivUnity" className="col-span-9" />
-          
+
           <div style={{ display: "none" }} ref={toolbox}>
             {props.children}
           </div>
 
           <div className="col-span-3 p-2">
             <h2>Mo phong</h2>
-            <UnityWebGL code={codeJavascript} toogleClick={toogleClick}/>
+            <UnityWebGL code={codeJavascript} toogleClick={toogleClick} />
             <div className="flex justify-center ">
               <Button
                 className="border-[#1ce61c] "
@@ -122,7 +153,6 @@ function BlocklyUnityComponent(props) {
                   <DirectionsCarIcon style={{ fill: "#fff" }} />
                 </div>
               </Button>
-              
             </div>
           </div>
         </div>

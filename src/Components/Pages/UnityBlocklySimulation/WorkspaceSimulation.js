@@ -1,5 +1,3 @@
-import logo from "../../../Assets/logoApp.jpg";
-
 import BlocklyComponent, {
   Block,
   Value,
@@ -7,20 +5,12 @@ import BlocklyComponent, {
   Shadow,
   Category,
 } from "../../../Blockly";
-
-// import './blocks/customblocks';
-// import './blocks/gpio';  // Import file gpio.js chứa khối GPIO
 import "../../../generator/generator";
-// import "./blocks/text"
-// import "./Components/Gpio_simulator"
-// import "./blocks/mathBlocks"
-// import "./time.js"
 import WestIcon from "@mui/icons-material/West";
 import "../../../blocks/exportBlocks";
 import { IconButton } from "@mui/material";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { t } from "i18next";
-import { useState } from "react";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
 function WorkspaceSimulation({ projectId, xmlRemember }) {
   return (
@@ -63,7 +53,9 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           </Category>
           {/* Danh mục các khối Digital I/O */}
           <Category name="Event" colour="230">
-            <Block type="event_block" />
+            <Block type="event_block_obstacle" />
+            <Block type="event_block_LineTracking" />
+
           </Category>
           <Category name="Điều khiển xe" colour="50">
             <Block type="set_car_speed_angle" />
