@@ -3,10 +3,10 @@ import React, { Fragment, useEffect } from "react";
 import Car from "../Classes/Car";
 function UnityWebGL({ code = "" ,toogleClick=false}) {
   const { unityProvider, sendMessage } = useUnityContext({
-    loaderUrl: "WebGl/Build/WebGl.loader.js",
-    dataUrl: "WebGl/Build/WebGl.data",
-    frameworkUrl: "WebGl/Build/WebGl.framework.js",
-    codeUrl: "WebGl/Build/WebGl.wasm",
+    loaderUrl: "WebGl/Build/Save/WebGl.loader.js",
+    dataUrl: "WebGl/Build/Save/WebGl.data",
+    frameworkUrl: "WebGl/Build/Save/WebGl.framework.js",
+    codeUrl: "WebGl/Build/Save/WebGl.wasm",
   });
   const car = new Car(sendMessage, "Maruti800");
 

@@ -52,12 +52,12 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
             <Block type="controls_whileUntil" />
           </Category>
           {/* Danh mục các khối Digital I/O */}
-          <Category name="Event" colour="230">
+          <Category name={t("BlocklyUnityPage_Toolbar_Event")} colour="230">
             <Block type="event_block_obstacle" />
             <Block type="event_block_LineTracking" />
 
           </Category>
-          <Category name="Điều khiển xe" colour="50">
+          <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
           </Category>
         </BlocklyUnityComponent>

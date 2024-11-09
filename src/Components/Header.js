@@ -165,14 +165,14 @@ function Header() {
                     "aria-labelledby": "user-button",
                   }}
                 >
-                  <MenuItem>Edit profile</MenuItem>
+                  <MenuItem>{t("HeaderComponent_MyProfileTitle")}</MenuItem>
                   <MenuItem
                     onClick={() => {
                       handleLogout();
                       handleMenuClose();
                     }}
                   >
-                    Sign out
+                    {t("logout")}
                   </MenuItem>
                 </Menu>
               </>
@@ -189,7 +189,7 @@ function Header() {
       >
         <div className="flex justify-between items-center md:w-[540px] border-b border-black">
           <DialogTitle id="alert-dialog-title" className="text-black">
-            Choose a language
+            {t("HeaderComponent_ChooseLanguage")}
           </DialogTitle>
           <DialogActions>
             <IconButton onClick={() => handleDialogClose("dialog1")}>

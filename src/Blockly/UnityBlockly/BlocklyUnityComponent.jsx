@@ -91,17 +91,14 @@ function BlocklyUnityComponent(props) {
 
           // Create a dictionary to keep track of each event block type
           const blockTypes = {};
-
           eventBlocks.forEach((block) => {
             if (blockTypes[block.type]) {
               // If this block type already exists, disable the additional one
               block.disabled = true;
-              block.updateDisabled();
             } else {
               // Otherwise, add it to the dictionary and ensure it's enabled
               blockTypes[block.type] = block;
               block.disabled = false;
-              block.updateDisabled();
             }
           });
         }
@@ -133,7 +130,7 @@ function BlocklyUnityComponent(props) {
           </div>
 
           <div className="col-span-3 p-2">
-            <h2>Mo phong</h2>
+            <h2>{t("BlocklyUnityPage_SimulateTitle")}</h2>
             <UnityWebGL code={codeJavascript} toogleClick={toogleClick} />
             <div className="flex justify-center ">
               <Button
@@ -148,7 +145,7 @@ function BlocklyUnityComponent(props) {
                 }}
                 onClick={generateCode}
               >
-                <p className="px-20">Simulate</p>
+                <p className="px-20">{t("BlocklyUnityPage_SimulateButton")}</p>
                 <div className="bg-[#0f760f] p-2 rounded-[10px]">
                   <DirectionsCarIcon style={{ fill: "#fff" }} />
                 </div>
@@ -169,7 +166,7 @@ function BlocklyUnityComponent(props) {
             }}
             onClick={saveCodeUpdate}
           >
-            <p className="px-20">Save code</p>
+            <p className="px-20">{t("BlocklyPage_SaveProjectButton")}</p>
             <div className="bg-[#0f760f] p-2 rounded-[10px]">
               <SaveIcon />
             </div>

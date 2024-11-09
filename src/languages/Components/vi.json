@@ -26,5 +26,21 @@
     "signin":"Sign in",
     "forgot_password":"Quên mật khẩu",
     "languages":"Ngôn ngữ",
-    "logout":"Đăng xuất"
+    "logout":"Đăng xuất",
+    "HeaderComponent_MyProfileTitle":"Thông tin cá nhân",
+    "HeaderComponent_ChooseLanguage":"Chọn ngôn ngữ",
+
+    "ProjectPage_MyProject":"Dự án của tôi",
+    "ProjectPage_ViewAll":"Xem thêm",
+    "ProjectPage_NewProject":"Dự án mới",
+    "ProjectPage_DialogCreateTitle":"Tạo dự án",
+    "ProjectPage_DialogProjectName":"Đặt tên cho dự án",
+    "ProjectPage_DialogProjectType":"Chọn loại dự án",
+    "ProjectPage_DialogProjectTypeSelect":"Chọn loại dự án",
+    "ProjectPage_DialogProjectCreateButton":"Tạo",
+    "BlocklyUnityPage_SimulateTitle":"Mô phỏng",
+    "BlocklyUnityPage_SimulateButton":"Mô phỏng ngay",
+    "BlocklyUnityPage_Toolbar_CarMotion":"Hành vi cho xe",
+    "BlocklyUnityPage_Toolbar_Event":"Sự kiện",
+    "BlocklyPage_SaveProjectButton":"Lưu dự án"
 }

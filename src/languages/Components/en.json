@@ -33,5 +33,24 @@
     "signin":"Sign in",
     "forgot_password":"Forgot password?",
     "languages":"Language",
-    "logout":"Logout"
+    "logout":"Logout",
+    
+    "HeaderComponent_MyProfileTitle": "My Profile",
+    "HeaderComponent_ChooseLanguage": "Choose Language",
+    
+    "ProjectPage_MyProject": "My Projects",
+    "ProjectPage_ViewAll": "View All",
+    "ProjectPage_NewProject": "New Project",
+    "ProjectPage_DialogCreateTitle": "Create Project",
+    "ProjectPage_DialogProjectName": "Project Name",
+    "ProjectPage_DialogProjectType": "Project Type",
+    "ProjectPage_DialogProjectTypeSelect": "Select Project Type",
+    "ProjectPage_DialogProjectCreateButton": "Create",
+    
+    "BlocklyUnityPage_SimulateTitle": "Simulate",
+    "BlocklyUnityPage_SimulateButton": "Simulate Now",
+    "BlocklyUnityPage_Toolbar_CarMotion": "Car Motion",
+    "BlocklyUnityPage_Toolbar_Event": "Event",
+    
+    "BlocklyPage_SaveProjectButton": "Save Project"
 }

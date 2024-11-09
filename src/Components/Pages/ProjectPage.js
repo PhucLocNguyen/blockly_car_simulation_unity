@@ -3,12 +3,10 @@ import { AuthContext } from "../../context/AuthContext";
 import {
   Container,
   Box,
-  Grid,
   Typography,
   Card,
   CardContent,
   IconButton,
-  Menu,
   MenuItem,
   Button,
   Dialog,
@@ -16,10 +14,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Input,
   Select,
-  InputLabel,
-  FormControl,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import CheckIcon from "@mui/icons-material/Check";
@@ -33,6 +28,7 @@ import RaspberrypiLogo from "../../Assets/RaspberrypiIcon.png";
 import simulatorIcon from "../../Assets/simulator.png";
 import AddIcon from "@mui/icons-material/Add";
 import { toast } from "react-toastify";
+import { t } from "i18next";
 export const projectType = [
   {
     title: "Vehicle simulator block",
@@ -122,10 +118,10 @@ function ProjectPage() {
         <Box sx={{ py: 2 }} />
         <Box className="flex items-center gap-2 ">
           <Typography variant="h5" gutterBottom>
-            Dự án của tôi
+            {t("ProjectPage_MyProject")}
           </Typography>
           <Link to="/projects" className="no-underline">
-            View all
+            {t("ProjectPage_ViewAll")}
           </Link>
         </Box>
 
@@ -156,7 +152,9 @@ function ProjectPage() {
               <AddCircleIcon
                 sx={{ fill: "#fff", width: "60px", height: "60px" }}
               />
-              <Typography variant="h6">Dự án mới</Typography>
+              <Typography variant="h6">
+                {t("ProjectPage_NewProject")}
+              </Typography>
             </Card>
           </Box>
           {projectList.map((current) => {
@@ -209,7 +207,7 @@ function ProjectPage() {
         >
           <div className="flex justify-between items-center md:w-[540px] border-b border-black">
             <DialogTitle id="alert-dialog-title" className="text-black">
-              {"Create a Project"}
+              {t("ProjectPage_DialogCreateTitle")}
             </DialogTitle>
             <DialogActions>
               <IconButton onClick={() => handleDialogClose("dialog1")}>
@@ -219,9 +217,7 @@ function ProjectPage() {
           </div>
 
           <DialogContent sx={{ padding: "0px 25px" }}>
-            <DialogContentText id="alert-dialog-description">
-              Give your project a name.
-            </DialogContentText>
+            <DialogContentText id="alert-dialog-description"></DialogContentText>
             <div className="pl-1">
               <input
                 onChange={debouncedOnChange}
@@ -232,14 +228,14 @@ function ProjectPage() {
                 autoCorrect={"false"}
               />
               <DialogContentText className="mt-2">
-                Choose a type for project
+                {t("ProjectPage_DialogProjectType")}
               </DialogContentText>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={data.type}
                 name="type"
-                label="Chọn giá trị"
+                label={t("ProjectPage_DialogProjectTypeSelect")}
                 onChange={HandleChangeData}
               >
                 {projectType.map((current) => {
@@ -262,7 +258,9 @@ function ProjectPage() {
                 disabled={data?.projectTitle === ""}
                 onClick={CreateProject}
               >
-                <p className="px-2">Create</p>
+                <p className="px-2">
+                  {t("ProjectPage_DialogProjectCreateButton")}
+                </p>
                 <div className="bg-[#0f760f] p-2">
                   <CheckIcon />
                 </div>
