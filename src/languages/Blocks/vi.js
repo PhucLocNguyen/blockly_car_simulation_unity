@@ -1,12 +1,12 @@
 import * as Blockly from 'blockly/core';
 
 //General
-Blockly.Msg["High_status"] ="Cao"
-Blockly.Msg["Low_status"] ="Thấp"
+Blockly.Msg["High_status"] = "Cao"
+Blockly.Msg["Low_status"] = "Thấp"
 // Time
-Blockly.Msg["seconds_translate"]="giây"
-Blockly.Msg["1_seconds_translate"]="giây"
-Blockly.Msg["miliseconds_translate"]="mili giây"
+Blockly.Msg["seconds_translate"] = "giây"
+Blockly.Msg["1_seconds_translate"] = "giây"
+Blockly.Msg["miliseconds_translate"] = "mili giây"
 
 // Basic
 Blockly.Msg['SLEEP_MS_TITLE'] = 'chờ';
@@ -107,7 +107,7 @@ Blockly.Msg['TEXT_PRINT_TOOLTIP'] = 'In giá trị của đầu vào.';
 
 //Car movement
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TITLE"] = "Thiết lập tốc độ và góc của xe";
-Blockly.Msg["SET_CAR_SPEED_LEFT"] = "Tốc độ bên trái";
+Blockly.Msg["SET_CAR_SPEED"] = "Tốc độ";
 Blockly.Msg["SET_CAR_SPEED_RIGHT"] = "Tốc độ bên phải";
 Blockly.Msg["SET_CAR_ANGLE"] = "Góc";
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TOOLTIP"] = "Thiết lập tốc độ bánh xe bên trái, bên phải và góc của xe.";

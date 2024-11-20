@@ -1,12 +1,12 @@
 import * as Blockly from 'blockly/core';
 
 //General
-Blockly.Msg["High_status"] ="High"
-Blockly.Msg["Low_status"] ="Low"
+Blockly.Msg["High_status"] = "High"
+Blockly.Msg["Low_status"] = "Low"
 // Time
-Blockly.Msg["seconds_translate"]="seconds"
-Blockly.Msg["1_seconds_translate"]="second"
-Blockly.Msg["miliseconds_translate"]="miliseconds"
+Blockly.Msg["seconds_translate"] = "seconds"
+Blockly.Msg["1_seconds_translate"] = "second"
+Blockly.Msg["miliseconds_translate"] = "miliseconds"
 
 // Basic
 Blockly.Msg['SLEEP_MS_TITLE'] = 'wait';
@@ -106,7 +106,7 @@ Blockly.Msg['TEXT_PRINT'] = 'print';
 Blockly.Msg['TEXT_PRINT_TOOLTIP'] = 'Print the value of the input.';
 
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TITLE"] = "Set car speed and angle";
-Blockly.Msg["SET_CAR_SPEED_LEFT"] = "Left speed";
+Blockly.Msg["SET_CAR_SPEED"] = "Speed";
 Blockly.Msg["SET_CAR_SPEED_RIGHT"] = "Right speed";
 Blockly.Msg["SET_CAR_ANGLE"] = "Angle";
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TOOLTIP"] = "Sets the left and right wheel speed and angle of the car.";

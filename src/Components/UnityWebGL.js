@@ -1,18 +1,47 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Car from "../Classes/Car";
-function UnityWebGL({ code = "" ,toogleClick=false}) {
+const handleUnityData = (event) => {
+  console.log("Data received from Unity:", event.detail);
+  return event?.detail;
+};
+
+function UnityWebGL({ code = "", toogleClick = false }) {
   const { unityProvider, sendMessage } = useUnityContext({
-    loaderUrl: "WebGl/Build/Save/WebGl.loader.js",
-    dataUrl: "WebGl/Build/Save/WebGl.data",
-    frameworkUrl: "WebGl/Build/Save/WebGl.framework.js",
-    codeUrl: "WebGl/Build/Save/WebGl.wasm",
+    loaderUrl: "WebGl/Build/WebGl.loader.js",
+    dataUrl: "WebGl/Build/WebGl.data",
+    frameworkUrl: "WebGl/Build/WebGl.framework.js",
+    codeUrl: "WebGl/Build/WebGl.wasm",
   });
-  const car = new Car(sendMessage, "Maruti800");
+  const car = new Car(sendMessage, "Car");
+
+  const [sensorData, setSensorData] = useState(null);
+
+  // useEffect(() => {
+  //   const handleUnityData = (event) => {
+  //     console.log("Data received from Unity:", event.detail);
+  //     setSensorData(event.detail);
+  //     console.log(event.detail)
+
+  //   };
+
+  //   window.addEventListener("UnityData", handleUnityData);
+
+  //   return () => {
+  //     window.removeEventListener("UnityData", handleUnityData);
+  //   };
+  // }, []);
 
   useEffect(() => {
-    eval(code);
-  }, [code,toogleClick]);
+    if (code) {
+      try {
+        eval(code); // Thực thi code từ props
+      } catch (e) {
+        console.error("Error evaluating code:", e);
+      }
+    }
+  }, [code, toogleClick]);
+
 
   return (
     <div id="unity-root" className=" disabled ">

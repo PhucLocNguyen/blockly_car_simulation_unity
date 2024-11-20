@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { t } from "i18next";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
 function WorkspaceSimulation({ projectId, xmlRemember }) {
+
   return (
     <div className="App">
       <header className="App-header">
@@ -59,6 +60,76 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           </Category>
           <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
+          </Category>
+          <Category name={t("category_Logic")} colour="210">
+            <Block type="controls_ifelse" />
+            <Block type="logic_compare_custom">
+              <Value name="LEFT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+            </Block>
+            <Block type="logic_operation" />
+            <Block type="logic_negate" />
+            <Block type="logic_boolean" />
+            <Block type="logic_compare_string_custom">
+              <Value name="LEFT">
+                <Shadow type="text">
+                  <Field name="TEXT">Default String 1</Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="text">
+                  <Field name="TEXT">Default String 2</Field>
+                </Shadow>
+              </Value>
+            </Block>
+          </Category>
+          <Category
+            name={t("category_Variable")}
+            colour="320"
+            custom="VARIABLE"
+          >
+            <Block type="variable_untyped" />
+            <Block type="variable_typed" />
+            <Block type="text_print">
+              <Value name="VALUE">
+                <Shadow type="text">
+                  <Field name="TEXT">Hello World</Field>
+                </Shadow>
+              </Value>
+            </Block>
+            <Block type="variables_get">
+              <Field name="VAR">Y</Field>
+            </Block>
+            <Block type="variables_set">
+              <field name="VAR">x</field>
+              <value name="VALUE">
+                <shadow type="math_number">
+                  <field name="NUM">5</field>
+                </shadow>
+              </value>
+            </Block>
+          </Category>
+          <Category
+            name={t("category_line_sensor")}
+            colour="380"
+          >
+            <Block type="variables_get">
+              <Field name="VAR">Data sensor</Field>
+            </Block>
+            <Block type="event_block_LineTracking">
+
+            </Block>
+            <Block type="text_print">
+              <Field name="VAR">Data sensor</Field>
+            </Block>
           </Category>
         </BlocklyUnityComponent>
       </header>
