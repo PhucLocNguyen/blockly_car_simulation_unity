@@ -5,8 +5,8 @@ class Car {
     }
 
     // Method to move the car with custom speed and angle
-    moveCar(frontLeftSpeed, frontRightSpeed, rearLeftSpeed, rearRightSpeed, angle, duration) {
-        const command = `${frontLeftSpeed},${frontRightSpeed},${rearLeftSpeed},${rearRightSpeed},${angle},${duration}`;
+    moveCar(speed, angle, duration) {
+        const command = `${speed},${duration},${angle}`;
         this.sendMessage(this.objectName, "MoveCar", command);
         console.log(`Sending move command: ${command}`);
     }
@@ -18,22 +18,22 @@ class Car {
 
     // Method to move forward with specified speed and duration
     moveForward(speed = 100, duration = 2) {
-        this.moveCar(speed, speed, speed, speed, 0, duration);
+        this.moveCar(speed, 0, duration);
     }
 
     // Method to move backward with specified speed and duration
-    moveBackward(speed = -100, duration = 2) {
-        this.moveCar(speed, speed, speed, speed, 0, duration);
+    moveBackward(speed = 100, duration = 2) {
+        this.moveCar(speed, 0, duration);
     }
 
     // Method to turn left with an angle
     turnLeft(speed = 100, angle = -30, duration = 2) {
-        this.moveCar(speed, speed, speed, speed, angle, duration);
+        this.moveCar(speed, angle, duration);
     }
 
     // Method to turn right with an angle
     turnRight(speed = 100, angle = 30, duration = 2) {
-        this.moveCar(speed, speed, speed, speed, angle, duration);
+        this.moveCar(speed, angle, duration);
     }
 }
 
