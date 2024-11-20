@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { t } from "i18next";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
 function WorkspaceSimulation({ projectId, xmlRemember }) {
-  
+
   return (
     <div className="App">
       <header className="App-header">
@@ -115,6 +115,20 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
                   <field name="NUM">5</field>
                 </shadow>
               </value>
+            </Block>
+          </Category>
+          <Category
+            name={t("category_line_sensor")}
+            colour="380"
+          >
+            <Block type="variables_get">
+              <Field name="VAR">Data sensor</Field>
+            </Block>
+            <Block type="event_block_LineTracking">
+
+            </Block>
+            <Block type="text_print">
+              <Field name="VAR">Data sensor</Field>
             </Block>
           </Category>
         </BlocklyUnityComponent>

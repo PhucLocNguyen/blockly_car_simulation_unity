@@ -1,6 +1,11 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Car from "../Classes/Car";
+const handleUnityData = (event) => {
+  console.log("Data received from Unity:", event.detail);
+  return event?.detail;
+};
+
 function UnityWebGL({ code = "", toogleClick = false }) {
   const { unityProvider, sendMessage } = useUnityContext({
     loaderUrl: "WebGl/Build/WebGl.loader.js",
@@ -10,7 +15,22 @@ function UnityWebGL({ code = "", toogleClick = false }) {
   });
   const car = new Car(sendMessage, "Car");
 
+  const [sensorData, setSensorData] = useState(null);
 
+  // useEffect(() => {
+  //   const handleUnityData = (event) => {
+  //     console.log("Data received from Unity:", event.detail);
+  //     setSensorData(event.detail);
+  //     console.log(event.detail)
+
+  //   };
+
+  //   window.addEventListener("UnityData", handleUnityData);
+
+  //   return () => {
+  //     window.removeEventListener("UnityData", handleUnityData);
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (code) {
@@ -21,6 +41,7 @@ function UnityWebGL({ code = "", toogleClick = false }) {
       }
     }
   }, [code, toogleClick]);
+
 
   return (
     <div id="unity-root" className=" disabled ">
