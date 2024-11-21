@@ -1,5 +1,5 @@
 import { Unity, useUnityContext } from "react-unity-webgl";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Car from "../Classes/Car";
 function UnityWebGL({ code = "", toogleClick = false }) {
   const { unityProvider, sendMessage } = useUnityContext({
@@ -8,18 +8,10 @@ function UnityWebGL({ code = "", toogleClick = false }) {
     frameworkUrl: "WebGl/Build/WebGl.framework.js",
     codeUrl: "WebGl/Build/WebGl.wasm",
   });
-  const car = new Car(sendMessage, "Car");
-
-
+  const car = new Car(sendMessage, "Maruti800");
 
   useEffect(() => {
-    if (code) {
-      try {
-        eval(code); // Thực thi code từ props
-      } catch (e) {
-        console.error("Error evaluating code:", e);
-      }
-    }
+    eval(code);
   }, [code, toogleClick]);
 
   return (

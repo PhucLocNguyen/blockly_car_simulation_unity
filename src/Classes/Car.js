@@ -12,7 +12,7 @@ class Car {
     }
 
     // Method to stop the car
-    stop(duration = 3) {
+    stop() {
         this.moveCar(0, 0, 0, 0, 0, duration);
     }
 
@@ -34,6 +34,9 @@ class Car {
     // Method to turn right with an angle
     turnRight(speed = 100, angle = 30, duration = 2) {
         this.moveCar(speed, angle, duration);
+    }
+    resetCar() {
+        this.sendMessage(this.objectName, "resetCarStatus");
     }
 }
 
