@@ -31,15 +31,7 @@ class Car {
     this.moveCar(speed, angle, duration);
   }
 
-<<<<<<< HEAD
-  // Method to turn right with an angle
-  turnRight(speed = 100, angle = 30, duration = 2) {
-    this.moveCar(speed, angle, duration);
-  }
-  resetCar() {
-    this.sendMessage(this.objectName, "resetCarStatus");
-  }
-=======
+
     // Method to turn right with an angle
     turnRight(speed = 100, angle = 30, duration = 2) {
         this.moveCar(speed, angle, duration);
@@ -47,7 +39,6 @@ class Car {
     resetCar() {
         this.sendMessage(this.objectName, "resetCarStatus");
     }
->>>>>>> 02030fc4fb27957a80ba77641ba272bc6afa233d
 }
 
 export default Car;
