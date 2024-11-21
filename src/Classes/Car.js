@@ -13,7 +13,7 @@ class Car {
 
     // Method to stop the car
     stop() {
-        this.moveCar(0, 0, 0, 0, 0, duration);
+        this.moveCar(0, 0, 0, 0, 0, 0);
     }
 
     // Method to move forward with specified speed and duration
@@ -35,8 +35,8 @@ class Car {
     turnRight(speed = 100, angle = 30, duration = 2) {
         this.moveCar(speed, angle, duration);
     }
-    resetCar(){
-        this.sendMessage(this.objectName,"resetCarStatus");
+    resetCar() {
+        this.sendMessage(this.objectName, "resetCarStatus");
     }
 }
 
