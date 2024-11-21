@@ -13,7 +13,7 @@ class Car {
 
     // Method to stop the car
     stop() {
-        this.moveCar(0, 0, 0, 0, 0, duration);
+        this.moveCar(0, 0, 0);
     }
 
     // Method to move forward with specified speed and duration
