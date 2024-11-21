@@ -42,5 +42,7 @@
     "BlocklyUnityPage_Toolbar_CarMotion": "Hành vi cho xe",
     "BlocklyUnityPage_Toolbar_Event": "Sự kiện",
     "BlocklyPage_SaveProjectButton": "Lưu dự án",
-    "category_line_sensor": "Cảm biến dò line"
+    "category_line_sensor": "Cảm biến dò line",
+    "BlocklyUnityPage_StopSimulation":"Dừng mô phỏng"
+
 }

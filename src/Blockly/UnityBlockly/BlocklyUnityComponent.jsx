@@ -13,13 +13,16 @@ import { useLocation } from "react-router-dom";
 import { GetProjectById, updateProject } from "../../utils/CRUD_Project";
 import UnityWebGL from "../../Components/UnityWebGL";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import StopIcon from "@mui/icons-material/Stop";
 import { LanguageContext } from "../../context/LanguageProvider";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 function BlocklyUnityComponent(props) {
   const [codeJavascript, setCodeJavascript] = useState(null);
   const { language } = useContext(LanguageContext);
-  const [toogleClick, setToggleClick] = useState(false);
   const blocklyDiv = useRef();
+  const [isSimulated, setIsSimulated] = useState(false);
   const toolbox = useRef();
+  const [isReset, setIsReset] = useState(false);
   let primaryWorkspace = useRef();
   const autosaveInterval = useRef();
   const projectId = props.projectId;
@@ -32,10 +35,12 @@ function BlocklyUnityComponent(props) {
       delete require.cache[require.resolve("../../languages/Blocks/vi.js")];
     }
   }
-  const generateCode = () => {
+  const generateCode = (event) => {
+    event.stopPropagation();
     const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
     setCodeJavascript(code);
-    setToggleClick(!toogleClick); //listen to simulate button to simulate
+    setIsSimulated(!isSimulated); //listen to simulate button to simulate
+
     console.log("Javascript:", code);
   };
   const saveCodeUpdate = async () => {
@@ -43,6 +48,12 @@ function BlocklyUnityComponent(props) {
     const workspace = primaryWorkspace.current;
     const xml = Blockly.Xml.workspaceToDom(workspace);
     const xmlText = Blockly.Xml.domToText(xml);
+    if (
+      xmlText ===
+      `<xml xmlns="https://developers.google.com/blockly/xml"></xml>`
+    ) {
+      return;
+    }
     await updateProject(projectId, xmlText);
   };
 
@@ -105,6 +116,11 @@ function BlocklyUnityComponent(props) {
       });
     }
   }, [primaryWorkspace.current]);
+  const ResetUnityButton = (event) => {
+    event.stopPropagation();
+    setIsReset(true);
+    setIsSimulated(!isSimulated); //listen to simulate button to simulate
+  };
   useEffect(() => {
     autosaveInterval.current = setInterval(saveCodeUpdate, 10000);
     loadLocale(language);
@@ -131,24 +147,47 @@ function BlocklyUnityComponent(props) {
 
           <div className="col-span-3 p-2">
             <h2>{t("BlocklyUnityPage_SimulateTitle")}</h2>
-            <UnityWebGL code={codeJavascript} toogleClick={toogleClick} />
-            <div className="flex justify-center ">
+            <UnityWebGL
+              code={codeJavascript}
+              toogleClick={isSimulated}
+              isReset={isReset}
+              setIsReset={setIsReset}
+            />
+            <div className="flex justify-center  ">
               <Button
-                className="border-[#1ce61c] "
+                className={
+                  isSimulated ? "border-[#1ce61c] text-nowrap" : "border-red-600 "
+                }
                 sx={{
-                  border: "4px solid #1ce61c",
+                  border: isSimulated ? "4px solid red" : "4px solid #1ce61c",
                   color: "#000",
-                  padding: "0px",
+                  padding: "0px 12px 0 0",
                   background: "#fff",
                   borderRadius: "10px",
-                  marginLeft: "10px",
+                  marginLeft: "",
+                  minWidth:"360px",
+                  textWrap:"nowrap",
+                  justifyContent:"flex-start"
                 }}
-                onClick={generateCode}
+                onClick={!isSimulated ? generateCode : ResetUnityButton}
               >
-                <p className="px-20">{t("BlocklyUnityPage_SimulateButton")}</p>
-                <div className="bg-[#0f760f] p-2 rounded-[10px]">
-                  <DirectionsCarIcon style={{ fill: "#fff" }} />
-                </div>
+                {isSimulated ? (
+                  <>
+                    <div className="bg-[#a10909] w-[50px] h-full m-2 flex items-center justify-center rounded-sm ml-0 px-2">
+                      <StopIcon style={{ fill: "#fff" }} />
+                    </div>
+                    <p className="text-center w-full">{t("BlocklyUnityPage_StopSimulation")}</p>
+                  </>
+                ) : (
+                  <>
+                    <div className="bg-[#0f760f]  w-[50px] h-full m-2 flex items-center justify-center rounded-sm ml-0 px-2">
+                      <PlayArrowIcon style={{ fill: "#fff" }} />
+                    </div>
+                    <p className="text-center w-full ">
+                      {t("BlocklyUnityPage_SimulateButton")}
+                    </p>
+                  </>
+                )}
               </Button>
             </div>
           </div>

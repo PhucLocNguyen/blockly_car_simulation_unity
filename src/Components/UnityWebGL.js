@@ -6,7 +6,12 @@ const handleUnityData = (event) => {
   return event?.detail;
 };
 
-function UnityWebGL({ code = "", toogleClick = false }) {
+function UnityWebGL({
+  code = "",
+  toogleClick = false,
+  isReset = false,
+  setIsReset,
+}) {
   const { unityProvider, sendMessage } = useUnityContext({
     loaderUrl: "WebGl/Build/WebGl.loader.js",
     dataUrl: "WebGl/Build/WebGl.data",
@@ -31,9 +36,15 @@ function UnityWebGL({ code = "", toogleClick = false }) {
   //     window.removeEventListener("UnityData", handleUnityData);
   //   };
   // }, []);
-
   useEffect(() => {
-    if (code) {
+    if (isReset) {
+      // reset lai game
+      car.resetCar();
+      setIsReset(false);
+    }
+  }, [isReset]);
+  useEffect(() => {
+    if (code && !isReset) {
       try {
         eval(code); // Thực thi code từ props
       } catch (e) {
@@ -41,7 +52,6 @@ function UnityWebGL({ code = "", toogleClick = false }) {
       }
     }
   }, [code, toogleClick]);
-
 
   return (
     <div id="unity-root" className=" disabled ">
