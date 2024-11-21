@@ -31,6 +31,7 @@ class Car {
         this.moveCar(speed, angle, duration);
     }
 
+
     // Method to turn right with an angle
     turnRight(speed = 100, angle = 30, duration = 2) {
         this.moveCar(speed, angle, duration);
