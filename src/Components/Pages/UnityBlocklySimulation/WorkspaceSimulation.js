@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import { t } from "i18next";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
 function WorkspaceSimulation({ projectId, xmlRemember }) {
-
   return (
     <div className="App">
       <header className="App-header">
@@ -55,11 +54,15 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           {/* Danh mục các khối Digital I/O */}
           <Category name={t("BlocklyUnityPage_Toolbar_Event")} colour="230">
             <Block type="event_block_obstacle" />
-            <Block type="event_block_LineTracking" />
-
           </Category>
           <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
+          </Category>
+          <Category name={t("Blockly_Math_Title")} colour="50">
+            <Block type="math_multiplication" />
+            <Block type="math_division" />
+            <Block type="math_subtraction" />
+            <Block type="math_addition" />
           </Category>
           <Category name={t("category_Logic")} colour="210">
             <Block type="controls_ifelse" />
@@ -92,9 +95,13 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
             </Block>
           </Category>
           <Category
-            name={t("category_Variable")}
+            name={t("category_Create_Variable")}
             colour="320"
             custom="VARIABLE"
+          ></Category>
+          <Category
+            name={t("category_Variable")}
+            colour="320"
           >
             <Block type="variable_untyped" />
             <Block type="variable_typed" />
@@ -117,16 +124,13 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
               </value>
             </Block>
           </Category>
-          <Category
-            name={t("category_line_sensor")}
-            colour="380"
-          >
+          <Category name={t("category_line_sensor")} colour="380">
             <Block type="variables_get">
-              <Field name="VAR">Data sensor</Field>
+              <Field name="VAR">Data_sensor</Field>
             </Block>
-            <Block type="event_block_LineTracking">
+            <Block type="Road_map_normal" />
+            <Block type="Road_map_LineTracking" />
 
-            </Block>
             <Block type="text_print">
               <Field name="VAR">Data sensor</Field>
             </Block>

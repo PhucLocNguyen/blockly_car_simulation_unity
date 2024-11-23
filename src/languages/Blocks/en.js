@@ -111,3 +111,25 @@ Blockly.Msg["SET_CAR_SPEED_RIGHT"] = "Right speed";
 Blockly.Msg["SET_CAR_ANGLE"] = "Angle";
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TOOLTIP"] = "Sets the left and right wheel speed and angle of the car.";
 Blockly.Msg["BKY_SET_CAR_DURATION"] = "in ";
+
+// car Map
+Blockly.Msg['BKY_Road_Map_LineTracking_TITLE'] = "Line Tracking Mode";
+Blockly.Msg['Event_Execute_title'] = "execute";
+Blockly.Msg['BKY_Road_Map_LineTracking_toolTip'] = "This block executes the inner blocks when the line tracking event occurs.";
+
+Blockly.Msg['BKY_Road_Map_Normal_TITLE'] = "Normal Map Mode";
+Blockly.Msg['BKY_Road_Map_Normal_Execute_title'] = "execute";
+Blockly.Msg['BKY_Road_Map_Normal_toolTip'] = "This block executes the inner blocks when the normal map event occurs.";
+
+// Math block
+Blockly.Msg['MATH_ADDITION_TITLE'] = "Add";
+Blockly.Msg['MATH_ADDITION_TOOLTIP'] = "Returns the sum of two numbers.";
+
+Blockly.Msg['MATH_SUBTRACTION_TITLE'] = "Subtract";
+Blockly.Msg['MATH_SUBTRACTION_TOOLTIP'] = "Returns the difference between two numbers.";
+
+Blockly.Msg['MATH_MULTIPLICATION_TITLE'] = "Multiply";
+Blockly.Msg['MATH_MULTIPLICATION_TOOLTIP'] = "Returns the product of two numbers.";
+
+Blockly.Msg['MATH_DIVISION_TITLE'] = "Divide";
+Blockly.Msg['MATH_DIVISION_TOOLTIP'] = "Returns the quotient of two numbers.";

@@ -11,6 +11,7 @@ import {
   getDoc,
   orderBy,
   limit,
+  count,
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { doc } from "firebase/firestore";
@@ -68,7 +69,15 @@ const GetAllProjects = async (userID, limitPage = null) => {
     console.error("Error getting projects:", error);
   }
 };
-
+const CountAllProjects =async (userID) => {
+  try {
+    const totalQuery = query(docRef, where("userID", "==", userID));
+    const totalSnapshot = await getDocs(totalQuery);
+    return totalSnapshot.size;
+  } catch (error) {
+    console.error("Error getting projects:", error);
+  }
+}
 const GetProjectById = async (projectId) => {
   try {
     const projectRef = doc(db, "Projects", projectId);
@@ -119,4 +128,5 @@ export {
   deleteProject,
   GetProjectById,
   updateProject,
+  CountAllProjects
 };

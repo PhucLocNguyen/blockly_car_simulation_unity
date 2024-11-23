@@ -112,3 +112,25 @@ Blockly.Msg["SET_CAR_SPEED_RIGHT"] = "Tốc độ bên phải";
 Blockly.Msg["SET_CAR_ANGLE"] = "Góc";
 Blockly.Msg["SET_CAR_SPEED_ANGLE_TOOLTIP"] = "Thiết lập tốc độ bánh xe bên trái, bên phải và góc của xe.";
 Blockly.Msg["BKY_SET_CAR_DURATION"] = "trong khoảng";
+
+// Car Map
+Blockly.Msg['BKY_Road_Map_LineTracking_TITLE'] = "Chế độ bám vạch";
+Blockly.Msg['Event_Execute_title'] = "thực thi";
+Blockly.Msg['BKY_Road_Map_LineTracking_toolTip'] = "Khối này thực thi các khối bên trong khi xảy ra sự kiện bám vạch.";
+
+Blockly.Msg['BKY_Road_Map_Normal_TITLE'] = "Chế độ bản đồ bình thường";
+Blockly.Msg['BKY_Road_Map_Normal_Execute_title'] = "thực thi";
+Blockly.Msg['BKY_Road_Map_Normal_toolTip'] = "Khối này thực thi các khối bên trong khi sự kiện bản đồ bình thường xảy ra.";
+
+// Math block
+Blockly.Msg['MATH_ADDITION_TITLE'] = "Cộng";
+Blockly.Msg['MATH_ADDITION_TOOLTIP'] = "Trả về tổng của hai số.";
+
+Blockly.Msg['MATH_SUBTRACTION_TITLE'] = "Trừ";
+Blockly.Msg['MATH_SUBTRACTION_TOOLTIP'] = "Trả về hiệu của hai số.";
+
+Blockly.Msg['MATH_MULTIPLICATION_TITLE'] = "Nhân";
+Blockly.Msg['MATH_MULTIPLICATION_TOOLTIP'] = "Trả về tích của hai số.";
+
+Blockly.Msg['MATH_DIVISION_TITLE'] = "Chia";
+Blockly.Msg['MATH_DIVISION_TOOLTIP'] = "Trả về thương của hai số.";

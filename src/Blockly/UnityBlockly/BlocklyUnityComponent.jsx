@@ -12,7 +12,6 @@ import SaveIcon from "@mui/icons-material/Save";
 import { useLocation } from "react-router-dom";
 import { GetProjectById, updateProject } from "../../utils/CRUD_Project";
 import UnityWebGL from "../../Components/UnityWebGL";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import StopIcon from "@mui/icons-material/Stop";
 import { LanguageContext } from "../../context/LanguageProvider";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -39,18 +38,18 @@ function BlocklyUnityComponent(props) {
     event.stopPropagation();
     const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
     setCodeJavascript(code);
+    console.log(code);
     setIsSimulated(!isSimulated); //listen to simulate button to simulate
-
-    console.log("Javascript:", code);
   };
-  const saveCodeUpdate = async () => {
+  const saveCodeUpdate = async (isAuto = false) => {
     //Save code va co the save duoc ten cua du an
     const workspace = primaryWorkspace.current;
     const xml = Blockly.Xml.workspaceToDom(workspace);
     const xmlText = Blockly.Xml.domToText(xml);
     if (
       xmlText ===
-      `<xml xmlns="https://developers.google.com/blockly/xml"></xml>`
+        `<xml xmlns="https://developers.google.com/blockly/xml"></xml>` &&
+      isAuto
     ) {
       return;
     }
@@ -61,7 +60,6 @@ function BlocklyUnityComponent(props) {
     if (primaryWorkspace.current) {
       primaryWorkspace.current.dispose(); // Xóa workspace cũ
     }
-
     primaryWorkspace.current = Blockly.inject(blocklyDiv.current, {
       toolbox: toolbox.current,
       ...props,
@@ -99,11 +97,24 @@ function BlocklyUnityComponent(props) {
           const eventBlocks = allBlocks.filter((block) =>
             block.type.startsWith("event_block")
           );
-
+          console.log(eventBlocks);
           // Create a dictionary to keep track of each event block type
           const blockTypes = {};
           eventBlocks.forEach((block) => {
             if (blockTypes[block.type]) {
+              // If this block type already exists, disable the additional one
+              block.disabled = true;
+            } else {
+              // Otherwise, add it to the dictionary and ensure it's enabled
+              blockTypes[block.type] = block;
+              block.disabled = false;
+            }
+          });
+          const mapBlocks = allBlocks.filter((block) =>
+            block.type.startsWith("Road_map")
+          );
+          mapBlocks.forEach((block, index) => {
+            if (index !== 0) {
               // If this block type already exists, disable the additional one
               block.disabled = true;
             } else {
@@ -122,7 +133,9 @@ function BlocklyUnityComponent(props) {
     setIsSimulated(!isSimulated); //listen to simulate button to simulate
   };
   useEffect(() => {
-    autosaveInterval.current = setInterval(saveCodeUpdate, 10000);
+    autosaveInterval.current = setInterval(() => {
+      saveCodeUpdate(true);
+    }, 10000);
     loadLocale(language);
     return () => {
       if (primaryWorkspace.current) {
@@ -156,7 +169,9 @@ function BlocklyUnityComponent(props) {
             <div className="flex justify-center  ">
               <Button
                 className={
-                  isSimulated ? "border-[#1ce61c] text-nowrap" : "border-red-600 "
+                  isSimulated
+                    ? "border-[#1ce61c] text-nowrap"
+                    : "border-red-600 "
                 }
                 sx={{
                   border: isSimulated ? "4px solid red" : "4px solid #1ce61c",
@@ -165,9 +180,9 @@ function BlocklyUnityComponent(props) {
                   background: "#fff",
                   borderRadius: "10px",
                   marginLeft: "",
-                  minWidth:"360px",
-                  textWrap:"nowrap",
-                  justifyContent:"flex-start"
+                  minWidth: "360px",
+                  textWrap: "nowrap",
+                  justifyContent: "flex-start",
                 }}
                 onClick={!isSimulated ? generateCode : ResetUnityButton}
               >
@@ -176,7 +191,9 @@ function BlocklyUnityComponent(props) {
                     <div className="bg-[#a10909] w-[50px] h-full m-2 flex items-center justify-center rounded-sm ml-0 px-2">
                       <StopIcon style={{ fill: "#fff" }} />
                     </div>
-                    <p className="text-center w-full">{t("BlocklyUnityPage_StopSimulation")}</p>
+                    <p className="text-center w-full">
+                      {t("BlocklyUnityPage_StopSimulation")}
+                    </p>
                   </>
                 ) : (
                   <>
@@ -203,7 +220,9 @@ function BlocklyUnityComponent(props) {
               borderRadius: "10px",
               marginLeft: "10px",
             }}
-            onClick={saveCodeUpdate}
+            onClick={() => {
+              saveCodeUpdate(false);
+            }}
           >
             <p className="px-20">{t("BlocklyPage_SaveProjectButton")}</p>
             <div className="bg-[#0f760f] p-2 rounded-[10px]">

@@ -38,6 +38,9 @@ class Car {
     resetCar(){
         this.sendMessage(this.objectName,"resetCarStatus");
     }
+    changeLineTrackingStatusMap(){
+        this.sendMessage(this.objectName,"ChangeLineTrackingState","1");
+    }
 }
 
 export default Car;

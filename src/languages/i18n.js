@@ -16,7 +16,7 @@ i18n
   .init({
     resources,
     lng: languageCurrent,
-    fallbackLng: 'en'
+    fallbackLng: 'vi'
   });
 
 export default i18n;

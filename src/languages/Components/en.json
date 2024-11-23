@@ -50,5 +50,7 @@
     "BlocklyUnityPage_Toolbar_Event": "Event",
     "BlocklyPage_SaveProjectButton": "Save Project",
     "category_line_sensor": "Line Sensor value",
-    "BlocklyUnityPage_StopSimulation":"Stop simulation"
+    "BlocklyUnityPage_StopSimulation":"Stop simulation",
+    "category_Create_Variable":"Create variable",
+    "Blockly_Math_Title":"Math"
 }

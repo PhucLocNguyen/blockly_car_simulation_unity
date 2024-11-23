@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         primary: "rgb(59 130 246 / 0.5)", // Now you can use bg-primary, text-primary, etc.
         secondary: "var(--secondary-color)",
+        primaryText:"#1976d2"
       },
     },
   },
