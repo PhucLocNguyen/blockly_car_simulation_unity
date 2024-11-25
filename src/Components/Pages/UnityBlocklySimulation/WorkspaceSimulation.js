@@ -38,6 +38,13 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           {/* Danh mục các khối cơ bản*/}
           <Category name={t("category_Basic")} colour="140">
             <Block type="sleep_ms" />
+            <Block type="text_print">
+              <Value name="VALUE">
+                <Shadow type="text">
+                  <Field name="TEXT">Hello World</Field>
+                </Shadow>
+              </Value>
+            </Block>
           </Category>
           {/* Danh mục các khối vòng lặp */}
           <Category name={t("category_Loops")} colour="120">
@@ -51,9 +58,11 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
             <Block type="forever_loop" />
             <Block type="controls_whileUntil" />
           </Category>
-          {/* Danh mục các khối Digital I/O */}
+          {/* Danh mục các khối Event */}
           <Category name={t("BlocklyUnityPage_Toolbar_Event")} colour="230">
             <Block type="event_block_obstacle" />
+            <Block type="Road_map_normal" />
+            <Block type="Road_map_LineTracking" />
           </Category>
           <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
@@ -109,13 +118,6 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           >
             <Block type="variable_untyped" />
             <Block type="variable_typed" />
-            <Block type="text_print">
-              <Value name="VALUE">
-                <Shadow type="text">
-                  <Field name="TEXT">Hello World</Field>
-                </Shadow>
-              </Value>
-            </Block>
             <Block type="variables_get">
               <Field name="VAR">Y</Field>
             </Block>
@@ -128,15 +130,9 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
               </value>
             </Block>
           </Category>
-          <Category name={t("category_line_sensor")} colour="380">
+          <Category name={t("category_line_sensor")} colour="320">
             <Block type="variables_get">
               <Field name="VAR">Data_sensor</Field>
-            </Block>
-            <Block type="Road_map_normal" />
-            <Block type="Road_map_LineTracking" />
-
-            <Block type="text_print">
-              <Field name="VAR">Data sensor</Field>
             </Block>
           </Category>
         </BlocklyUnityComponent>
