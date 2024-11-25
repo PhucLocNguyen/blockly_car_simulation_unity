@@ -60,10 +60,57 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           </Category>
           <Category name={t("category_Math")} colour="250">
             <Block type="math_number" />
+            <Block type="min_operation">
+              <Value name="LEFT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+            </Block>
+            <Block type="max_operation">
+              <Value name="LEFT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+            </Block>
+            <Block type="remainder_operation">
+              <Value name="LEFT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+            </Block>
             <Block type="math_arithmetic" />
             <Block type="math_single" />
             <Block type="math_constant" />
-            <Block type="math_random_int" />
+            <Block type="random_operation">
+              <Value name="LEFT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+              <Value name="RIGHT">
+                <Shadow type="math_number">
+                  <Field name="NUM"></Field>
+                </Shadow>
+              </Value>
+            </Block>
             <Block type="math_random_float" />
             <Block type="math_round" />
             <Block type="math_on_list" />
