@@ -52,5 +52,13 @@
     "category_line_sensor": "Line Sensor value",
     "BlocklyUnityPage_StopSimulation":"Stop simulation",
     "category_Create_Variable":"Create variable",
-    "Blockly_Math_Title":"Math"
+    "Blockly_Math_Title":"Math",
+    "ProjectPage_DialogProjectTitle":"Project title",
+    "ProjectManagement_RenameTitlePopup":"Rename the project",
+    "ProjectPage_DialogProjectUpdateButton":"Update",
+    "ProjectManagement_DuplicateTitlePopup":"Duplicate to create a new project",
+    "ProjectPage_DialogProjectDuplicateButton":"Duplicate",
+    "ProjectManagement_DeleteTitlePopup":"Delete confirmation",
+    "ProjectPage_DialogProjectDeleteButton":"Delete now"
+
 }

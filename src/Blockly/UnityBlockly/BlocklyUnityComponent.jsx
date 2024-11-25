@@ -10,7 +10,7 @@ import { t } from "i18next";
 import { Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useLocation } from "react-router-dom";
-import { GetProjectById, updateProject } from "../../utils/CRUD_Project";
+import { GetProjectById, updateProject, updateProjectXML } from "../../utils/CRUD_Project";
 import UnityWebGL from "../../Components/UnityWebGL";
 import StopIcon from "@mui/icons-material/Stop";
 import { LanguageContext } from "../../context/LanguageProvider";
@@ -53,7 +53,7 @@ function BlocklyUnityComponent(props) {
     ) {
       return;
     }
-    await updateProject(projectId, xmlText);
+    await updateProjectXML(projectId, xmlText);
   };
 
   const recreateWorkspace = async () => {

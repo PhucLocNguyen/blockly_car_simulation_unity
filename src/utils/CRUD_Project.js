@@ -12,9 +12,11 @@ import {
   orderBy,
   limit,
   count,
+  setDoc,
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { doc } from "firebase/firestore";
+import { toast } from "react-toastify";
 const docRef = collection(db, "Projects");
 const addNewProject = async (userID, projectTitle, projectType) => {
   let projectId = "";
@@ -46,7 +48,36 @@ const addNewProject = async (userID, projectTitle, projectType) => {
     console.error("Error adding project:", error);
   }
 };
+const duplicateProject = async (userID, projectDetail) => {
+  let projectId = "";
+  const { id, ...detailRest } = projectDetail; // Loại bỏ ID gốc
+  try {
+    // Tạo một projectId ngẫu nhiên
+    do {
+      projectId = uuidv4();
 
+      // Kiểm tra nếu projectId đã tồn tại
+      const q = query(
+        collection(db, "Projects"),
+        where("projectId", "==", projectId)
+      );
+      var querySnapshot = await getDocs(q);
+    } while (!querySnapshot.empty);
+
+    // Thêm project với projectId duy nhất
+    const projectRef = doc(db, "Projects", projectId);
+    await setDoc(projectRef, {
+      ...detailRest,
+      projectId: projectId,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      userID: userID,
+    });
+    console.log("Project duplicated successfully!");
+  } catch (error) {
+    console.error("Error duplicating project:", error);
+  }
+};
 const GetAllProjects = async (userID, limitPage = null) => {
   try {
     let q = query(
@@ -55,7 +86,8 @@ const GetAllProjects = async (userID, limitPage = null) => {
       orderBy("createdAt"),
       limit(2)
     );
-    if (limitPage == null) q = query(docRef, where("userID", "==", userID), orderBy("createdAt"));
+    if (limitPage == null)
+      q = query(docRef, where("userID", "==", userID), orderBy("createdAt"));
     const querySnapshot = await getDocs(q);
 
     const projects = querySnapshot.docs.map((doc) => ({
@@ -69,7 +101,7 @@ const GetAllProjects = async (userID, limitPage = null) => {
     console.error("Error getting projects:", error);
   }
 };
-const CountAllProjects =async (userID) => {
+const CountAllProjects = async (userID) => {
   try {
     const totalQuery = query(docRef, where("userID", "==", userID));
     const totalSnapshot = await getDocs(totalQuery);
@@ -77,7 +109,7 @@ const CountAllProjects =async (userID) => {
   } catch (error) {
     console.error("Error getting projects:", error);
   }
-}
+};
 const GetProjectById = async (projectId) => {
   try {
     const projectRef = doc(db, "Projects", projectId);
@@ -94,9 +126,10 @@ const GetProjectById = async (projectId) => {
     console.error("Error getting project:", error);
   }
 };
-const updateProject = async (projectId, updatedData) => {
+const updateProject = async ({ id, ...updatedData }) => {
   try {
-    const projectRef = doc(db, "Projects", projectId);
+    console.log(updatedData);
+    const projectRef = doc(db, "Projects", id);
     const docSnap = await getDoc(projectRef);
     if (!docSnap.exists()) {
       console.error("Document does not exist!");
@@ -104,21 +137,48 @@ const updateProject = async (projectId, updatedData) => {
     }
 
     await updateDoc(projectRef, {
-      content: updatedData,
+      name: updatedData.name,
       updatedAt: serverTimestamp(),
     });
-    console.log("Project updated successfully!");
+    // update chua luu duoc
+    toast.success("Project updated successfully!");
   } catch (error) {
-    console.error("Error updating project:", error);
+    toast.error("Error updating project:", error);
+  }
+};
+
+const updateProjectXML = async (id, content) => {
+  try {
+    const projectRef = doc(db, "Projects", id);
+    const docSnap = await getDoc(projectRef);
+    if (!docSnap.exists()) {
+      console.error("Document does not exist!");
+      return;
+    }
+
+    await updateDoc(projectRef, {
+      content: content,
+      updatedAt: serverTimestamp(),
+    });
+    // update chua luu duoc
+  } catch (error) {
+    toast.error("Error updating project:", error);
   }
 };
 
 const deleteProject = async (projectId) => {
   try {
-    await deleteDoc(doc(db, "Projects", projectId));
-    console.log("Project deleted successfully!");
+    const projectRef = doc(db, "Projects", projectId);
+    const docSnap = await getDoc(projectRef);
+    if (!docSnap.exists()) {
+      console.error(`Project with ID ${projectId} does not exist!`);
+      return;
+    }
+
+    await deleteDoc(projectRef);
+    console.log(`Project with ID ${projectId} deleted successfully!`);
   } catch (error) {
-    console.error("Error deleting project:", error);
+    console.error(`Error deleting project with ID ${projectId}:`, error);
   }
 };
 
@@ -128,5 +188,7 @@ export {
   deleteProject,
   GetProjectById,
   updateProject,
-  CountAllProjects
+  CountAllProjects,
+  updateProjectXML,
+  duplicateProject
 };
