@@ -40,7 +40,7 @@ function Header() {
     const { name, value } = e.target;
     setLanguage(value);
     localStorage.setItem("language", value);
-    window.location.reload();
+    // window.location.reload();
   };
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);

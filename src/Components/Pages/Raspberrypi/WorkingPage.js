@@ -16,13 +16,19 @@ import "../../../generator/generator";
 import "../../../blocks/exportBlocks";
 
 import { t } from "i18next";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
+import { LanguageContext } from "../../../context/LanguageProvider";
 
 function WorkingPage({projectId, xmlRemember}) {
-  
+  const {language} =useContext(LanguageContext);
+  const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    setReloadKey((prevKey) => prevKey + 1);
+  }, [language]);
   return (
     <div className="App">
       <header className="App-header">
@@ -34,6 +40,7 @@ function WorkingPage({projectId, xmlRemember}) {
           </Link>
         </div>
         <BlocklyComponent
+          key={reloadKey}
           readOnly={false}
           trashcan={true}
           media={"media/"}

@@ -12,7 +12,15 @@ import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { t } from "i18next";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
+import { useContext, useEffect, useState } from "react";
+import { LanguageContext } from "../../../context/LanguageProvider";
 function WorkspaceSimulation({ projectId, xmlRemember }) {
+  const {language} =useContext(LanguageContext);
+  const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    setReloadKey((prevKey) => prevKey + 1);
+  }, [language]);
   return (
     <div className="App">
       <header className="App-header">
@@ -24,6 +32,7 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           </Link>
         </div>
         <BlocklyUnityComponent
+          key={reloadKey}
           readOnly={false}
           trashcan={true}
           media={"media/"}
@@ -58,15 +67,11 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
           </Category>
-          <Category name={t("category_Math")} colour="250">
-            <Block type="math_number" />
-            <Block type="math_arithmetic" />
-            <Block type="math_single" />
-            <Block type="math_constant" />
-            <Block type="math_random_int" />
-            <Block type="math_random_float" />
-            <Block type="math_round" />
-            <Block type="math_on_list" />
+          <Category name={t("Blockly_Math_Title")} colour="50">
+            <Block type="math_multiplication" />
+            <Block type="math_division" />
+            <Block type="math_subtraction" />
+            <Block type="math_addition" />
           </Category>
           <Category name={t("category_Logic")} colour="210">
             <Block type="controls_ifelse" />
@@ -103,10 +108,7 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
             colour="320"
             custom="VARIABLE"
           ></Category>
-          <Category
-            name={t("category_Variable")}
-            colour="320"
-          >
+          <Category name={t("category_Variable")} colour="320">
             <Block type="variable_untyped" />
             <Block type="variable_typed" />
             <Block type="text_print">

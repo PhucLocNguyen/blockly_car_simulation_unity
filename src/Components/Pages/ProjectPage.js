@@ -216,13 +216,16 @@ function ProjectPage() {
             </DialogActions>
           </div>
 
-          <DialogContent sx={{ padding: "0px 25px" }}>
+          <DialogContent sx={{ padding: "0px 15px" }}>
             <DialogContentText id="alert-dialog-description"></DialogContentText>
-            <div className="pl-1">
+            <div className="pl-3">
+            <DialogContentText className="mt-2">
+                {t("ProjectPage_DialogProjectTitle")}
+              </DialogContentText>
               <input
                 onChange={debouncedOnChange}
                 name="projectTitle"
-                className="w-full py-1 pl-2 mt-2 text-lg mb-2"
+                className="w-full pl-2 mt-2 text-lg mb-2"
                 type="text"
                 autoComplete={"false"}
                 autoCorrect={"false"}

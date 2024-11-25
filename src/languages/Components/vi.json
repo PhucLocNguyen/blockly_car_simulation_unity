@@ -45,6 +45,12 @@
     "category_line_sensor": "Cảm biến dò line",
     "BlocklyUnityPage_StopSimulation":"Dừng mô phỏng",
     "category_Create_Variable":"Tạo biến",
-    "Blockly_Math_Title":"Phép Tính"
-
+    "Blockly_Math_Title":"Phép Tính",
+    "ProjectPage_DialogProjectTitle":"Tiêu đề dự án",
+    "ProjectManagement_RenameTitlePopup":"Đổi tên dự án",
+    "ProjectPage_DialogProjectUpdateButton":"Cập nhật",
+    "ProjectManagement_DuplicateTitlePopup":"Sao chép ra dự án mới",
+    "ProjectPage_DialogProjectDuplicateButton":"Nhân bản",
+    "ProjectManagement_DeleteTitlePopup":"Xác nhận xoá dự án",
+    "ProjectPage_DialogProjectDeleteButton":"Xoá ngay"
 }

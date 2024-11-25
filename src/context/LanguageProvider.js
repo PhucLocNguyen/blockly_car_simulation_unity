@@ -6,7 +6,9 @@ function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(
     localStorage.getItem("language") ?? "vi"
   );
- 
+  useEffect(() => {
+    i18next.changeLanguage(language);
+  }, [language]);
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       {children}
