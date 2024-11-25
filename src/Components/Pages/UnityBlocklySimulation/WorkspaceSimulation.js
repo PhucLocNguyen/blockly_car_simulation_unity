@@ -58,11 +58,15 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
           </Category>
-          <Category name={t("Blockly_Math_Title")} colour="50">
-            <Block type="math_multiplication" />
-            <Block type="math_division" />
-            <Block type="math_subtraction" />
-            <Block type="math_addition" />
+          <Category name={t("category_Math")} colour="250">
+            <Block type="math_number" />
+            <Block type="math_arithmetic" />
+            <Block type="math_single" />
+            <Block type="math_constant" />
+            <Block type="math_random_int" />
+            <Block type="math_random_float" />
+            <Block type="math_round" />
+            <Block type="math_on_list" />
           </Category>
           <Category name={t("category_Logic")} colour="210">
             <Block type="controls_ifelse" />
