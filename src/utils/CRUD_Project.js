@@ -12,6 +12,7 @@ import {
   orderBy,
   limit,
   count,
+  setDoc,
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { doc } from "firebase/firestore";
@@ -49,31 +50,32 @@ const addNewProject = async (userID, projectTitle, projectType) => {
 };
 const duplicateProject = async (userID, projectDetail) => {
   let projectId = "";
-  const {id, ...detailRest} = projectDetail;
+  const { id, ...detailRest } = projectDetail; // Loại bỏ ID gốc
   try {
-    // Create a random projectId
+    // Tạo một projectId ngẫu nhiên
     do {
       projectId = uuidv4();
 
-      // Check if the projectId already exists
+      // Kiểm tra nếu projectId đã tồn tại
       const q = query(
         collection(db, "Projects"),
         where("projectId", "==", projectId)
       );
       var querySnapshot = await getDocs(q);
     } while (!querySnapshot.empty);
+
+    // Thêm project với projectId duy nhất
     const projectRef = doc(db, "Projects", projectId);
-    // Add new project if projectId is unique
-    await addDoc(collection(db, "Projects"), {
+    await setDoc(projectRef, {
       ...detailRest,
       projectId: projectId,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
-      userID:userID,
+      userID: userID,
     });
-    console.log("Project added successfully!");
+    console.log("Project duplicated successfully!");
   } catch (error) {
-    console.error("Error adding project:", error);
+    console.error("Error duplicating project:", error);
   }
 };
 const GetAllProjects = async (userID, limitPage = null) => {

@@ -44,7 +44,7 @@ function ProjectManagement() {
   const [openDialog, setOpenDialogs] = useState({
     dialog1: false,
     dialog2: false,
-    dialog3:false
+    dialog3: false,
   });
   const targetRenameInput = useRef(null);
   const [data, setData] = useState({});
@@ -133,6 +133,7 @@ function ProjectManagement() {
   };
   const DuplicateProjectDialogOpen = () => {
     let projectTarget = selectedItem[0];
+    console.log(selectedItem);
     handleDialogOpen("dialog2");
     // Đợi DOM được render để gán giá trị
     setTimeout(() => {
@@ -164,15 +165,17 @@ function ProjectManagement() {
     fetchProjects();
 
     handleDialogClose("dialog2");
+    setSelectedItem([]);
   };
-  const DeleteSubmit = async ()=>{
-    await selectedItem.forEach((current,index)=>{
-      console.log(current.id);
-      deleteProject(current.id);
-    })
-    handleDialogClose("dialog3");
+  const DeleteSubmit = async () => {
+    await Promise.all(selectedItem.map((current) => deleteProject(current.id)));
+
+    // Sau khi xóa xong, gọi hàm fetchProjects để cập nhật danh sách
     await fetchProjects();
-  }
+    setCurrentPage(1);
+    handleDialogClose("dialog3");
+    setSelectedItem([]);
+  };
   const handleDialogOpen = (dialogKey) => {
     setOpenDialogs((prev) => ({ ...prev, [dialogKey]: true }));
   };
@@ -492,7 +495,7 @@ function ProjectManagement() {
           </div>
           <DialogContent sx={{ padding: "0px 15px" }}>
             <div className="pl-3">
-                <p>Bạn sẽ xoá hết {selectedItem.length} dự án</p>
+              <p>Bạn sẽ xoá hết {selectedItem.length} dự án</p>
             </div>
           </DialogContent>
           <div className="px-2">
