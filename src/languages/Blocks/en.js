@@ -64,6 +64,9 @@ Blockly.Msg['FOREVER_LOOP_DO'] = 'do';
 Blockly.Msg['MATH_CHANGE_TITLE'] = 'change %1 by %2';
 Blockly.Msg['MATH_CHANGE_VARIABLE'] = 'item';
 Blockly.Msg['MATH_CHANGE_TOOLTIP'] = 'Add a number to variable "%1".';
+Blockly.Msg['MATH_RANDOM_TITLE'] = 'Pick random';
+Blockly.Msg['MATH_RANDOM_TO'] = 'to';
+Blockly.Msg['MATH_RANDOM_REMAINDER'] = 'Remainder of';
 
 // Pin
 Blockly.Msg['GPIO_SET_DIGITAL_WRITE_PIN'] = 'Digital write pin';
