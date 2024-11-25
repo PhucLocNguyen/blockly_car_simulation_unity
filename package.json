@@ -1,0 +1,66 @@
+{
+  "name": "blockly-react-sample",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.5",
+    "@mui/material": "^6.1.5",
+    "@svgr/webpack": "^8.1.0",
+    "blockly": "^11.1.1",
+    "firebase": "^11.0.1",
+    "i18next": "^23.16.2",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-http-backend": "^2.6.2",
+    "react": "^18.3.1",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^15.1.0",
+    "react-router-dom": "^6.27.0",
+    "react-scripts": "^5.0.1",
+    "react-syntax-highlighter": "^15.6.1",
+    "react-toastify": "^10.0.6",
+    "react-unity-webgl": "^9.6.0",
+    "uuid": "^11.0.2"
+  },
+  "scripts": {
+    "audit": "npm audit fix",
+    "update": "npm update",
+    "postinstall": "cpx \"node_modules/blockly/media/**\" public/media",
+    "predeploy": "npm run build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "homepage": "./",
+  "blocklyDemoConfig": {
+    "title": "Blockly in React",
+    "description": "Load Blockly in a React project.",
+    "files": [
+      "build/index.html",
+      "build/**/*"
+    ]
+  },
+  "devDependencies": {
+    "acorn": "^8.12.1",
+    "cpx": "^1.5.0",
+    "typescript": "^4.9.5"
+  }
+}
