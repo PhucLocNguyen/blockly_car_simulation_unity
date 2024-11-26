@@ -24,6 +24,8 @@ import {
   GetAllProjects,
   updateProject,
 } from "../../utils/CRUD_Project";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { projectType } from "./ProjectPage";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -35,6 +37,7 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import LaunchIcon from "@mui/icons-material/Launch";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { t } from "i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 function ProjectManagement() {
   const { user } = useContext(AuthContext);
   const [projectList, setProjectList] = useState([]);
@@ -46,6 +49,16 @@ function ProjectManagement() {
     dialog2: false,
     dialog3: false,
   });
+  const [buttonStatus, setButtonStatus] = useState({
+    openButtonStatus: true,
+    renameButtonStatus: true,
+    duplicateButtonStatus: true,
+    deleteButtonStatus: true,
+  });
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedItem, setSelectedItem] = useState([]);
+
   const targetRenameInput = useRef(null);
   const [data, setData] = useState({});
   const numberOfElement = 8;
@@ -59,7 +72,6 @@ function ProjectManagement() {
     }
   };
 
-  const [selectedItem, setSelectedItem] = useState([]);
   const handleChange = (event, value) => {
     setCurrentPage(value);
   };
@@ -87,12 +99,6 @@ function ProjectManagement() {
       }
     });
   };
-  const [buttonStatus, setButtonStatus] = useState({
-    openButtonStatus: true,
-    renameButtonStatus: true,
-    duplicateButtonStatus: true,
-    deleteButtonStatus: true,
-  });
 
   useEffect(() => {
     console.log(selectedItem);
@@ -193,6 +199,13 @@ function ProjectManagement() {
       [name]: value,
     }));
   };
+  const OpenProject = () => {
+    // khi click vào project cũ
+    const projectSelected = selectedItem[0];
+    navigate("/editor", {
+      state: { id: projectSelected.id, type: projectSelected.type },
+    });
+  };
 
   const debounce = (func, delay) => {
     let timeoutId;
@@ -209,7 +222,7 @@ function ProjectManagement() {
 
   return (
     <div>
-      <HeaderSubPage title="My Projects" />
+      <HeaderSubPage title={t("MyProjects_title")} />
       <div className="w-full bg-primary py-2 ">
         <Container
           maxWidth="xl"
@@ -224,6 +237,7 @@ function ProjectManagement() {
                 border: "1px solid #000", // Màu nền khi hover
               },
             }}
+            onClick={OpenProject}
             disabled={buttonStatus.openButtonStatus}
           >
             <LaunchIcon className=" fill-primary" />
@@ -235,7 +249,7 @@ function ProjectManagement() {
                   : {}
               }
             >
-              Open
+              {t("openButton")}
             </p>
           </Button>
           <Button
@@ -259,7 +273,7 @@ function ProjectManagement() {
                   : {}
               }
             >
-              Rename
+              {t("renameButton")}
             </p>
           </Button>
           <Button
@@ -283,7 +297,7 @@ function ProjectManagement() {
                   : {}
               }
             >
-              Duplicate
+              {t("duplicateButton")}
             </p>
           </Button>
           <Button
@@ -313,7 +327,7 @@ function ProjectManagement() {
                   : {}
               }
             >
-              Delete
+              {t("deleteButton")}
             </p>
           </Button>
         </Container>
@@ -330,13 +344,6 @@ function ProjectManagement() {
                 }}
                 className="cursor-pointer"
               >
-                {selectedItem.some((item) => item.id === current.id) && (
-                  <div className="ml-2">
-                    <Typography color="green" fontWeight="bold">
-                      ✔️
-                    </Typography>
-                  </div>
-                )}
                 <CardContent
                   sx={{
                     display: "flex",
@@ -345,6 +352,17 @@ function ProjectManagement() {
                     position: "relative",
                   }}
                 >
+                  <div className="absolute right-5">
+                    <div className="ml-2">
+                      {selectedItem.some((item) => item.id === current.id) ? (
+                        <CheckCircleOutlineIcon
+                          sx={{ fill: "green", scale: "1.5" }}
+                        />
+                      ) : (
+                        <RadioButtonUncheckedIcon />
+                      )}
+                    </div>
+                  </div>
                   <Typography variant="h6" className="lineClamp1Format">
                     {current.name}
                   </Typography>
@@ -495,7 +513,7 @@ function ProjectManagement() {
           </div>
           <DialogContent sx={{ padding: "0px 15px" }}>
             <div className="pl-3">
-              <p>Bạn sẽ xoá hết {selectedItem.length} dự án</p>
+              <p>{t("totalProjectSelectedDelete",{count:selectedItem.length})}</p>
             </div>
           </DialogContent>
           <div className="px-2">

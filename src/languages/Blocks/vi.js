@@ -64,6 +64,9 @@ Blockly.Msg['FOREVER_LOOP_TOOLTIP'] = 'Liên tục thực hiện các khối đ�
 Blockly.Msg['MATH_CHANGE_TITLE'] = 'thay đổi %1 bởi %2';
 Blockly.Msg['MATH_CHANGE_VARIABLE'] = 'mục';
 Blockly.Msg['MATH_CHANGE_TOOLTIP'] = 'Cộng một số vào biến "%1".';
+Blockly.Msg['MATH_RANDOM_TITLE'] = 'Chọn ngẫu nhiên';
+Blockly.Msg['MATH_RANDOM_TO'] = 'đến';
+Blockly.Msg['MATH_RANDOM_REMAINDER'] = 'Chia lấy dư';
 
 // Pin
 Blockly.Msg['GPIO_SET_DIGITAL_WRITE_PIN'] = 'Ghi kỹ thuật số vào chân';

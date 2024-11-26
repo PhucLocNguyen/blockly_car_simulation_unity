@@ -166,7 +166,7 @@ function Header() {
                     "aria-labelledby": "user-button",
                   }}
                 >
-                  <MenuItem>{t("HeaderComponent_MyProfileTitle")}</MenuItem>
+                  {/* <MenuItem>{t("HeaderComponent_MyProfileTitle")}</MenuItem> */}
                   <MenuItem
                     onClick={() => {
                       handleLogout();
