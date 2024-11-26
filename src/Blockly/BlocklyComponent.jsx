@@ -25,7 +25,7 @@ function loadLocale(language) {
 }
 
 function BlocklyComponent(props) {
-  const {language} = useContext(LanguageContext);
+  const { language } = useContext(LanguageContext);
   const [codePython, setCodePython] = useState("");
   const [displayConvertBox, setDisplayConvertBox] = useState(true);
   const blocklyDiv = useRef();
@@ -123,7 +123,7 @@ function BlocklyComponent(props) {
                   }}
                   onClick={generateCode}
                 >
-                  <p className="px-20">Convert code</p>
+                  <p className="px-20">{t("ConvertCode_Btn")}</p>
                   <div className="bg-[#0f760f] p-2 rounded-[10px]">
                     <SaveIcon />
                   </div>
@@ -145,7 +145,7 @@ function BlocklyComponent(props) {
             }}
             onClick={saveCodeUpdate}
           >
-            <p className="px-20">Save code</p>
+            <p className="px-20">{t("BlocklyPage_SaveProjectButton")}</p>
             <div className="bg-[#0f760f] p-2 rounded-[10px]">
               <SaveIcon />
             </div>
