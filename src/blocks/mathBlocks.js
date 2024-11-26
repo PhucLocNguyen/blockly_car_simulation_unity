@@ -7,8 +7,8 @@ import '../fields/BlocklyReactField';
 var mathChangeJson = {
   "message0": "%{BKY_MATH_CHANGE_TITLE}",
   "args0": [
-    {"type": "field_variable", "name": "VAR", "variable": "%{BKY_MATH_CHANGE_VARIABLE}", "variableTypes": [""]},
-    {"type": "input_value", "name": "DELTA", "check": "Number"}
+    { "type": "field_variable", "name": "VAR", "variable": "%{BKY_MATH_CHANGE_VARIABLE}", "variableTypes": [""] },
+    { "type": "input_value", "name": "DELTA", "check": "Number" }
   ],
   "previousStatement": null,
   "nextStatement": null,
@@ -16,11 +16,11 @@ var mathChangeJson = {
 };
 
 Blockly.Blocks['math_change'] = {
-  init: function() {
+  init: function () {
     this.jsonInit(mathChangeJson);
     // Assign 'this' to a variable for use in the tooltip closure below.
     var thisBlock = this;
-    this.setTooltip(function() {
+    this.setTooltip(function () {
       return '%{BKY_MATH_CHANGE_TOOLTIP}'.replace('%1', thisBlock.getFieldValue('VAR'));
     });
   }
@@ -88,6 +88,121 @@ Blockly.Blocks["math_division"] = {
     this.setHelpUrl("");
   },
 };
+//Hàm tìm min
+Blockly.Blocks['min_operation'] = {
+  init: function() {
+      this.appendValueInput("LEFT")
+          .setCheck("Number"); // Allows connection to blocks that output a number or direct input
+      this.appendDummyInput()
+          .appendField(new Blockly.FieldDropdown([["min", "min"], ["max", "max"]]), "OPERATOR");
+      this.appendValueInput("RIGHT")
+          .setCheck("Number"); // Allows connection to blocks that output a number or direct input
+      this.setInputsInline(true);
+      this.setOutput(true, "Number"); // This block outputs a Boolean
+      this.setColour(228); // Adjust the color to match the expected appearance
+      this.setTooltip("%{BKY_LOGIC_COMPARE_TOOLTIP}");
+      this.setHelpUrl("");
+    }
+};
+//Hàm tìm max
+Blockly.Blocks['max_operation'] = {
+  init: function () {
+    this.appendValueInput("LEFT")
+          .setCheck("Number");  // Default value 0, editable number field
+    this.appendDummyInput()
+      .appendField(new Blockly.FieldDropdown([["max", "max"], ["min", "min"]]), "OPERATOR"); // Dropdown for operator
+      this.appendValueInput("RIGHT")
+      .setCheck("Number"); // Default value 0, editable number field
+    this.setInputsInline(true); // All elements in one line
+    this.setOutput(true, "Number"); // Outputs a Boolean value (true/false)
+    this.setColour(228); // Block color
+    this.setTooltip("Compare two numbers to check if they are equal or not.");
+    this.setHelpUrl(""); // Provide a help URL if required
+  }
+};
+
+Blockly.Blocks['random_operation'] = {
+  init: function() {
+      this.appendDummyInput()
+          .appendField(Blockly.Msg['MATH_RANDOM_TITLE']);
+          this.appendValueInput("LEFT")
+          .setCheck("Number");  // Default value is 0
+      this.appendDummyInput()
+          .appendField(Blockly.Msg['MATH_RANDOM_TO']);
+          this.appendValueInput("RIGHT")
+          .setCheck("Number");  // Default value is 100
+      this.setInputsInline(true); // Display everything on the same line
+      this.setOutput(true, "Number"); // Output type is a number
+      this.setColour(228); // Set block color
+      this.setTooltip("Trả về một số nguyên ngẫu nhiên trong khoảng được chỉ định.");
+      this.setHelpUrl(""); // Add a help URL if necessary
+  }
+};
+
+Blockly.Blocks['remainder_operation'] = {
+  init: function() {
+      this.appendDummyInput()
+          .appendField(Blockly.Msg['MATH_RANDOM_REMAINDER']);
+          this.appendValueInput("LEFT")
+          .setCheck("Number");  // Default value is 0
+      this.appendDummyInput()
+          .appendField("/");
+          this.appendValueInput("RIGHT")
+          .setCheck("Number");  // Default value is 100
+      this.setInputsInline(true); // Display everything on the same line
+      this.setOutput(true, "Number"); // Output type is a number
+      this.setColour(228); // Set block color
+      this.setTooltip("Trả về một số nguyên ngẫu nhiên trong khoảng được chỉ định.");
+      this.setHelpUrl(""); // Add a help URL if necessary
+  }
+};
+
+// Generator cho hàm remainder
+javascriptGenerator.forBlock['remainder_operation'] = function(block) {
+  var leftValue = javascriptGenerator.valueToCode(block, 'LEFT', javascriptGenerator.ORDER_ATOMIC);
+  var rightValue = javascriptGenerator.valueToCode(block, 'RIGHT', javascriptGenerator.ORDER_ATOMIC);
+  var code = `${leftValue} % ${rightValue}`
+  return [code, javascriptGenerator.ORDER_NONE];
+};
+
+// Generator cho hàm random
+javascriptGenerator.forBlock['random_operation'] = function(block) {
+  var leftValue = javascriptGenerator.valueToCode(block, 'LEFT', javascriptGenerator.ORDER_ATOMIC);
+  var rightValue = javascriptGenerator.valueToCode(block, 'RIGHT', javascriptGenerator.ORDER_ATOMIC);
+  var min = Math.min(leftValue,rightValue);
+  var max = Math.max(leftValue,rightValue);
+  var code = `Math.floor(Math.random() * (${max} - ${min} + 1)) + ${min}`
+  return [code, javascriptGenerator.ORDER_NONE];
+};
+
+// Generator cho hàm min
+javascriptGenerator.forBlock['min_operation'] = function(block) {
+  var leftValue = javascriptGenerator.valueToCode(block, 'LEFT', javascriptGenerator.ORDER_ATOMIC);
+  var operator = block.getFieldValue('OPERATOR');
+  var rightValue = javascriptGenerator.valueToCode(block, 'RIGHT', javascriptGenerator.ORDER_ATOMIC);
+  var code;
+  if(operator == "min"){
+    code = `Math.min(${leftValue}, ${rightValue})`
+  }else {
+     code = `Math.max(${leftValue}, ${rightValue})`
+  }
+  return [code, javascriptGenerator.ORDER_NONE];
+};
+
+// Generator cho max
+javascriptGenerator.forBlock['max_operation'] = function(block) {
+  var leftValue = javascriptGenerator.valueToCode(block, 'LEFT', javascriptGenerator.ORDER_ATOMIC);
+  var operator = block.getFieldValue('OPERATOR');
+  var rightValue = javascriptGenerator.valueToCode(block, 'RIGHT', javascriptGenerator.ORDER_ATOMIC);
+  var code;
+  if(operator == "min"){
+    code = `Math.min(${leftValue}, ${rightValue})`
+  }else {
+     code = `Math.max(${leftValue}, ${rightValue})`
+  }
+  return [code, javascriptGenerator.ORDER_NONE];
+};
+
 // Generator cho phép cộng
 javascriptGenerator.forBlock["math_addition"] = function (block) {
   var value_a = javascriptGenerator.valueToCode(block, "A", javascriptGenerator.ORDER_ATOMIC);

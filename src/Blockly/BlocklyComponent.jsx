@@ -2,16 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import "./BlocklyComponent.css";
 
 import * as Blockly from "blockly/core";
-import { javascriptGenerator } from "blockly/javascript";
 import "blockly/blocks";
 import { pythonGenerator } from "blockly/python";
 import * as localeVi from "blockly/msg/vi";
 import * as localeEn from "blockly/msg/en";
 import SimulateIDECode from "../Components/SimulateIDECode";
-import logo from "../Assets/logoApp.jpg";
 import { t } from "i18next";
-import { GetProjectById, updateProject } from "../utils/CRUD_Project";
-import { useLocation } from "react-router-dom";
+import { GetProjectById, updateProjectXML } from "../utils/CRUD_Project";
 import { Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { useContext } from "react";
@@ -28,7 +25,7 @@ function loadLocale(language) {
 }
 
 function BlocklyComponent(props) {
-  const {language} = useContext(LanguageContext);
+  const { language } = useContext(LanguageContext);
   const [codePython, setCodePython] = useState("");
   const [displayConvertBox, setDisplayConvertBox] = useState(true);
   const blocklyDiv = useRef();
@@ -91,7 +88,7 @@ function BlocklyComponent(props) {
     const workspace = primaryWorkspace.current;
     const xml = Blockly.Xml.workspaceToDom(workspace);
     const xmlText = Blockly.Xml.domToText(xml);
-    await updateProject(projectId, xmlText);
+    await updateProjectXML(projectId, xmlText);
   };
   const HandleClickConvertBox = () => {
     setDisplayConvertBox(!displayConvertBox);
@@ -126,7 +123,7 @@ function BlocklyComponent(props) {
                   }}
                   onClick={generateCode}
                 >
-                  <p className="px-20">Convert code</p>
+                  <p className="px-20">{t("ConvertCode_Btn")}</p>
                   <div className="bg-[#0f760f] p-2 rounded-[10px]">
                     <SaveIcon />
                   </div>
@@ -148,7 +145,7 @@ function BlocklyComponent(props) {
             }}
             onClick={saveCodeUpdate}
           >
-            <p className="px-20">Save code</p>
+            <p className="px-20">{t("BlocklyPage_SaveProjectButton")}</p>
             <div className="bg-[#0f760f] p-2 rounded-[10px]">
               <SaveIcon />
             </div>
