@@ -18,7 +18,7 @@ function UnityWebGL({
     frameworkUrl: "WebGl/Build/WebGl.framework.js",
     codeUrl: "WebGl/Build/WebGl.wasm",
   });
-  const car = new Car(sendMessage, "Car");
+  const car = new Car(sendMessage, "dangster_v2");
 
   const [sensorData, setSensorData] = useState(null);
 

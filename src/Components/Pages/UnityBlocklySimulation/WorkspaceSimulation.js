@@ -66,6 +66,8 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           </Category>
           <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
+            <Block type="set_car_speed_NOLIMIT" />
+
           </Category>
           <Category name={t("category_Math")} colour="250">
             <Block type="math_number" />
