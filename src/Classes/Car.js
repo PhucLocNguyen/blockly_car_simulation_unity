@@ -40,6 +40,7 @@ class Car {
   }
   changeLineTrackingStatusMap() {
     this.sendMessage(this.objectName, "ChangeLineTrackingState", "1");
+
   }
 }
 
