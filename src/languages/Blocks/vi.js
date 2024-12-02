@@ -137,3 +137,8 @@ Blockly.Msg['MATH_MULTIPLICATION_TOOLTIP'] = "Trả về tích của hai số.";
 
 Blockly.Msg['MATH_DIVISION_TITLE'] = "Chia";
 Blockly.Msg['MATH_DIVISION_TOOLTIP'] = "Trả về thương của hai số.";
+
+Blockly.Msg['SET_CAR_MOVE_SPEED'] = "Điều chỉnh tốc độ xe";  // Vietnamese translation for "Set Car Move Speed"
+Blockly.Msg['SET_CAR_LEFT_SPEED'] = "Tốc độ bánh trái";  // Vietnamese translation for "Set Left Speed"
+Blockly.Msg['SET_CAR_RIGHT_SPEED'] = "Tốc độ bánh phải";  // Vietnamese translation for "Set Right Speed"
+Blockly.Msg['SET_CAR_SPEED_TOOLTIP'] = "Điều chỉnh tốc độ của bánh trái và bánh phải xe mà không có giới hạn.";  // Vietnamese tooltip for setting car speeds

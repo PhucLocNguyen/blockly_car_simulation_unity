@@ -6,10 +6,7 @@ import BlocklyComponent, {
   Category,
 } from "../../../Blockly";
 import "../../../generator/generator";
-import WestIcon from "@mui/icons-material/West";
 import "../../../blocks/exportBlocks";
-import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
 import { t } from "i18next";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
 import { useContext, useEffect, useState } from "react";
@@ -24,13 +21,6 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="bg-white w-full py-4">
-          <Link to="/">
-            <IconButton>
-              <WestIcon />
-            </IconButton>
-          </Link>
-        </div>
         <BlocklyUnityComponent
           key={reloadKey}
           readOnly={false}
@@ -66,6 +56,8 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
           </Category>
           <Category name={t("BlocklyUnityPage_Toolbar_CarMotion")} colour="50">
             <Block type="set_car_speed_angle" />
+            <Block type="set_car_speed_NOLIMIT" />
+
           </Category>
           <Category name={t("category_Math")} colour="250">
             <Block type="math_number" />

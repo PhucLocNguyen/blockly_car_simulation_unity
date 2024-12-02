@@ -16,7 +16,7 @@ Blockly.Blocks["Road_map_LineTracking"] = {
 
 javascriptGenerator.forBlock["Road_map_LineTracking"] = function (block) {
   var statements_do = javascriptGenerator.statementToCode(block, "DO");
-  var code = `function listenEventLineTracking(event) {\n var Data_sensor=event?.detail;\n ${statements_do}};\nwindow.addEventListener("UnityData", listenEventLineTracking);\n`;
+  var code = `car.changeLineTrackingStatusMap();\nfunction listenEventLineTracking(event) {\n var Data_sensor=event?.detail;\n ${statements_do}};\nwindow.addEventListener("UnityData", listenEventLineTracking);\n`;
   return code;
 };
 

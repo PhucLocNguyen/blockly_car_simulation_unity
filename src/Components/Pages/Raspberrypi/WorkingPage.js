@@ -32,13 +32,6 @@ function WorkingPage({projectId, xmlRemember}) {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="bg-white w-full py-4">
-          <Link to="/">
-            <IconButton >
-              <WestIcon />
-            </IconButton>
-          </Link>
-        </div>
         <BlocklyComponent
           key={reloadKey}
           readOnly={false}

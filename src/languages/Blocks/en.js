@@ -136,3 +136,8 @@ Blockly.Msg['MATH_MULTIPLICATION_TOOLTIP'] = "Returns the product of two numbers
 
 Blockly.Msg['MATH_DIVISION_TITLE'] = "Divide";
 Blockly.Msg['MATH_DIVISION_TOOLTIP'] = "Returns the quotient of two numbers.";
+
+Blockly.Msg['SET_CAR_MOVE_SPEED'] = "Set Car Move";  
+Blockly.Msg['SET_CAR_LEFT_SPEED'] = "Left Speed";  
+Blockly.Msg['SET_CAR_RIGHT_SPEED'] = "Right Speed";  
+Blockly.Msg['SET_CAR_SPEED_TOOLTIP'] = "Adjust the speed of the left and right car wheels without limits.";  
