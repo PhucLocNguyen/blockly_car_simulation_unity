@@ -6,10 +6,7 @@ import BlocklyComponent, {
   Category,
 } from "../../../Blockly";
 import "../../../generator/generator";
-import WestIcon from "@mui/icons-material/West";
 import "../../../blocks/exportBlocks";
-import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
 import { t } from "i18next";
 import BlocklyUnityComponent from "../../../Blockly/UnityBlockly/BlocklyUnityComponent";
 import { useContext, useEffect, useState } from "react";
@@ -24,13 +21,6 @@ function WorkspaceSimulation({ projectId, xmlRemember }) {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="bg-white w-full py-4">
-          <Link to="/">
-            <IconButton>
-              <WestIcon />
-            </IconButton>
-          </Link>
-        </div>
         <BlocklyUnityComponent
           key={reloadKey}
           readOnly={false}

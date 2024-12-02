@@ -226,110 +226,112 @@ function ProjectManagement() {
       <div className="w-full bg-primary py-2 ">
         <Container
           maxWidth="xl"
-          sx={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem" }}
         >
-          <Button
-            sx={{
-              background: "#fff",
-              border: "1px solid transparent",
-              minWidth: "110px",
-              ":hover": {
-                border: "1px solid #000", // Màu nền khi hover
-              },
-            }}
-            onClick={OpenProject}
-            disabled={buttonStatus.openButtonStatus}
-          >
-            <LaunchIcon className=" fill-primary" />
-            <p
-              className="text-primaryText normal-case mb-0 mt-0 py-2 px-2 "
-              style={
-                buttonStatus.openButtonStatus
-                  ? { color: "rgba(0, 0, 0, 0.26)" }
-                  : {}
-              }
+          <div className="sm:grid  sm:grid-cols-2 sm:gap-2 md:flex md:justify-end md:gap-2">
+            <Button
+              sx={{
+                background: "#fff",
+                border: "1px solid transparent",
+                minWidth: "110px",
+                ":hover": {
+                  border: "1px solid #000", // Màu nền khi hover
+                },
+              }}
+              className=""
+              onClick={OpenProject}
+              disabled={buttonStatus.openButtonStatus}
             >
-              {t("openButton")}
-            </p>
-          </Button>
-          <Button
-            sx={{
-              background: "#fff",
-              border: "1px solid transparent",
-              minWidth: "110px",
-              ":hover": {
-                border: "1px solid #000", // Màu nền khi hover
-              },
-            }}
-            disabled={buttonStatus.renameButtonStatus}
-            onClick={RenameProjectDialogOpen}
-          >
-            <DriveFileRenameOutlineIcon className=" fill-primary" />
-            <p
-              className="text-primaryText normal-case mb-0 mt-0 py-2 px-2"
-              style={
-                buttonStatus.renameButtonStatus
-                  ? { color: "rgba(0, 0, 0, 0.26)" }
-                  : {}
-              }
+              <LaunchIcon className=" fill-primary" />
+              <p
+                className="text-primaryText normal-case mb-0 mt-0 py-2 px-2 "
+                style={
+                  buttonStatus.openButtonStatus
+                    ? { color: "rgba(0, 0, 0, 0.26)" }
+                    : {}
+                }
+              >
+                {t("openButton")}
+              </p>
+            </Button>
+            <Button
+              sx={{
+                background: "#fff",
+                border: "1px solid transparent",
+                minWidth: "110px",
+                ":hover": {
+                  border: "1px solid #000", // Màu nền khi hover
+                },
+              }}
+              disabled={buttonStatus.renameButtonStatus}
+              onClick={RenameProjectDialogOpen}
             >
-              {t("renameButton")}
-            </p>
-          </Button>
-          <Button
-            sx={{
-              background: "#fff",
-              border: "1px solid transparent",
-              minWidth: "110px",
-              ":hover": {
-                border: "1px solid #000", // Màu nền khi hover
-              },
-            }}
-            disabled={buttonStatus.duplicateButtonStatus}
-            onClick={DuplicateProjectDialogOpen}
-          >
-            <ContentCopyIcon className=" fill-primary" />
-            <p
-              className="text-primaryText normal-case mb-0 mt-0 py-2 px-2"
-              style={
-                buttonStatus.duplicateButtonStatus
-                  ? { color: "rgba(0, 0, 0, 0.26)" }
-                  : {}
-              }
+              <DriveFileRenameOutlineIcon className=" fill-primary" />
+              <p
+                className="text-primaryText normal-case mb-0 mt-0 py-2 px-2"
+                style={
+                  buttonStatus.renameButtonStatus
+                    ? { color: "rgba(0, 0, 0, 0.26)" }
+                    : {}
+                }
+              >
+                {t("renameButton")}
+              </p>
+            </Button>
+            <Button
+              sx={{
+                background: "#fff",
+                border: "1px solid transparent",
+                minWidth: "110px",
+                ":hover": {
+                  border: "1px solid #000", // Màu nền khi hover
+                },
+              }}
+              disabled={buttonStatus.duplicateButtonStatus}
+              onClick={DuplicateProjectDialogOpen}
             >
-              {t("duplicateButton")}
-            </p>
-          </Button>
-          <Button
-            sx={{
-              background: "#fff",
-              border: "1px solid transparent",
-              minWidth: "110px",
-              ":hover": {
-                border: "1px solid #000", // Màu nền khi hover
-              },
-            }}
-            disabled={buttonStatus.deleteButtonStatus}
-            onClick={DeleteProjectDialogOpen}
-          >
-            <DeleteIcon
-              sx={
-                buttonStatus.deleteButtonStatus
-                  ? { fill: "currentColor" }
-                  : { fill: "red" }
-              }
-            />
-            <p
-              className="text-red-600 normal-case mb-0 mt-0 py-2 px-2"
-              style={
-                buttonStatus.deleteButtonStatus
-                  ? { color: "rgba(0, 0, 0, 0.26)" }
-                  : {}
-              }
+              <ContentCopyIcon className=" fill-primary" />
+              <p
+                className="text-primaryText normal-case mb-0 mt-0 py-2 px-2"
+                style={
+                  buttonStatus.duplicateButtonStatus
+                    ? { color: "rgba(0, 0, 0, 0.26)" }
+                    : {}
+                }
+              >
+                {t("duplicateButton")}
+              </p>
+            </Button>
+            <Button
+              sx={{
+                background: "#fff",
+                border: "1px solid transparent",
+                minWidth: "110px",
+                ":hover": {
+                  border: "1px solid #000", // Màu nền khi hover
+                },
+              }}
+              disabled={buttonStatus.deleteButtonStatus}
+              onClick={DeleteProjectDialogOpen}
             >
-              {t("deleteButton")}
-            </p>
-          </Button>
+              <DeleteIcon
+                sx={
+                  buttonStatus.deleteButtonStatus
+                    ? { fill: "currentColor" }
+                    : { fill: "red" }
+                }
+              />
+              <p
+                className="text-red-600 normal-case mb-0 mt-0 py-2 px-2"
+                style={
+                  buttonStatus.deleteButtonStatus
+                    ? { color: "rgba(0, 0, 0, 0.26)" }
+                    : {}
+                }
+              >
+                {t("deleteButton")}
+              </p>
+            </Button>
+          </div>
         </Container>
       </div>
 
@@ -513,7 +515,11 @@ function ProjectManagement() {
           </div>
           <DialogContent sx={{ padding: "0px 15px" }}>
             <div className="pl-3">
-              <p>{t("totalProjectSelectedDelete",{count:selectedItem.length})}</p>
+              <p>
+                {t("totalProjectSelectedDelete", {
+                  count: selectedItem.length,
+                })}
+              </p>
             </div>
           </DialogContent>
           <div className="px-2">
