@@ -13,10 +13,10 @@ function UnityWebGL({
   setIsReset,
 }) {
   const { unityProvider, sendMessage } = useUnityContext({
-    loaderUrl: "WebGl/Build/WebGl.loader.js",
-    dataUrl: "WebGl/Build/WebGl.data",
-    frameworkUrl: "WebGl/Build/WebGl.framework.js",
-    codeUrl: "WebGl/Build/WebGl.wasm",
+    loaderUrl: "WebGl/Build/Webgl.loader.js",
+    dataUrl: "WebGl/Build/Webgl.data",
+    frameworkUrl: "WebGl/Build/Webgl.framework.js",
+    codeUrl: "WebGl/Build/Webgl.wasm",
   });
   const car = new Car(sendMessage, "dangster_v2");
 
