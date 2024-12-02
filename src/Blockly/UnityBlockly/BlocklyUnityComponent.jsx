@@ -43,7 +43,13 @@ function BlocklyUnityComponent(props) {
   }
   const generateCode = (event) => {
     event.stopPropagation();
-    const code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
+    let code = javascriptGenerator.workspaceToCode(primaryWorkspace.current);
+    code += `var button = document.getElementById("resetSimulation");  // thay "yourButtonId" bằng ID thực tế của nút bạn muốn gắn sự kiện
+    console.log(button);
+    button.addEventListener("click", function() {
+        window.removeEventListener("UnityData", listenEventLineTracking);
+        console.log("Sự kiện đã được hủy.");
+    });`;
     setCodeJavascript(code);
     console.log(code);
     setIsSimulated(!isSimulated); //listen to simulate button to simulate
@@ -233,6 +239,7 @@ function BlocklyUnityComponent(props) {
                   minWidth: "360px",
                   justifyContent: "flex-start",
                 }}
+                id="resetSimulation"
                 onClick={!isSimulated ? generateCode : ResetUnityButton}
               >
                 {isSimulated ? (

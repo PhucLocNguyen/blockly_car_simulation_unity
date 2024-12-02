@@ -36,10 +36,11 @@ class Car {
     this.moveCar(speed, angle, duration);
   }
   resetCar() {
-    this.sendMessage(this.objectName, "resetCarStatus");
+    this.sendMessage(this.objectName, "ResetCar");
   }
   changeLineTrackingStatusMap() {
     this.sendMessage(this.objectName, "ChangeLineTrackingState", "1");
+
   }
 }
 
